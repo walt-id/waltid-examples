@@ -27,8 +27,6 @@ repositories {
     maven { url = uri("https://maven.walt.id/repository/waltid/") }
     maven { url = uri("https://jitpack.io") }
 
-
-
 }
 
 dependencies {
@@ -40,12 +38,20 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:5.7.2")
     testImplementation("io.kotest:kotest-assertions-core:5.7.2")
     testImplementation("io.kotest:kotest-assertions-json:5.7.2")
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+
+    // https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt
+    implementation("com.nimbusds:nimbus-jose-jwt:9.38-rc3")
 
     implementation("com.github.multiformats:java-multibase:v1.1.1")
 
+
+    implementation("id.walt.crypto:waltid-crypto:$waltid_version")
     implementation("id.walt.credentials:waltid-verifiable-credentials:$waltid_version")
     implementation("id.walt.did:waltid-did:$waltid_version")
     implementation("id.walt:waltid-sdjwt-jvm:$waltid_version")
+    implementation("id.walt:waltid-openid4vc:$waltid_version")
 
 
 }
