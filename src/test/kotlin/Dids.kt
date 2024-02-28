@@ -27,13 +27,13 @@ class Dids : StringSpec({
             useJwkJcsPub = true
         )
         val didResult = DidService.registerByKey(
-            method = "key",
+            method = "crypto",
             key = key,
             options = options
         )
         val didDocumentResult = DidService.resolve(didResult.did)
         val document = didDocumentResult.getOrNull()
-        didResult.did shouldContain "key"
+        didResult.did shouldContain "crypto"
         document shouldNotBe null
     }
 

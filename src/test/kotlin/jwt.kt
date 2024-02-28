@@ -16,7 +16,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.instanceOf
 import kotlinx.serialization.json.JsonPrimitive
-import kotlin.reflect.typeOf
 import kotlin.time.Duration.Companion.days
 
 class jwt : StringSpec({
@@ -58,7 +57,7 @@ class jwt : StringSpec({
     "Sign Credential JWT".config() {
         DidService.minimalInit()
         val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
-        val myIssuerDid = DidService.registerByKey("key", myIssuerKey).did
+        val myIssuerDid = DidService.registerByKey("crypto", myIssuerKey).did
         val mySubjectDid = "did:key:xyz"
         val vc = CredentialBuilder(CredentialBuilderType.W3CV11CredentialBuilder).apply {
             addContext("https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.2.json")
@@ -106,7 +105,7 @@ class jwt : StringSpec({
     "Sign Credential SD-JWT".config() {
         DidService.minimalInit()
         val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
-        val myIssuerDid = DidService.registerByKey("key", myIssuerKey).did
+        val myIssuerDid = DidService.registerByKey("crypto", myIssuerKey).did
         val mySubjectDid = "did:key:xyz"
         val disclosureMap = SDMap(
             fields = mapOf("name" to SDField(true)),

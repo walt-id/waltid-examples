@@ -52,13 +52,13 @@ class CITestProvider : OpenIDCredentialIssuer(
         credentialsSupported = listOf(
             CredentialSupported(
                 CredentialFormat.jwt_vc_json, "VerifiableId",
-                cryptographicBindingMethodsSupported = setOf("did"), cryptographicSuitesSupported = setOf("ES256K"),
+                cryptographicBindingMethodsSupported = setOf("crypto"), cryptographicSuitesSupported = setOf("ES256K"),
                 types = listOf("VerifiableCredential", "VerifiableId"),
                 customParameters = mapOf("foo" to JsonPrimitive("bar"))
             ),
             CredentialSupported(
                 CredentialFormat.jwt_vc_json, "VerifiableDiploma",
-                cryptographicBindingMethodsSupported = setOf("did"), cryptographicSuitesSupported = setOf("ES256K"),
+                cryptographicBindingMethodsSupported = setOf("crypto"), cryptographicSuitesSupported = setOf("ES256K"),
                 types = listOf("VerifiableCredential", "VerifiableAttestation", "VerifiableDiploma")
             )
         )
@@ -75,7 +75,7 @@ class CITestProvider : OpenIDCredentialIssuer(
     // crypto operations and credential issuance
     private val CI_TOKEN_KEY = runBlocking { LocalKey.generate(KeyType.RSA) }
     private val CI_DID_KEY = runBlocking { LocalKey.generate(KeyType.Ed25519) }
-    val CI_ISSUER_DID = runBlocking { DidService.registerByKey("key", CI_DID_KEY).did }
+    val CI_ISSUER_DID = runBlocking { DidService.registerByKey("crypto", CI_DID_KEY).did }
     val deferredCredentialRequests = mutableMapOf<String, CredentialRequest>()
     var deferIssuance = false
 
