@@ -1,4 +1,4 @@
-package crypto
+package crypto.create
 
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.LocalKey
