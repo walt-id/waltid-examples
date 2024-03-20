@@ -1,7 +1,7 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-val waltid_version: String= "0.1.0"
+val waltid_version: String= "1.0.2403040917-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.9.22"
@@ -30,6 +30,8 @@ repositories {
 }
 
 dependencies {
+
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
 
     implementation("id.walt.crypto:waltid-crypto:$waltid_version")
     implementation("id.walt.credentials:waltid-verifiable-credentials:$waltid_version")
