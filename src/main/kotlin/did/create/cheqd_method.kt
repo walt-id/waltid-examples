@@ -1,4 +1,16 @@
 package did.create
 
-class cheqd_method {
+import id.walt.did.dids.DidService
+import id.walt.did.dids.registrar.dids.DidCheqdCreateOptions
+
+suspend fun main() {
+
+    DidService.minimalInit()
+    val options = DidCheqdCreateOptions(
+        network = "testnet"
+    )
+    println("Create and register did")
+    val didResult = DidService.register(options)
+    println("Key did result: "+didResult+"\n")
+
 }
