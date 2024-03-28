@@ -6,9 +6,12 @@ import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidJwkCreateOptions
 
 suspend fun main() {
+    jwk_method()
+}
+suspend fun jwk_method(){
     DidService.minimalInit()
     val options = DidJwkCreateOptions(
-        keyType = KeyType.RSA
+        keyType = KeyType.Ed25519
     )
     val didResult = DidService.register(options)
     println("Key did result: "+didResult+"\n")

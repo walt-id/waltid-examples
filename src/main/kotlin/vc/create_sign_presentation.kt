@@ -1,3 +1,5 @@
+package vc
+
 import id.walt.credentials.CredentialBuilder
 import id.walt.credentials.CredentialBuilderType
 import id.walt.credentials.PresentationBuilder
@@ -11,7 +13,10 @@ import id.walt.did.dids.DidService
 import kotlin.js.ExperimentalJsExport
 
 suspend fun main() {
+    create_sign_presentation()
+}
 
+suspend fun create_sign_presentation(){
     DidService.minimalInit()
 
     val myIssuerKey = LocalKey.generate(KeyType.Ed25519)

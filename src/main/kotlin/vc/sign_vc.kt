@@ -1,29 +1,22 @@
 package vc
 
-import id.walt.credentials.CredentialBuilder
-import id.walt.credentials.CredentialBuilderType
-import id.walt.credentials.issuance.Issuer.baseIssue
 import id.walt.credentials.vc.vcs.W3CVC
 import id.walt.credentials.verification.Verifier
 import id.walt.credentials.verification.models.PolicyRequest
-import id.walt.credentials.verification.models.PolicyRequest.Companion.parsePolicyRequests
 import id.walt.credentials.verification.policies.JwtSignaturePolicy
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.LocalKey
-import id.walt.crypto.utils.JsonUtils.toJsonObject
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
 import id.walt.sdjwt.DecoyMode
 import id.walt.sdjwt.SDField
 import id.walt.sdjwt.SDMap
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlin.time.Duration.Companion.days
-
 
 suspend fun main (){
+    sign_vc()
+}
+
+suspend fun sign_vc(){
 
     DidService.init()
 

@@ -6,7 +6,10 @@ import id.walt.crypto.utils.JsonUtils.toJsonObject
 import kotlin.time.Duration.Companion.days
 
 fun main (){
+    build_vc()
+}
 
+fun build_vc() {
     val entityIdentificationNumber = "12345"
     val issuingAuthorityId = "abc"
     val proofType = "document"
@@ -36,5 +39,5 @@ fun main (){
         useCredentialSubject(credentialSubject)
     }.buildW3C()
 
-    println(w3cCredential.toPrettyJson())
-}
+    println(w3cCredential.toPrettyJson())}
+

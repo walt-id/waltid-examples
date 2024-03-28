@@ -3,15 +3,15 @@ package did.resolve
 import id.walt.did.dids.DidService
 
 suspend fun main(){
-    web_method()
+    key_method()
 }
-suspend fun web_method(){
+suspend fun key_method(){
     DidService.minimalInit()
-    val did = "did:web:wallet.walt-test.cloud:wallet-api:registry:6ae92b09-b4ee-4b8f-ac4c-1bf3b837caca"
+    val did = "did:key:zBhBLmYmyihtomRdJJNEKzbPj51o4a3GYFeZoRHSABKUwqdjiQPY2cc3SKCmkYnqk94qTDsAV1ntvdvCCVvqcqvxMt7QUUt2hLNjv6u4yr6qpQy1CAwomcLjcQ8TPYuVVSppvGzq2cYFCXdCXJUrhAH9bKCCSVDSAvaFoM3tiNpdJazWjLjwAnQ"
     val didDocumentResult = DidService.resolve(did)
     val document = didDocumentResult.getOrNull()
     println(document)
     val keyResult = DidService.resolveToKey(did)
     val key = keyResult.getOrNull()
-    println(key)
+    println(key!!.getKeyId())
 }

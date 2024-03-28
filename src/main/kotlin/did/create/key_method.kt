@@ -6,6 +6,9 @@ import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
 
 suspend fun main() {
+    key_method()
+}
+suspend fun key_method(){
     DidService.minimalInit()
     val options = DidKeyCreateOptions(
         keyType = KeyType.RSA

@@ -6,6 +6,9 @@ import id.walt.crypto.keys.LocalKey
 import id.walt.crypto.keys.LocalKeyMetadata
 
 suspend fun main() {
+    export_jwk()
+}
+suspend fun export_jwk(){
     println("Generating key: RSA")
     val key = LocalKey.generate(KeyType.RSA)
     println("Key id: " + key.getKeyId())

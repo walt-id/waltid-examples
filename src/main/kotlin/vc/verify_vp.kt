@@ -8,6 +8,10 @@ import id.walt.did.dids.DidService
 
 
 suspend fun main() {
+    verify_vp()
+}
+
+suspend fun verify_vp(){
     // Initialise DID Service to be able to resolve DIDs
     DidService.minimalInit()
 

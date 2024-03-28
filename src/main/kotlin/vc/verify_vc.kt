@@ -5,6 +5,10 @@ import id.walt.credentials.verification.policies.JwtSignaturePolicy
 import id.walt.did.dids.DidService
 
 suspend fun main() {
+    verify_vc()
+}
+
+suspend fun verify_vc(){
     // Initialise DID Service to be able to resolve DIDs
     DidService.minimalInit()
     println("Verify JWT signature: ")

@@ -6,6 +6,9 @@ import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidWebCreateOptions
 
 suspend fun main() {
+    web_method()
+}
+suspend fun web_method(){
     DidService.minimalInit()
     val options = DidWebCreateOptions(
         domain = "wallet.walt-test.cloud",

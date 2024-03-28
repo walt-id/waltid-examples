@@ -6,6 +6,9 @@ import id.walt.crypto.keys.LocalKey
 import id.walt.crypto.keys.LocalKeyMetadata
 
 suspend fun main() {
+    import_secp256k1_jwk()
+}
+suspend fun import_secp256k1_jwk(){
     println("Importing private JWK...")
     val key = LocalKey.generate(KeyType.secp256k1, LocalKeyMetadata())
     val privateKeyJsonString = key.jwk.toString()

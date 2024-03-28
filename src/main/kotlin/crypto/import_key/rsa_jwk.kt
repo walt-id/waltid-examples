@@ -5,6 +5,9 @@ import id.walt.crypto.keys.LocalKey
 import id.walt.crypto.keys.LocalKeyMetadata
 
 suspend fun main() {
+    import_rsa_jwk()
+}
+suspend fun import_rsa_jwk(){
     println("Importing private JWK...")
     val key = LocalKey.generate(KeyType.RSA, LocalKeyMetadata())
     val privateKeyJsonString = key.jwk.toString()
