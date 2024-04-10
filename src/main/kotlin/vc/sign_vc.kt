@@ -12,11 +12,11 @@ import id.walt.sdjwt.DecoyMode
 import id.walt.sdjwt.SDField
 import id.walt.sdjwt.SDMap
 
-suspend fun main (){
+suspend fun main() {
     sign_vc()
 }
 
-suspend fun sign_vc(){
+suspend fun sign_vc() {
 
     DidService.init()
 
@@ -24,7 +24,7 @@ suspend fun sign_vc(){
     println("Register the DID with a given key:")
     println("Generating key...")
     val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
-    println("Generated key: "+myIssuerKey.getKeyId())
+    println("Generated key: " + myIssuerKey.getKeyId())
     val optionsKey = DidKeyCreateOptions(
         useJwkJcsPub = true
     )
@@ -73,8 +73,8 @@ suspend fun sign_vc(){
     )
     //JWT signature
     println("\nUsing JWT as signature type..")
-    val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, mySubjectDid.did )
-    println("JWS: "+signedJWT+"\n")
+    val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, mySubjectDid.did)
+    println("JWS: " + signedJWT + "\n")
     val results = Verifier.verifyCredential(
         signedJWT,
         listOf(
@@ -94,7 +94,7 @@ suspend fun sign_vc(){
         decoys = 2
     )
     val signedSDJWT: String = vc.signSdJwt(myIssuerKey, myIssuerDid.did, mySubjectDid.did, disclosureMap)
-    println("JWS: "+signedSDJWT+"\n")
+    println("JWS: " + signedSDJWT + "\n")
     val results1 = Verifier.verifyCredential(
         signedSDJWT,
         listOf(

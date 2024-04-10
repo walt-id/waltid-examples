@@ -8,31 +8,31 @@ import id.walt.did.dids.registrar.dids.DidWebCreateOptions
 suspend fun main() {
     web_method()
 }
-suspend fun web_method(){
+
+suspend fun web_method() {
     DidService.minimalInit()
     val options = DidWebCreateOptions(
         domain = "wallet.walt-test.cloud",
-        path= "/wallet-api/registry/1111",
+        path = "/wallet-api/registry/1111",
         keyType = KeyType.Ed25519
     )
     val didResult = DidService.register(options = options)
-    println("Did result: "+didResult+"\n")
+    println("Did result: $didResult\n")
 
 
     println("Register the DID with a given key:")
     println("Generating key...")
     val key = LocalKey.generate(KeyType.RSA)
-    println("Generated key: "+key.getKeyId())
+    println("Generated key: " + key.getKeyId())
     val optionsKey = DidWebCreateOptions(
         domain = "wallet.walt-test.cloud",
-        path= "/wallet-api/registry/1111",
+        path = "/wallet-api/registry/1111",
     )
     val didResultKey = DidService.registerByKey(
         method = "web",
         key = key,
         options = optionsKey
     )
-    println("Did result: "+didResultKey)
-
+    println("DID result: $didResultKey")
 
 }

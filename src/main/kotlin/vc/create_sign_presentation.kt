@@ -5,18 +5,16 @@ import id.walt.credentials.CredentialBuilderType
 import id.walt.credentials.PresentationBuilder
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.LocalKey
-import id.walt.crypto.utils.JsonUtils.toJsonElement
 import id.walt.crypto.utils.JsonUtils.toJsonObject
+import id.walt.did.dids.DidService
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.time.Duration.Companion.days
-import id.walt.did.dids.DidService
-import kotlin.js.ExperimentalJsExport
 
 suspend fun main() {
     create_sign_presentation()
 }
 
-suspend fun create_sign_presentation(){
+suspend fun create_sign_presentation() {
     DidService.minimalInit()
 
     val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
@@ -74,7 +72,7 @@ suspend fun create_sign_presentation(){
         nonce = "20394029340"
         addCredential(JsonPrimitive(jwtVc))
     }
-    println("Verifiable Presentation: "+vp.presentationId)
+    println("Verifiable Presentation: " + vp.presentationId)
 
     // Sign Verifiable Presentation as JWT
     println("Sign Verifiable Presentation as JWT")

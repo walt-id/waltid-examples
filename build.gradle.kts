@@ -1,7 +1,7 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
-val waltid_version: String= "1.0.2403040917-SNAPSHOT"
+val waltid_version: String = "1.0.2403040917-SNAPSHOT"
 
 plugins {
     kotlin("jvm") version "1.9.22"

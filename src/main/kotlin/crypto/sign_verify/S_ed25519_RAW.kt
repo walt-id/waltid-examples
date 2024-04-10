@@ -9,6 +9,7 @@ import kotlinx.serialization.json.JsonPrimitive
 suspend fun main() {
     sign_ed25519_raw()
 }
+
 suspend fun sign_ed25519_raw() {
     val payloadString = JsonObject(
         mapOf(

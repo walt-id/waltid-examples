@@ -5,7 +5,7 @@ import id.walt.credentials.CredentialBuilderType
 import id.walt.crypto.utils.JsonUtils.toJsonObject
 import kotlin.time.Duration.Companion.days
 
-fun main (){
+fun main() {
     build_vc()
 }
 
@@ -39,5 +39,6 @@ fun build_vc() {
         useCredentialSubject(credentialSubject)
     }.buildW3C()
 
-    println(w3cCredential.toPrettyJson())}
+    println(w3cCredential.toPrettyJson())
+}
 

@@ -8,8 +8,9 @@ import kotlinx.serialization.json.JsonPrimitive
 
 suspend fun main() {
     sign_secp256k1_raw()
-    }
-suspend fun sign_secp256k1_raw(){
+}
+
+suspend fun sign_secp256k1_raw() {
     val payloadString = JsonObject(
         mapOf(
             "sub" to JsonPrimitive("16bb17e0-e733-4622-9384-122bc2fc6290"),

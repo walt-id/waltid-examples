@@ -7,7 +7,7 @@ suspend fun main() {
     cheqd_method()
 }
 
-suspend fun cheqd_method(){
+suspend fun cheqd_method() {
 
     DidService.minimalInit()
     val options = DidCheqdCreateOptions(
@@ -15,6 +15,6 @@ suspend fun cheqd_method(){
     )
     println("Create and register did")
     val didResult = DidService.register(options)
-    println("Key did result: "+didResult+"\n")
+    println("Key did result: " + didResult + "\n")
 
 }
