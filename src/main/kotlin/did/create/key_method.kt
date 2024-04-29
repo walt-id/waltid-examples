@@ -1,7 +1,7 @@
 package did.create
 
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
+import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
 
@@ -20,7 +20,7 @@ suspend fun key_method() {
 
     println("Register the DID with a given key:")
     println("Generating key...")
-    val key = LocalKey.generate(KeyType.secp256k1)
+    val key = JWKKey.generate(KeyType.secp256k1)
     println("Generated key: " + key.getKeyId())
     val optionsKey = DidKeyCreateOptions(
         useJwkJcsPub = true

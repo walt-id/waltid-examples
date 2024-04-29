@@ -5,7 +5,7 @@ import id.walt.credentials.verification.Verifier
 import id.walt.credentials.verification.models.PolicyRequest
 import id.walt.credentials.verification.policies.JwtSignaturePolicy
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
+import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
 import id.walt.sdjwt.DecoyMode
@@ -23,7 +23,7 @@ suspend fun sign_vc() {
 //  Create issuer key and did
     println("Register the DID with a given key:")
     println("Generating key...")
-    val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
+    val myIssuerKey = JWKKey.generate(KeyType.Ed25519)
     println("Generated key: " + myIssuerKey.getKeyId())
     val optionsKey = DidKeyCreateOptions(
         useJwkJcsPub = true
@@ -73,7 +73,7 @@ suspend fun sign_vc() {
     )
     //JWT signature
     println("\nUsing JWT as signature type..")
-    val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, mySubjectDid.did)
+    val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, null, mySubjectDid.did)
     println("JWS: " + signedJWT + "\n")
     val results = Verifier.verifyCredential(
         signedJWT,

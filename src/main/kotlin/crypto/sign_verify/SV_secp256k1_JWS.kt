@@ -1,8 +1,7 @@
 package crypto.sign_verify
 
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
-import id.walt.crypto.keys.LocalKeyMetadata
+import id.walt.crypto.keys.jwk.JWKKey
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -18,7 +17,7 @@ suspend fun sv_secp256k1_jws() {
             "aud" to JsonPrimitive("TOKEN"),
         )
     )
-    val key = LocalKey.generate(KeyType.secp256k1, LocalKeyMetadata())
+    val key = JWKKey.generate(KeyType.secp256k1)
     val signature = key.signJws(payloadString.toString().encodeToByteArray())
     val verificationResult = key.getPublicKey().verifyJws(signature)
 

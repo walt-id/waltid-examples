@@ -1,8 +1,7 @@
 package crypto.import_key
 
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
-import id.walt.crypto.keys.LocalKeyMetadata
+import id.walt.crypto.keys.jwk.JWKKey
 
 suspend fun main() {
     import_rsa_raw()
@@ -10,10 +9,10 @@ suspend fun main() {
 
 suspend fun import_rsa_raw() {
     println("Importing private JWK...")
-    val key = LocalKey.generate(KeyType.RSA, LocalKeyMetadata())
+    val key = JWKKey.generate(KeyType.RSA)
     val privateKeyJsonString = key.jwk
     val privateKeyResult =
-        LocalKey.importRawPublicKey(KeyType.RSA, privateKeyJsonString as ByteArray, LocalKeyMetadata())
+        JWKKey.importRawPublicKey(KeyType.RSA, privateKeyJsonString as ByteArray, null)
 
     println("Success: " + privateKeyResult)
     println("Getting private key...")

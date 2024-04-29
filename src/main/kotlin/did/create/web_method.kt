@@ -1,7 +1,7 @@
 package did.create
 
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
+import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidWebCreateOptions
 
@@ -22,7 +22,7 @@ suspend fun web_method() {
 
     println("Register the DID with a given key:")
     println("Generating key...")
-    val key = LocalKey.generate(KeyType.RSA)
+    val key = JWKKey.generate(KeyType.RSA)
     println("Generated key: " + key.getKeyId())
     val optionsKey = DidWebCreateOptions(
         domain = "wallet.walt-test.cloud",

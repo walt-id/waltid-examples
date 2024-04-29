@@ -4,7 +4,8 @@ import id.walt.credentials.CredentialBuilder
 import id.walt.credentials.CredentialBuilderType
 import id.walt.credentials.PresentationBuilder
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
+import id.walt.crypto.keys.JWKKey
+import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.crypto.utils.JsonUtils.toJsonObject
 import id.walt.did.dids.DidService
 import kotlinx.serialization.json.JsonPrimitive
@@ -17,10 +18,10 @@ suspend fun main() {
 suspend fun create_sign_presentation() {
     DidService.minimalInit()
 
-    val myIssuerKey = LocalKey.generate(KeyType.Ed25519)
+    val myIssuerKey = JWKKey.generate(KeyType.Ed25519)
     val myIssuerDid = DidService.registerByKey("key", myIssuerKey).did
 
-    val mySubjectKey = LocalKey.generate(KeyType.Ed25519)
+    val mySubjectKey = JWKKey.generate(KeyType.Ed25519)
     val mySubjectDid = DidService.registerByKey("key", mySubjectKey).did
 
     // Creating The Verifiable Credential
@@ -63,7 +64,7 @@ suspend fun create_sign_presentation() {
 
     // Signing The Verifiable Credential
     println("Signing The Verifiable Credential")
-    val jwtVc: String = vc.signJws(myIssuerKey, myIssuerDid, mySubjectDid)
+    val jwtVc: String = vc.signJws(myIssuerKey, myIssuerDid, null, mySubjectDid)
 
     // Creating Verifiable Presentation
     println("Creating Verifiable Presentation")

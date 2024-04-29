@@ -1,10 +1,9 @@
 package did.create
 
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.LocalKey
+import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidJwkCreateOptions
-import kotlin.js.ExperimentalJsExport
 
 suspend fun main() {
     jwk_method()
@@ -21,7 +20,7 @@ suspend fun jwk_method() {
 
     println("Register the DID with a given key:")
     println("Generating key...")
-    val key = LocalKey.generate(KeyType.RSA)
+    val key = JWKKey.generate(KeyType.RSA)
     println("Generated key: " + key.getKeyId())
     val didResultKey = DidService.registerByKey(
         method = "jwk",
