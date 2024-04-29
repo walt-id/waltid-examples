@@ -4,7 +4,6 @@ import id.walt.credentials.CredentialBuilder
 import id.walt.credentials.CredentialBuilderType
 import id.walt.credentials.PresentationBuilder
 import id.walt.crypto.keys.KeyType
-import id.walt.crypto.keys.JWKKey
 import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.crypto.utils.JsonUtils.toJsonObject
 import id.walt.did.dids.DidService
