@@ -1,6 +1,5 @@
 val kotlin_version: String by project
-//val waltid_version: String = "1.0.2404260939-SNAPSHOT"
-val waltid_version: String = "1.0.2404291247-SNAPSHOT"
+val waltid_version: String = "1.0.2404292350-SNAPSHOT"
 
 
 plugins {
