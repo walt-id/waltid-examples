@@ -1,4 +1,4 @@
-package crypto;
+package waltid;
 
 import id.walt.credentials.CredentialBuilder;
 import id.walt.credentials.CredentialBuilderType;

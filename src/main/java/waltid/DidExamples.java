@@ -1,4 +1,4 @@
-package crypto;
+package waltid;
 
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
