@@ -1,9 +1,9 @@
 val kotlin_version: String by project
-val waltid_version: String = "1.local-testing-SNAPSHOT"
+val waltid_version: String = "1.0.2405231216-SNAPSHOT"
 
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "1.9.24"
 }
 
 group = "identity"
