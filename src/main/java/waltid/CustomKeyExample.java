@@ -54,7 +54,6 @@ public class CustomKeyExample extends JavaKey {
     }
 
     @NotNull
-    @Override
     public byte[] javaVerifyRaw(@NotNull byte[] signed, @Nullable byte[] detachedPlaintext) {
         System.out.println("Verifying signed with custom key (example): " + Arrays.toString(signed));
 
@@ -66,8 +65,8 @@ public class CustomKeyExample extends JavaKey {
         }
     }
 
-    @NotNull
-    @Override
+
+
     public JsonElement javaVerifyJws(@Language(value = "json") @NotNull String signedJws) {
         if (Random.Default.nextBoolean()) {
             return Json.Default.parseToJsonElement(signedJws);
@@ -155,5 +154,15 @@ public class CustomKeyExample extends JavaKey {
         System.out.println("Stub signed: " + Arrays.toString(signed));
 
         key.verifyRawAsync(signed, plaintext).thenAccept(result -> System.out.println("Result: " + result));
+    }
+
+    @Override
+    public JsonElement javaVerifyJws() {
+        return null;
+    }
+
+    @Override
+    public byte[] javaVerifyRaw() {
+        return new byte[0];
     }
 }
