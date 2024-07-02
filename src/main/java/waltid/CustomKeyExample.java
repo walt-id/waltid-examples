@@ -9,11 +9,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Objects;
+
+import kotlin.coroutines.Continuation;
+import kotlin.coroutines.CoroutineContext;
+import kotlin.coroutines.EmptyCoroutineContext;
 import kotlin.random.Random;
-import kotlinx.serialization.json.Json;
 import kotlinx.serialization.json.JsonElement;
 import kotlinx.serialization.json.JsonObject;
-import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,11 +53,21 @@ public class CustomKeyExample extends JavaKey {
     @NotNull
     @Override
     public Key javaGetPublicKey() {
-        return JWKKey.Companion.generateBlocking(getKeyType(), null);
+        return (Key) Objects.requireNonNull(JWKKey.Companion.generate(getKeyType(), null, new Continuation<JWKKey>() {
+            @NotNull
+            @Override
+            public CoroutineContext getContext() {
+                return EmptyCoroutineContext.INSTANCE;
+
+            }
+
+            @Override
+            public void resumeWith(@NotNull Object result) {
+                System.out.println("Generated key: " + result);
+            }
+        }));
     }
 
-    @NotNull
-    @Override
     public byte[] javaVerifyRaw(@NotNull byte[] signed, @Nullable byte[] detachedPlaintext) {
         System.out.println("Verifying signed with custom key (example): " + Arrays.toString(signed));
 
@@ -64,17 +77,30 @@ public class CustomKeyExample extends JavaKey {
         } else {
             throw new IllegalArgumentException("Invalid signature!");
         }
+
     }
 
     @NotNull
     @Override
-    public JsonElement javaVerifyJws(@Language(value = "json") @NotNull String signedJws) {
-        if (Random.Default.nextBoolean()) {
-            return Json.Default.parseToJsonElement(signedJws);
-        } else {
-            throw new IllegalArgumentException("Illegal signature!");
-        }
+    public JsonElement javaVerifyJws() {
+        return null;
     }
+
+    @NotNull
+    @Override
+    public byte[] javaVerifyRaw() {
+        return new byte[0];
+    }
+
+//    @NotNull
+//    @Override
+//    public JsonElement javaVerifyJws(@Language(value = "json") @NotNull String signedJws) {
+//        if (Random.Default.nextBoolean()) {
+//            return Json.Default.parseToJsonElement(signedJws);
+//        } else {
+//            throw new IllegalArgumentException("Illegal signature!");
+//        }
+//    }
 
     @NotNull
     @Override
@@ -83,7 +109,7 @@ public class CustomKeyExample extends JavaKey {
 
         String myHeaders = base64.encodeToString("{\"my-headers\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
         String myPayload = base64.encodeToString("{\"my-payload\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
-        String mySignature = base64.encodeToString((byte[]) signRawBlocking(plaintext));
+        String mySignature = base64.encodeToString( javaSignRaw(plaintext));
 
         return myHeaders + "." + myPayload + "." + mySignature;
     }
@@ -149,11 +175,18 @@ public class CustomKeyExample extends JavaKey {
         System.out.println("A type: " + key.getKeyType());
 
         var plaintext = "plaintext".getBytes(StandardCharsets.UTF_8);
-        System.out.println("Plaintext: " + Arrays.toString(plaintext));
+        System.out.println("Plaintext: " + new String(plaintext , StandardCharsets.UTF_8));
 
-        var signed = (byte[]) key.signRawBlocking(plaintext);
-        System.out.println("Stub signed: " + Arrays.toString(signed));
+        var signed = (byte[]) key.javaSignRaw(plaintext);
+        System.out.println("Stub signed: " + new String(signed , StandardCharsets.UTF_8));
 
-        key.verifyRawAsync(signed, plaintext).thenAccept(result -> System.out.println("Result: " + result));
+        var verify = key.javaVerifyRaw(signed, plaintext);
+        System.out.println("Stub verified: " + new String(verify , StandardCharsets.UTF_8));
+
+
     }
+
+
+
+
 }
