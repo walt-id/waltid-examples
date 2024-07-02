@@ -19,37 +19,40 @@ public class DidExamples {
     public static String generateDidSync(Key key) {
         DidCreateOptions options = new DidJwkCreateOptions();
 
-        DidResult result = didService.javaRegisterByKeyBlocking("jwk", key, options);
+        DidResult result = (DidResult) didService.javaRegisterByKey("jwk", key, options , null);
 
         System.out.println("(sync) DID: " + result.getDid());
         System.out.println("(sync) DID document: " + result.getDidDocument());
 
         return result.getDid();
     }
+// TODO: Uncomment this code when the async API is fixed
 
-    private static void generateDidAsync(Key key) {
-        DidCreateOptions options = new DidKeyCreateOptions();
+//    private static void generateDidAsync(Key key) {
+//        DidCreateOptions options = new DidKeyCreateOptions();
+//
+//        didService.javaRegisterByKeyAsync("key", key, options).thenAccept(result -> {
+//                    System.out.println("(async) DID: " + result.getDid());
+//                    System.out.println("(async) DID document: " + result.getDidDocument());
+//                }
+//        );
+//    }
+// TODO: Uncomment this code when the async API is fixed
 
-        didService.javaRegisterByKeyAsync("key", key, options).thenAccept(result -> {
-                    System.out.println("(async) DID: " + result.getDid());
-                    System.out.println("(async) DID document: " + result.getDidDocument());
-                }
-        );
-    }
+//    private static void resolveDid(String did) throws ExecutionException, InterruptedException {
+//        Result<Key> x = didService.resolveToKeyAsync(did).get();
+//        System.out.println("Resolved: " + x);
+//    }
+// TODO: Uncomment this code when the async API is fixed
 
-    private static void resolveDid(String did) throws ExecutionException, InterruptedException {
-        Result<Key> x = didService.resolveToKeyAsync(did).get();
-        System.out.println("Resolved: " + x);
-    }
-
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        WaltidServices.INSTANCE.minimalInitBlocking();
-        var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
-
-        DidExamples.generateDidAsync(key);
-        String did = DidExamples.generateDidSync(key);
-
-        resolveDid(did);
-    }
+//    public static void main(String[] args) throws ExecutionException, InterruptedException {
+//        WaltidServices.INSTANCE.minimalInitBlocking();
+//        var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
+//
+//        DidExamples.generateDidAsync(key);
+//        String did = DidExamples.generateDidSync(key);
+//
+//        resolveDid(did);
+//    }
 
 }
