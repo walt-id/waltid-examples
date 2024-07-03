@@ -26,33 +26,30 @@ public class DidExamples {
 
         return result.getDid();
     }
-// TODO: Uncomment this code when the async API is fixed
 
-//    private static void generateDidAsync(Key key) {
-//        DidCreateOptions options = new DidKeyCreateOptions();
-//
-//        didService.javaRegisterByKeyAsync("key", key, options).thenAccept(result -> {
-//                    System.out.println("(async) DID: " + result.getDid());
-//                    System.out.println("(async) DID document: " + result.getDidDocument());
-//                }
-//        );
-//    }
-// TODO: Uncomment this code when the async API is fixed
+    private static void generateDidAsync(Key key) {
+        DidCreateOptions options = new DidKeyCreateOptions();
 
-//    private static void resolveDid(String did) throws ExecutionException, InterruptedException {
-//        Result<Key> x = didService.resolveToKeyAsync(did).get();
-//        System.out.println("Resolved: " + x);
-//    }
-// TODO: Uncomment this code when the async API is fixed
+        didService.javaRegisterByKeyAsync("key", key, options).thenAccept(result -> {
+                    System.out.println("(async) DID: " + result.getDid());
+                    System.out.println("(async) DID document: " + result.getDidDocument());
+                }
+        );
+    }
 
-//    public static void main(String[] args) throws ExecutionException, InterruptedException {
-//        WaltidServices.INSTANCE.minimalInitBlocking();
-//        var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
-//
-//        DidExamples.generateDidAsync(key);
-//        String did = DidExamples.generateDidSync(key);
-//
-//        resolveDid(did);
-//    }
+    private static void resolveDid(String did) throws ExecutionException, InterruptedException {
+        Result<Key> x = didService.resolveToKeyAsync(did).get();
+        System.out.println("Resolved: " + x);
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        WaltidServices.INSTANCE.minimalInitBlocking();
+        var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
+
+        DidExamples.generateDidAsync(key);
+        String did = DidExamples.generateDidSync(key);
+
+        resolveDid(did);
+    }
 
 }
