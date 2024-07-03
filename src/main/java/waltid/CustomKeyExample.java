@@ -55,19 +55,7 @@ public class CustomKeyExample extends JavaKey {
     @NotNull
     @Override
     public Key javaGetPublicKey() {
-        return (Key) Objects.requireNonNull(JWKKey.Companion.generate(getKeyType(), null, new Continuation<JWKKey>() {
-            @NotNull
-            @Override
-            public CoroutineContext getContext() {
-                return EmptyCoroutineContext.INSTANCE;
-
-            }
-
-            @Override
-            public void resumeWith(@NotNull Object result) {
-                System.out.println("Generated key: " + result);
-            }
-        }));
+        return  JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
     }
 
     public byte[] javaVerifyRaw(@NotNull byte[] signed, @Nullable byte[] detachedPlaintext) {

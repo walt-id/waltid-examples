@@ -19,7 +19,7 @@ public class DidExamples {
     public static String generateDidSync(Key key) {
         DidCreateOptions options = new DidJwkCreateOptions();
 
-        DidResult result = (DidResult) didService.javaRegisterByKey("jwk", key, options , null);
+        DidResult result =  didService.javaRegisterByKeyBlocking("jwk", key, options);
 
         System.out.println("(sync) DID: " + result.getDid());
         System.out.println("(sync) DID document: " + result.getDidDocument());

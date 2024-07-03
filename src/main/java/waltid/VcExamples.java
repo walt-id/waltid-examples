@@ -16,7 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import id.walt.did.helpers.WaltidServices;
 import kotlin.Result;
+import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import kotlin.coroutines.CoroutineContext;
 import kotlin.coroutines.EmptyCoroutineContext;
@@ -59,33 +61,15 @@ public class VcExamples {
         // setup signing
 
 
-        Key key = (Key) JWKKey.Companion.generate(KeyType.Ed25519, null , null);
+        Key key = (Key) JWKKey.Companion.generateBlocking(KeyType.Ed25519 , null);
         System.out.println("Key: " + key);
 // TODO: Uncomment this code when the async API is fixed
 
-//        WaltidServices.INSTANCE.minimalInit(
-//                new Continuation<Unit>() {
-//                    @NotNull
-//                    @Override
-//                    public CoroutineContext getContext() {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public void resumeWith(@NotNull Object result) {
-//                        if (result instanceof Result.Failure) {
-//                            Throwable exception = ((Result.Failure) result).exception;
-//                            System.err.println("Failed to initialize: " + exception);
-//                        } else {
-//                            System.out.println("Minimal init: " + result);
-//                        }
-//                    }
-//                }
-//        );
+        WaltidServices.INSTANCE.minimalInitAsync();
 
         String did = credentialBuilder.getIssuerDid();
         // sign
-        String signed = (String) vc.signJws(key, did, null, did, new HashMap<>(), new HashMap<>() , null);
+        String signed = (String) vc.signJwsBlocking(key, did, null, did, new HashMap<>(), new HashMap<>());
         System.out.println("Signed: " + signed);
 
         return signed;
@@ -94,30 +78,10 @@ public class VcExamples {
     private static String verify(String signed) {
         System.out.println("Verifying...");
 
-        Verifier.INSTANCE.verifyCredential(
+        Verifier.INSTANCE.verifyCredentialBlocking(
                 signed,
                 List.of(new PolicyRequest(new JwtSignaturePolicy(), null)),
-                new HashMap<>(),
-                new Continuation<List<PolicyResult>>() {
-                    @NotNull
-                    @Override
-                    public CoroutineContext getContext() {
-                        return EmptyCoroutineContext.INSTANCE; // Properly initialize the context
-                    }
-
-                    @Override
-                    public void resumeWith(@NotNull Object result) {
-                        if (result instanceof Result.Failure) {
-                            Throwable exception = ((Result.Failure) result).exception;
-                            System.err.println("Failed to verify: " + exception);
-                        } else {
-                            List<PolicyResult> policyResults = (List<PolicyResult>) result;
-                            for (PolicyResult policyResult : policyResults) {
-                                System.out.println("Result: " + policyResult);
-                            }
-                        }
-                    }
-                }
+                new HashMap<>()
         );
         return signed;
     }
