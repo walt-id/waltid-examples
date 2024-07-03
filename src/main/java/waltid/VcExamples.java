@@ -11,19 +11,12 @@ import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import id.walt.crypto.utils.JsonUtils;
+import id.walt.did.helpers.WaltidServices;
+import kotlinx.serialization.json.JsonObject;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import id.walt.did.helpers.WaltidServices;
-import kotlin.Result;
-import kotlin.Unit;
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
-import kotlin.coroutines.EmptyCoroutineContext;
-import kotlinx.serialization.json.JsonObject;
-import org.jetbrains.annotations.NotNull;
 
 public class VcExamples {
 
@@ -59,38 +52,35 @@ public class VcExamples {
         System.out.println("VC: " + vc.toPrettyJson());
 
         // setup signing
+        Key key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
+        WaltidServices.INSTANCE.minimalInitBlocking();
 
-        Key key = (Key) JWKKey.Companion.generateBlocking(KeyType.Ed25519 , null);
-        System.out.println("Key: " + key);
-// TODO: Uncomment this code when the async API is fixed
-
-        WaltidServices.INSTANCE.minimalInitAsync();
-
-        String did = credentialBuilder.getIssuerDid();
+        String did = DidExamples.generateDidSync(key);
         // sign
-        String signed = (String) vc.signJwsBlocking(key, did, null, did, new HashMap<>(), new HashMap<>());
+        String signed = vc.signJwsBlocking(key, did, null, did, new HashMap<>(), new HashMap<>());
         System.out.println("Signed: " + signed);
 
         return signed;
     }
 
-    private static String verify(String signed) {
+    private static void verify(String signed) {
         System.out.println("Verifying...");
-
-        Verifier.INSTANCE.verifyCredentialBlocking(
-                signed,
+        List<PolicyResult> results = Verifier.INSTANCE.verifyCredentialBlocking(signed,
                 List.of(new PolicyRequest(new JwtSignaturePolicy(), null)),
                 new HashMap<>()
         );
-        return signed;
+
+        for (PolicyResult result : results) {
+            System.out.println("Result: " + result);
+        }
     }
 
 
     public static void main(String[] args) {
         String signed = buildAndSignVC();
-        String verified = verify(signed);
-        System.out.println("Verified: " + verified);
+        verify(signed);
+
 
     }
 

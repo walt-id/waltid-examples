@@ -5,15 +5,6 @@ import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyMeta;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Map;
-import java.util.Objects;
-
-import kotlin.coroutines.Continuation;
-import kotlin.coroutines.CoroutineContext;
-import kotlin.coroutines.EmptyCoroutineContext;
 import kotlin.random.Random;
 import kotlinx.serialization.json.Json;
 import kotlinx.serialization.json.JsonElement;
@@ -21,6 +12,11 @@ import kotlinx.serialization.json.JsonObject;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Map;
 
 public class CustomKeyExample extends JavaKey {
 
@@ -55,7 +51,7 @@ public class CustomKeyExample extends JavaKey {
     @NotNull
     @Override
     public Key javaGetPublicKey() {
-        return  JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
+        return JWKKey.Companion.generateBlocking(getKeyType(), null);
     }
 
     public byte[] javaVerifyRaw(@NotNull byte[] signed, @Nullable byte[] detachedPlaintext) {
@@ -82,15 +78,14 @@ public class CustomKeyExample extends JavaKey {
         return new byte[0];
     }
 
-//    @NotNull
-//    @Override
-//    public JsonElement javaVerifyJws(@Language(value = "json") @NotNull String signedJws) {
-//        if (Random.Default.nextBoolean()) {
-//            return Json.Default.parseToJsonElement(signedJws);
-//        } else {
-//            throw new IllegalArgumentException("Illegal signature!");
-//        }
-//    }
+    @NotNull
+    public JsonElement javaVerifyJws(@Language(value = "json") @NotNull String signedJws) {
+        if (Random.Default.nextBoolean()) {
+            return Json.Default.parseToJsonElement(signedJws);
+        } else {
+            throw new IllegalArgumentException("Illegal signature!");
+        }
+    }
 
     @NotNull
     @Override
