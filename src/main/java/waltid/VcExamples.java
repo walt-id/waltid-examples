@@ -12,10 +12,11 @@ import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import id.walt.crypto.utils.JsonUtils;
 import id.walt.did.helpers.WaltidServices;
+import kotlinx.serialization.json.JsonObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import kotlinx.serialization.json.JsonObject;
 
 public class VcExamples {
 
@@ -54,8 +55,8 @@ public class VcExamples {
         Key key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
         WaltidServices.INSTANCE.minimalInitBlocking();
-        String did = DidExamples.generateDidSync(key);
 
+        String did = DidExamples.generateDidSync(key);
         // sign
         String signed = vc.signJwsBlocking(key, did, null, did, new HashMap<>(), new HashMap<>());
         System.out.println("Signed: " + signed);
@@ -75,9 +76,11 @@ public class VcExamples {
         }
     }
 
+
     public static void main(String[] args) {
         String signed = buildAndSignVC();
         verify(signed);
+
 
     }
 

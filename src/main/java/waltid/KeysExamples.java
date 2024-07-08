@@ -5,6 +5,7 @@ import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 import kotlin.Result;
 
@@ -19,7 +20,7 @@ public class KeysExamples {
 
     public static void signBlocking() {
         System.out.println("Generating key synchronous...");
-        JWKKey k = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
+        JWKKey k = (JWKKey) JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
         System.out.println("Sync generated key: " + k);
         System.out.println("Signing with key synchronous...");
         var signed = (byte[]) k.signRawBlocking(plaintext);
@@ -43,6 +44,7 @@ public class KeysExamples {
         JWKKey.Companion.generateAsync(KeyType.Ed25519, null).thenAccept(key -> {
             System.out.println("Async generated key: " + key);
             System.out.println("Signing with key asynchronous...");
+
             key.signRawAsync(plaintext).thenAccept(signed -> {
                 System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
 
