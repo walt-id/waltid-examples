@@ -74,7 +74,7 @@ suspend fun sign_vc() {
     //JWT signature
     println("\nUsing JWT as signature type..")
     val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, null, mySubjectDid.did)
-    println("JWS: " + signedJWT + "\n")
+    println("JWS: $signedJWT\n")
     val results = Verifier.verifyCredential(
         signedJWT,
         listOf(
@@ -94,7 +94,7 @@ suspend fun sign_vc() {
         decoys = 2
     )
     val signedSDJWT: String = vc.signSdJwt(myIssuerKey, myIssuerDid.did, mySubjectDid.did, disclosureMap)
-    println("JWS: " + signedSDJWT + "\n")
+    println("JWS: $signedSDJWT\n")
     val results1 = Verifier.verifyCredential(
         signedSDJWT,
         listOf(
