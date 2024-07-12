@@ -1,5 +1,5 @@
 val kotlin_version: String by project
-val waltid_version: String = "1.0.2407081801-SNAPSHOT"
+val waltid_version: String = "0.5.0"
 
 
 plugins {
@@ -16,8 +16,7 @@ tasks.withType<Test>().configureEach {
 repositories {
     mavenLocal()
     mavenCentral()
-//    maven { url = uri("https://maven.waltid.dev/releases") }
-    maven { url = uri("https://maven.waltid.dev/snapshots") }
+    maven { url = uri("https://maven.waltid.dev/releases") }
 
 }
 
@@ -27,8 +26,8 @@ dependencies {
     implementation("id.walt.crypto:waltid-crypto:$waltid_version")
     implementation("id.walt.credentials:waltid-verifiable-credentials:$waltid_version")
     implementation("id.walt.did:waltid-did:$waltid_version")
-    implementation("id.walt:waltid-sdjwt:$waltid_version")
-    implementation("id.walt:waltid-openid4vc:$waltid_version")
+    implementation("id.walt.sdjwt:waltid-sdjwt:$waltid_version")
+    implementation("id.walt.openid4vc:waltid-openid4vc:$waltid_version")
 
     implementation("org.jetbrains:annotations:24.1.0")
 
