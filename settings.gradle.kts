@@ -1,1 +1,1 @@
-rootProject.name = "identity-test"
+rootProject.name = "waltid-examples"

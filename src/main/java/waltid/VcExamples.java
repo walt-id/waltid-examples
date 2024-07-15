@@ -17,6 +17,7 @@ import kotlinx.serialization.json.JsonObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class VcExamples {
 
@@ -76,12 +77,13 @@ public class VcExamples {
         }
     }
 
-
-    public static void main(String[] args) {
+    public static void runVcExample() {
         String signed = buildAndSignVC();
         verify(signed);
+    }
 
-
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        runVcExample();
     }
 
 }

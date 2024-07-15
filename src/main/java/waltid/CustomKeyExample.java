@@ -26,6 +26,23 @@ public class CustomKeyExample extends JavaKey {
         this._xyz = xyz;
     }
 
+    public static void runCustomKeyExample() {
+        var key = new CustomKeyExample("abc");
+        System.out.println("A type: " + key.getKeyType());
+
+        var plaintext = "plaintext".getBytes(StandardCharsets.UTF_8);
+        System.out.println("Plaintext: " + new String(plaintext, StandardCharsets.UTF_8));
+
+        var signed = (byte[]) key.javaSignRaw(plaintext);
+        System.out.println("Stub signed: " + new String(signed, StandardCharsets.UTF_8));
+
+        var verify = key.javaVerifyRaw(signed, plaintext);
+        System.out.println("Stub verified: " + new String(verify, StandardCharsets.UTF_8));
+    }
+
+    public static void main(String[] args) {
+        runCustomKeyExample();
+    }
 
     private byte[] reverseArray(byte[] arr) {
         for (int i = 0; i < arr.length / 2; i++) {
@@ -94,7 +111,7 @@ public class CustomKeyExample extends JavaKey {
 
         String myHeaders = base64.encodeToString("{\"my-headers\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
         String myPayload = base64.encodeToString("{\"my-payload\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
-        String mySignature = base64.encodeToString( javaSignRaw(plaintext));
+        String mySignature = base64.encodeToString(javaSignRaw(plaintext));
 
         return myHeaders + "." + myPayload + "." + mySignature;
     }
@@ -154,24 +171,6 @@ public class CustomKeyExample extends JavaKey {
             default -> throw new IllegalArgumentException("Unknown key type!");
         };
     }
-
-    public static void main(String[] args) {
-        var key = new CustomKeyExample("abc");
-        System.out.println("A type: " + key.getKeyType());
-
-        var plaintext = "plaintext".getBytes(StandardCharsets.UTF_8);
-        System.out.println("Plaintext: " + new String(plaintext , StandardCharsets.UTF_8));
-
-        var signed = (byte[]) key.javaSignRaw(plaintext);
-        System.out.println("Stub signed: " + new String(signed , StandardCharsets.UTF_8));
-
-        var verify = key.javaVerifyRaw(signed, plaintext);
-        System.out.println("Stub verified: " + new String(verify , StandardCharsets.UTF_8));
-
-
-    }
-
-
 
 
 }

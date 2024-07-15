@@ -9,8 +9,9 @@ import id.walt.did.dids.registrar.dids.DidCreateOptions;
 import id.walt.did.dids.registrar.dids.DidJwkCreateOptions;
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions;
 import id.walt.did.helpers.WaltidServices;
-import java.util.concurrent.ExecutionException;
 import kotlin.Result;
+
+import java.util.concurrent.ExecutionException;
 
 public class DidExamples {
 
@@ -19,7 +20,7 @@ public class DidExamples {
     public static String generateDidSync(Key key) {
         DidCreateOptions options = new DidJwkCreateOptions();
 
-        DidResult result =  didService.javaRegisterByKeyBlocking("jwk", key, options);
+        DidResult result = didService.javaRegisterByKeyBlocking("jwk", key, options);
 
         System.out.println("(sync) DID: " + result.getDid());
         System.out.println("(sync) DID document: " + result.getDidDocument());
@@ -42,7 +43,7 @@ public class DidExamples {
         System.out.println("Resolved: " + x);
     }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void runDidExample() throws ExecutionException, InterruptedException {
         WaltidServices.INSTANCE.minimalInitBlocking();
         var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
@@ -50,6 +51,10 @@ public class DidExamples {
         String did = DidExamples.generateDidSync(key);
 
         resolveDid(did);
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        runDidExample();
     }
 
 }

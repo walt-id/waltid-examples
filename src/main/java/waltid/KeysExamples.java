@@ -3,11 +3,11 @@ package waltid;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
+import kotlin.Result;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.ExecutionException;
-import kotlin.Result;
 
 public class KeysExamples {
 
@@ -76,11 +76,16 @@ public class KeysExamples {
         System.out.println("Import result: " + keyImport);
     }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void runKeyExample() throws ExecutionException, InterruptedException {
         KeysExamples.signAsync();
         KeysExamples.signBlocking();
 
         var jwk = exportKey();
         importKey(jwk);
+    }
+
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        runKeyExample();
     }
 }

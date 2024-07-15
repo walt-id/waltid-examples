@@ -2,7 +2,7 @@
 
 <div align="center">
  <h1>walt.id identity examples</h1>
- <p>This repository contains a few examples to quickly get you started with the waltid-identity code API.
+ <p>This repository contains a few examples to quickly get you started with the waltid-identity SDK.
 </p>
 
 <a href="https://walt.id/community">
@@ -30,22 +30,26 @@ For a selection of examples, please take a look at the following table:
 
 Follow the link to view the associated code example.
 
-You can also view samples in the test directories of the [identity repository](https://github.com/walt-id/waltid-identity).
+You can also view samples in the test directories of
+the [identity repository](https://github.com/walt-id/waltid-identity).
 
 ## Running the examples
 
 We're writing our projects with Gradle in mind; however, you can absolutely also use Apache Maven.
-Use the repository `https://maven.waltid.dev/releases`. For a web interface to list available artifacts and their current versions,
+Use the repository `https://maven.waltid.dev/releases`. For a web interface to list available artifacts and their
+current versions,
 visit https://maven.waltid.dev/#/releases/id/walt in your web browser.
 
 If you use Gradle with e.g., IntelliJ IDEA, you can simply run the examples by right-clicking them.
 
 ## Join the community
 
-* Connect and get the latest updates: <a href="https://discord.gg/AW8AgqJthZ">Discord</a> | <a href="https://walt.id/newsletter">
+* Connect and get the latest updates: <a href="https://discord.gg/AW8AgqJthZ">
+  Discord</a> | <a href="https://walt.id/newsletter">
   Newsletter</a> | <a href="https://www.youtube.com/channel/UCXfOzrv3PIvmur_CmwwmdLA">
   YouTube</a> | <a href="https://mobile.twitter.com/walt_id" target="_blank">Twitter</a>
-* Get help, request features and report bugs: <a href="https://github.com/walt-id/.github/discussions" target="_blank">GitHub
+* Get help, request features and report bugs: <a href="https://github.com/walt-id/.github/discussions" target="_blank">
+  GitHub
   Discussions</a>
 
 ## License
