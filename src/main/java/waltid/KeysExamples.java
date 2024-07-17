@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import kotlin.Result;
 
-@SuppressWarnings({"RedundantThrows", "DuplicateThrows", "CaughtExceptionImmediatelyRethrown", "CallToPrintStackTrace"})
+@SuppressWarnings({"RedundantThrows", "DuplicateThrows"})
 public class KeysExamples {
 
     private static final byte[] plaintext = "< this is my plaintext>".getBytes(StandardCharsets.UTF_8);
@@ -38,7 +38,7 @@ public class KeysExamples {
         verifyAsync(k, signed, invalid, "Test verification failure");
     }
 
-    public static void signAsync() throws Exception {
+    public static void signAsync() {
         System.out.println("Generating key asynchronous...");
 
         // join Futures to make sure they execute even when the program terminates earlier
@@ -47,7 +47,6 @@ public class KeysExamples {
             System.out.println("Signing with key asynchronous...");
 
             try {
-
                 key.signRawAsync(plaintext).thenAccept(signed -> {
                     System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
 
