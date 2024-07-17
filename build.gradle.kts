@@ -1,9 +1,9 @@
 val kotlin_version: String by project
-val waltid_version: String = "0.5.0"
+val waltid_version: String = "1.0.2407162254-SNAPSHOT"
 
 
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.0.20-Beta1"
 }
 
 group = "identity"
@@ -16,7 +16,7 @@ tasks.withType<Test>().configureEach {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url = uri("https://maven.waltid.dev/releases") }
+    maven { url = uri("https://maven.waltid.dev/snapshots") }
 
 }
 
