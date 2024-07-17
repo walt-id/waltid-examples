@@ -8,7 +8,7 @@ import static waltid.KeysExamples.runKeyExample;
 import static waltid.VcExamples.runVcExample;
 
 public class RunAll {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         runKeyExample();
         runDidExample();
         runVcExample();
