@@ -15,8 +15,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomCredentialWrapperValidatorPolicy extends JavaCredentialWrapperValidatorPolicy {
-    public CustomCredentialWrapperValidatorPolicy() {
-        super("java-custom-credential-wrapper-validator", "This is a custom credential wrapper validator for Java");
+    @NotNull
+    @Override
+    public String getName() {
+        return "java-custom-credential-wrapper-validator";
+    }
+
+    @NotNull
+    @Override
+    public String getDescription() {
+        return "This is a custom credential wrapper validator for Java";
     }
 
     @NotNull

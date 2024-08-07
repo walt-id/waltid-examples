@@ -9,9 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomCredentialDataValidatorPolicy extends JavaCredentialDataValidatorPolicy {
-    public CustomCredentialDataValidatorPolicy() {
-        super("java-custom-data-validator", "This is a custom data validator for Java");
-    }
 
     @NotNull
     @Override
@@ -27,5 +24,17 @@ public class CustomCredentialDataValidatorPolicy extends JavaCredentialDataValid
         }
 
         return myVerificationContent;
+    }
+
+    @NotNull
+    @Override
+    public String getName() {
+        return "java-custom-data-validator";
+    }
+
+    @NotNull
+    @Override
+    public String getDescription() {
+        return "This is a custom data validator for Java";
     }
 }
