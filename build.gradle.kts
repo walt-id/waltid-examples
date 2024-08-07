@@ -3,7 +3,7 @@ val waltid_version: String = "1.0.2408070002-SNAPSHOT"
 
 
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.0.20-RC"
 }
 
 group = "identity"

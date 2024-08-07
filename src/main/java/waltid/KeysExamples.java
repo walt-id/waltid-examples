@@ -3,12 +3,12 @@ package waltid;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
-import kotlin.Result;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
+import kotlin.Result;
 
+@SuppressWarnings({"RedundantThrows", "DuplicateThrows"})
 public class KeysExamples {
 
     private static final byte[] plaintext = "< this is my plaintext>".getBytes(StandardCharsets.UTF_8);
@@ -23,7 +23,8 @@ public class KeysExamples {
         JWKKey k = (JWKKey) JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
         System.out.println("Sync generated key: " + k);
         System.out.println("Signing with key synchronous...");
-        var signed = (byte[]) k.signRawBlocking(plaintext);
+        byte[] signed;
+        signed = (byte[]) k.signRawBlocking(plaintext);
 
         System.out.println("Signed synchronous: " + Arrays.toString(signed));
 
@@ -64,9 +65,9 @@ public class KeysExamples {
     public static void verifyAsync(Key key, byte[] signed, byte[] plaintext, String message) throws Exception {
         key.getPublicKeyAsync().thenAccept(publicKey -> {
             try {
-                publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
-                    System.out.println("Verification result (" + message + "): " + result);
-                }).join();
+            publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
+                System.out.println("Verification result (" + message + "): " + result);
+            }).join();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -88,7 +89,7 @@ public class KeysExamples {
         System.out.println("Import result: " + keyImport);
     }
 
-    public static void runKeyExample() throws Exception {
+    public static void runKeyExample() throws ExecutionException, InterruptedException, Exception {
         KeysExamples.signAsync();
         KeysExamples.signBlocking();
 
