@@ -84,13 +84,11 @@ public class CustomKeyExample extends JavaKey {
     }
 
     @NotNull
-    @Override
     public JsonElement javaVerifyJws() {
         return null;
     }
 
     @NotNull
-    @Override
     public byte[] javaVerifyRaw() {
         return new byte[0];
     }
@@ -104,14 +102,13 @@ public class CustomKeyExample extends JavaKey {
         }
     }
 
-    @NotNull
     @Override
-    public String javaSignJws(@NotNull byte[] plaintext, @NotNull Map<String, String> headers) {
+    public @NotNull String javaSignJws(@NotNull byte[] bytes, @NotNull Map<String, ? extends JsonElement> map) {
         var base64 = Base64.getUrlEncoder();
 
         String myHeaders = base64.encodeToString("{\"my-headers\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
         String myPayload = base64.encodeToString("{\"my-payload\": \"xyz\"}".getBytes(StandardCharsets.UTF_8));
-        String mySignature = base64.encodeToString(javaSignRaw(plaintext));
+        String mySignature = base64.encodeToString(javaSignRaw(bytes));
 
         return myHeaders + "." + myPayload + "." + mySignature;
     }
@@ -171,6 +168,4 @@ public class CustomKeyExample extends JavaKey {
             default -> throw new IllegalArgumentException("Unknown key type!");
         };
     }
-
-
 }

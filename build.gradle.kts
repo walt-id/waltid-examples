@@ -1,5 +1,5 @@
 val kotlin_version: String by project
-val waltid_version: String = "0.5.0"
+val waltid_version: String = "0.6.0"
 
 
 plugins {

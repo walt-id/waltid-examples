@@ -18,7 +18,7 @@ public class KeysExamples {
     // demonstrating the Java (async) CompletableFuture API.
     // Replace KeyType.Ed25519 with a different KeyType if desired.
 
-    public static void signBlocking() {
+    public static void signBlocking() throws Exception {
         System.out.println("Generating key synchronous...");
         JWKKey k = (JWKKey) JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
         System.out.println("Sync generated key: " + k);
@@ -45,23 +45,35 @@ public class KeysExamples {
             System.out.println("Async generated key: " + key);
             System.out.println("Signing with key asynchronous...");
 
-            key.signRawAsync(plaintext).thenAccept(signed -> {
-                System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
+            try {
+                key.signRawAsync(plaintext).thenAccept(signed -> {
+                    System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
 
-                verifyAsync(key, (byte[]) signed, plaintext, "Test async verification");
-            });
+                    try {
+                        verifyAsync(key, (byte[]) signed, plaintext, "Test async verification");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
-    public static void verifyAsync(Key key, byte[] signed, byte[] plaintext, String message) {
+    public static void verifyAsync(Key key, byte[] signed, byte[] plaintext, String message) throws Exception {
         key.getPublicKeyAsync().thenAccept(publicKey -> {
-            publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
-                System.out.println("Verification result (" + message + "): " + result);
-            }).join();
+            try {
+                publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
+                    System.out.println("Verification result (" + message + "): " + result);
+                }).join();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }).join();
     }
 
-    public static String exportKey() {
+    public static String exportKey() throws Exception {
         // Other KeyTypes:
         var key2 = JWKKey.Companion.generateBlocking(KeyType.secp256r1, null);
         System.out.println("Export key...");
@@ -76,7 +88,7 @@ public class KeysExamples {
         System.out.println("Import result: " + keyImport);
     }
 
-    public static void runKeyExample() throws ExecutionException, InterruptedException {
+    public static void runKeyExample() throws Exception {
         KeysExamples.signAsync();
         KeysExamples.signBlocking();
 
@@ -85,7 +97,7 @@ public class KeysExamples {
     }
 
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         runKeyExample();
     }
 }
