@@ -10,6 +10,13 @@ import crypto.key.import.jwk.importRSAJwk
 import crypto.key.import.jwk.importSecp256k1Jwk
 import crypto.key.import.jwk.importSecp256r1Jwk
 import crypto.key.import.raw.importRSARawPublicKey
+import did.create.createDidCheqd
+import did.create.createDidJwk
+import did.create.createDidKey
+import did.create.createDidWeb
+import did.resolve.resolveDidJwk
+import did.resolve.resolveDidKey
+import did.resolve.resolveDidWeb
 import vc.*
 
 
@@ -55,21 +62,21 @@ suspend fun main() {
     importRSARawPublicKey()
 
     // DIDs
-    println("cheqd_method() ------------------------------------------------------------------------------------------")
-    did.create.createDidCheqd()
-    println("jwk_method() --------------------------------------------------------------------------------------------")
-    did.create.createDidJwk()
-    println("key_method() --------------------------------------------------------------------------------------------")
-    did.create.createDidKey()
-    println("web_method() --------------------------------------------------------------------------------------------")
-    did.create.createDidWeb()
+    println("createDidCheqd() ----------------------------------------------------------------------------------------")
+    createDidCheqd()
+    println("createDidJwk() ------------------------------------------------------------------------------------------")
+    createDidJwk()
+    println("createDidKey() ------------------------------------------------------------------------------------------")
+    createDidKey()
+    println("createDidWeb() ------------------------------------------------------------------------------------------")
+    createDidWeb()
 
-    println("jwk_method() --------------------------------------------------------------------------------------------")
-    did.resolve.jwk_method()
-    println("key_method() --------------------------------------------------------------------------------------------")
-    did.resolve.key_method()
-    println("web_method() --------------------------------------------------------------------------------------------")
-    // FIXME did.resolve.web_method()
+    println("resolveDidJwk() -----------------------------------------------------------------------------------------")
+    resolveDidJwk()
+    println("resolveDidKey() -----------------------------------------------------------------------------------------")
+    resolveDidKey()
+    println("resolveDidWeb() -----------------------------------------------------------------------------------------")
+    resolveDidWeb()
 
     // VCs
     println("build_vc() ----------------------------------------------------------------------------------------------")
