@@ -1,13 +1,13 @@
-package crypto.create
+package crypto.key.create
 
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
 
 suspend fun main() {
-    create_ed25519()
+    createRSA()
 }
 
-suspend fun create_ed25519() {
-    val key = JWKKey.generate(KeyType.Ed25519)
+suspend fun createRSA() {
+    val key = JWKKey.generate(KeyType.RSA)
     println(key.jwk)
 }

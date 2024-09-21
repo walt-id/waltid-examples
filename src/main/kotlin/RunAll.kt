@@ -1,13 +1,15 @@
-import crypto.create.create_ed25519
-import crypto.create.create_rsa
-import crypto.create.create_secp256k1
-import crypto.create.create_secp256r1
-import crypto.export_key.export_jwk
-import crypto.export_key.export_jwk_object
-import crypto.import_key.import_ed25519_jwk
-import crypto.import_key.import_rsa_jwk
-import crypto.import_key.import_secp256k1_jwk
-import crypto.import_key.import_secp256r1_jwk
+import crypto.key.create.createEd25519
+import crypto.key.create.createRSA
+import crypto.key.create.createSecp256k1
+import crypto.key.create.createSecp256r1
+import crypto.key.export.exportJwkString
+import crypto.key.export.exportJwkObject
+import crypto.key.export.exportJwkPretty
+import crypto.key.import.jwk.importEd25519Jwk
+import crypto.key.import.jwk.importRSAJwk
+import crypto.key.import.jwk.importSecp256k1Jwk
+import crypto.key.import.jwk.importSecp256r1Jwk
+import crypto.key.import.raw.importRSARawPublicKey
 import vc.*
 
 
@@ -25,32 +27,32 @@ suspend fun main() {
     )
 
     // Crypto
-    println("create_ed25519() ----------------------------------------------------------------------------------------")
-    create_ed25519()
-    println("create_rsa() --------------------------------------------------------------------------------------------")
-    create_rsa()
-    println("create_secp256k1() --------------------------------------------------------------------------------------")
-    create_secp256k1()
-    println("create_secp256r1() --------------------------------------------------------------------------------------")
-    create_secp256r1()
+    println("createEd25519() -----------------------------------------------------------------------------------------")
+    createEd25519()
+    println("createRSA() ---------------------------------------------------------------------------------------------")
+    createRSA()
+    println("createSecp256k1() ---------------------------------------------------------------------------------------")
+    createSecp256k1()
+    println("createSecp256r1() ---------------------------------------------------------------------------------------")
+    createSecp256r1()
 
-    println("create_ed25519() ----------------------------------------------------------------------------------------")
-    export_jwk()
-    println("create_ed25519() ----------------------------------------------------------------------------------------")
-    export_jwk_object()
-    println("create_ed25519() ----------------------------------------------------------------------------------------")
-    create_ed25519()
+    println("exportJwkString() ---------------------------------------------------------------------------------------")
+    exportJwkString()
+    println("exportJwkObject() ---------------------------------------------------------------------------------------")
+    exportJwkObject()
+    println("exportJwkPretty() ---------------------------------------------------------------------------------------")
+    exportJwkPretty()
 
-    println("import_ed25519_jwk() ------------------------------------------------------------------------------------")
-    import_ed25519_jwk()
-    println("import_rsa_jwk() ----------------------------------------------------------------------------------------")
-    import_rsa_jwk()
-    println("import_rsa_raw() ----------------------------------------------------------------------------------------")
-    // FIXME import_rsa_raw()
-    println("import_secp256k1_jwk() ----------------------------------------------------------------------------------")
-    import_secp256k1_jwk()
-    println("import_secp256r1_jwk() ----------------------------------------------------------------------------------")
-    import_secp256r1_jwk()
+    println("importEd25519Jwk() --------------------------------------------------------------------------------------")
+    importEd25519Jwk()
+    println("importRSAJwk() ------------------------------------------------------------------------------------------")
+    importRSAJwk()
+    println("importSecp256k1Jwk() ------------------------------------------------------------------------------------")
+    importSecp256k1Jwk()
+    println("importSecp256r1Jwk() ------------------------------------------------------------------------------------")
+    importSecp256r1Jwk()
+    println("importRSARawPublicKey() ---------------------------------------------------------------------------------")
+    importRSARawPublicKey()
 
     // DIDs
     println("cheqd_method() ------------------------------------------------------------------------------------------")
