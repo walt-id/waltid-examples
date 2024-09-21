@@ -13,11 +13,3 @@ suspend fun importRSARawPublicKey() {
     println("Importing Raw-encoded RSA public key...")
     printImportedRawPublicKeyInfo(rsaPrivateKey.getPublicKeyRepresentation(), KeyType.RSA)
 }
-
-internal suspend fun printImportedRawPublicKeyInfo(
-    publicKeyBytes: ByteArray,
-    keyType: KeyType,
-) {
-    val key = JWKKey.importRawPublicKey(keyType, publicKeyBytes, null)
-    println("Decoded ${key.keyType} public key: ${key.exportJWK()}")
-}
