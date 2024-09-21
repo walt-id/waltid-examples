@@ -56,13 +56,13 @@ suspend fun main() {
 
     // DIDs
     println("cheqd_method() ------------------------------------------------------------------------------------------")
-    did.create.cheqd_method()
+    did.create.createDidCheqd()
     println("jwk_method() --------------------------------------------------------------------------------------------")
-    did.create.jwk_method()
+    did.create.createDidJwk()
     println("key_method() --------------------------------------------------------------------------------------------")
-    did.create.key_method()
+    did.create.createDidKey()
     println("web_method() --------------------------------------------------------------------------------------------")
-    did.create.web_method()
+    did.create.createDidWeb()
 
     println("jwk_method() --------------------------------------------------------------------------------------------")
     did.resolve.jwk_method()
