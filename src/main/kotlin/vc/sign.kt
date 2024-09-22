@@ -13,34 +13,35 @@ import id.walt.sdjwt.SDField
 import id.walt.sdjwt.SDMap
 
 suspend fun main() {
-    sign_vc()
+    sign()
 }
 
-suspend fun sign_vc() {
+suspend fun sign() {
 
     DidService.init()
 
-//  Create issuer key and did
-    println("Register the DID with a given key:")
-    println("Generating key...")
-    val myIssuerKey = JWKKey.generate(KeyType.Ed25519)
-    println("Generated key: " + myIssuerKey.getKeyId())
-    val optionsKey = DidKeyCreateOptions(
-        useJwkJcsPub = true
+    //Create issuer did
+    val issuerPrivateKey = JWKKey.generate(KeyType.Ed25519)
+    val issuerDidKeyOptions = DidKeyCreateOptions(
+        useJwkJcsPub = true,
     )
-    val myIssuerDid = DidService.registerByKey(
-        method = "key",
-        key = myIssuerKey,
-        options = optionsKey
+    val issuerDidResult = DidService.registerByKey(
+        method = issuerDidKeyOptions.method,
+        key = issuerPrivateKey,
+        options = issuerDidKeyOptions,
     )
+    println("Generated issuer DID: ${issuerDidResult.did}")
 
 
-//  Create holder did
-    val options = DidKeyCreateOptions(
-        keyType = KeyType.RSA
+    //Create holder did
+    val holderDidResult = DidService.register(
+        DidKeyCreateOptions(
+            keyType = KeyType.RSA
+        )
     )
-    val mySubjectDid = DidService.register(options)
+    println("Generated holder DID: ${holderDidResult.did}")
 
+    //build an OpenBadge verifiable credential
     val vc = W3CVC.build(
         context = listOf(
             "https://www.w3.org/2018/credentials/v1",
@@ -50,11 +51,11 @@ suspend fun sign_vc() {
 
         "id" to "urn:uuid:4177e048-9a4a-474e-9dc6-aed4e61a6439",
         "name" to "JFF x vc-edu PlugFest 3 Interoperability",
-        "issuer" to myIssuerDid.did,
+        "issuer" to issuerDidResult.did,
         "issuanceDate" to "2023-08-02T08:03:13Z",
         "credentialSubject" to mapOf(
             "type" to listOf("AchievementSubject"),
-            "id" to mySubjectDid.did,
+            "id" to holderDidResult.did,
             "achievement" to mapOf(
                 "id" to "urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926",
                 "type" to listOf("Achievement"),
@@ -71,21 +72,29 @@ suspend fun sign_vc() {
             )
         )
     )
-    //JWT signature
+
+    //JWT VC signature
     println("\nUsing JWT as signature type..")
-    val signedJWT = vc.signJws(myIssuerKey, myIssuerDid.did, null, mySubjectDid.did)
-    println("JWS: $signedJWT\n")
-    val results = Verifier.verifyCredential(
+    val signedJWT = vc.signJws(
+        issuerKey = issuerPrivateKey,
+        issuerDid = issuerDidResult.did,
+        issuerKid = issuerPrivateKey.getKeyId(),
+        subjectDid = holderDidResult.did,
+    )
+    println("JWT VC: $signedJWT\n")
+
+    println("\nVerify JWT VC signature....")
+    val jwtVerificationResults = Verifier.verifyCredential(
         signedJWT,
         listOf(
             PolicyRequest(JwtSignaturePolicy())
         )
     )
-    results.forEach { verification ->
+    jwtVerificationResults.forEach { verification ->
         println("[${verification.request.policy.name}] -> Success=${verification.isSuccess()}, Result=${verification.result}")
     }
 
-
+    //SD-JWT VC signature
     println("\nUsing SD-JWT as signature type..")
     // Prepare SD-JWT options for signing:
     val disclosureMap = SDMap(
@@ -93,15 +102,16 @@ suspend fun sign_vc() {
         decoyMode = DecoyMode.RANDOM,
         decoys = 2
     )
-    val signedSDJWT: String = vc.signSdJwt(myIssuerKey, myIssuerDid.did, mySubjectDid.did, disclosureMap)
-    println("JWS: $signedSDJWT\n")
-    val results1 = Verifier.verifyCredential(
+    val signedSDJWT: String = vc.signSdJwt(issuerPrivateKey, issuerDidResult.did, holderDidResult.did, disclosureMap)
+    println("SD-JWT VC: $signedSDJWT\n")
+
+    val sdJwtVerificationResults = Verifier.verifyCredential(
         signedSDJWT,
         listOf(
             PolicyRequest(JwtSignaturePolicy())
         )
     )
-    results1.forEach { verification ->
+    sdJwtVerificationResults.forEach { verification ->
         println("[${verification.request.policy.name}] -> Success=${verification.isSuccess()}, Result=${verification.result}")
     }
 

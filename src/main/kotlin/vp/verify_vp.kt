@@ -1,4 +1,4 @@
-package vc
+package vp
 
 import id.walt.credentials.verification.Verifier
 import id.walt.credentials.verification.models.PolicyRequest

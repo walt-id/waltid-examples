@@ -1,4 +1,4 @@
-package crypto.key.import.jwk
+package crypto.key.decode.jwk
 
 import id.walt.crypto.keys.jwk.JWKKey
 

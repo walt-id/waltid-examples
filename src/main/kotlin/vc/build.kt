@@ -6,10 +6,10 @@ import id.walt.crypto.utils.JsonUtils.toJsonObject
 import kotlin.time.Duration.Companion.days
 
 fun main() {
-    build_vc()
+    build()
 }
 
-fun build_vc() {
+fun build() {
     val entityIdentificationNumber = "12345"
     val issuingAuthorityId = "abc"
     val proofType = "document"

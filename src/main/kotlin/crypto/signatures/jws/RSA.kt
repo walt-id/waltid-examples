@@ -17,10 +17,16 @@ suspend fun signVerifyJwsRSAKey() {
             "aud" to JsonPrimitive("TOKEN"),
         )
     )
-
     val key = JWKKey.generate(KeyType.RSA)
-    val signature = key.signJws(payload.toString().encodeToByteArray())
 
+    println("JWS Sign:")
+    println("Payload: $payload")
+    println("Signing Key: ${key.exportJWK()}")
+    val signature = key.signJws(payload.toString().encodeToByteArray())
+    println("Signature: $signature")
+
+    println("JWS Verify:")
+    println("Verification Key: ${key.getPublicKey().exportJWK()}")
     val verificationResult = key.getPublicKey().verifyJws(signature)
-    println(verificationResult)
+    println("Result: $verificationResult")
 }
