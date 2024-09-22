@@ -15,18 +15,18 @@
 
 For a selection of examples, please take a look at the following table:
 
-| Examples available    | Kotlin                                                                                                           | Java                                                                                               |
-|-----------------------|------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| Generate DIDs         | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/did/create/key_method.kt)             | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/DidExamples.java)  |
-| Resolve DIDs          | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/did/resolve/key_method.kt)            | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/DidExamples.java)  |
-| Create Keys           | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/create/ed25519.kt)             | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
-| Import Keys           | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/import_key/ed25519_jwk.kt)     | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
-| Export Keys           | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/export_key/export_jwk.kt)      | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
-| Key sign / verify raw | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/sign_verify/S_ed25519_RAW.kt)  | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
-| Key sign / verify JWS | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/sign_verify/SV_ed25519_JWS.kt) | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
-| Build VC              | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vc/build_vc.kt)                       | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VcExamples.java)   |
-| Sign built VC         | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vc/sign_vc.kt)                        | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VcExamples.java)   |
-| Verify signed VC      | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vc/verify_vc.kt)                      | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VcExamples.java)   |
+| Examples available      | Kotlin                                                                                            | Java                                                                                               |
+|-------------------------|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| Generate DIDs           | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/did/create)            | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/DidExamples.java)  |
+| Resolve DIDs            | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/did/resolve)           | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/DidExamples.java)  |
+| Create Keys             | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/key/create)     | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
+| Import Keys             | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/key/decode)     | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
+| Export Keys             | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/key/encode)     | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
+| Key sign / verify raw   | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/signatures/raw) | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
+| Key sign / verify JWS   | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/crypto/signatures/jws) | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/KeysExamples.java) |
+| JWT VC sign / verify    | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vc/jwt)                | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VcExamples.java)   |
+| SD-JWT VC sign / verify | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vc/sdjwt)              | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VcExamples.java)   |
+| VP sign / verify        | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/kotlin/vp)                    | [Yes](https://github.com/walt-id/waltid-examples/blob/main/src/main/java/waltid/VpExamples.java)   |
 
 Follow the link to view the associated code example.
 
