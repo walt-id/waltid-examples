@@ -1,48 +1,47 @@
-package vc
+package vp
 
 import id.walt.credentials.CredentialBuilder
 import id.walt.credentials.CredentialBuilderType
 import id.walt.credentials.PresentationBuilder
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
+import id.walt.crypto.utils.JsonUtils.toJsonElement
 import id.walt.crypto.utils.JsonUtils.toJsonObject
 import id.walt.did.dids.DidService
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.time.Duration.Companion.days
 
 suspend fun main() {
-    create_sign_presentation()
+    signVP()
 }
 
-suspend fun create_sign_presentation() {
+suspend fun signVP() {
     DidService.minimalInit()
 
-    val myIssuerKey = JWKKey.generate(KeyType.Ed25519)
-    val myIssuerDid = DidService.registerByKey("key", myIssuerKey).did
+    println("Sign VP:")
+    //Create issuer did
+    val issuerPrivateKey = JWKKey.generate(KeyType.Ed25519)
+    val issuerDid = DidService.registerByKey("key", issuerPrivateKey).did
+    println("Generated issuer DID: $issuerDid")
 
-    val mySubjectKey = JWKKey.generate(KeyType.Ed25519)
-    val mySubjectDid = DidService.registerByKey("key", mySubjectKey).did
+    //Create holder did
+    val holderPrivateKey = JWKKey.generate(KeyType.Ed25519)
+    val holderDid = DidService.registerByKey("key", holderPrivateKey).did
+    println("Generated holder DID: $holderDid")
 
-    // Creating The Verifiable Credential
     println("Creating The Verifiable Credential")
     val vc = CredentialBuilder(CredentialBuilderType.W3CV11CredentialBuilder).apply {
         addContext("https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.2.json")
-
         addType("OpenBadgeCredential")
         credentialId = "urn:uuid:4177e048-9a4a-474e-9dc6-aed4e61a6439"
-
-        issuerDid = "did:key:z6MksFnax6xCBWdo6hhfZ7pEsbyaq9MMNdmABS1NrcCDZJr3"
-
+        this.issuerDid = issuerDid
         validFromNow()
         validFor(2.days)
-
-        subjectDid = "did:key:z6MksFnax6xCBWdo6hhfZ7pEsbyaq9MMNdmABS1NrcCDZJr3"
-
         useData("name", JsonPrimitive("JFF x vc-edu PlugFest 3 Interoperability"))
-
         useCredentialSubject(
             mapOf(
                 "type" to listOf("AchievementSubject"),
+                "id" to holderDid,
                 "achievement" to mapOf(
                     "id" to "urn:uuid:ac254bd5-8fad-4bb1-9d29-efd938536926",
                     "type" to listOf("Achievement"),
@@ -60,23 +59,31 @@ suspend fun create_sign_presentation() {
             ).toJsonObject()
         )
     }.buildW3C()
+    println("Unsigned VC:\n${vc.toPrettyJson()}")
 
-    // Signing The Verifiable Credential
-    println("Signing The Verifiable Credential")
-    val jwtVc: String = vc.signJws(myIssuerKey, myIssuerDid, null, mySubjectDid)
+    //JWT VC signature
+    println("\nUsing JWT as signature type...")
+    val signedJwtVc = vc.signJws(
+        issuerKey = issuerPrivateKey,
+        issuerDid = issuerDid,
+        issuerKid = issuerPrivateKey.getKeyId(),
+        subjectDid = holderDid,
+    )
+    println("Signed JWT VC: $signedJwtVc\n")
+
+    val verifierPrivateKey = JWKKey.generate(KeyType.Ed25519)
+    val verifierDid = DidService.registerByKey("key", verifierPrivateKey).did
+    println("Generated verifier DID: $verifierDid")
 
     // Creating Verifiable Presentation
-    println("Creating Verifiable Presentation")
+    println("Creating Verifiable Presentation...")
     val vp = PresentationBuilder().apply {
-        did = mySubjectDid
+        did = holderDid
         nonce = "20394029340"
-        addCredential(JsonPrimitive(jwtVc))
+        audience = verifierDid
+        addCredential(signedJwtVc.toJsonElement())
     }
-    println("Verifiable Presentation: " + vp.presentationId)
-
     // Sign Verifiable Presentation as JWT
-    println("Sign Verifiable Presentation as JWT")
-    val vpSigned = vp.buildAndSign(mySubjectKey)
-
-    println(vpSigned)
+    val vpSigned = vp.buildAndSign(holderPrivateKey)
+    println("Signed VP: $vpSigned")
 }

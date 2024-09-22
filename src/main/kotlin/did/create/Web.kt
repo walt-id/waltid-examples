@@ -21,7 +21,8 @@ suspend fun createDidWeb() {
         keyType = KeyType.Ed25519
     )
     didResult = DidService.register(options)
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 
     println("Register did:web by providing key")
     val key = JWKKey.generate(KeyType.Ed25519)
@@ -31,5 +32,6 @@ suspend fun createDidWeb() {
         key = key,
         options = options,
     )
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }

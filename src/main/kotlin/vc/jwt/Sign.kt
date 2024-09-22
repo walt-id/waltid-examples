@@ -1,25 +1,19 @@
-package vc
+package vc.jwt
 
 import id.walt.credentials.vc.vcs.W3CVC
-import id.walt.credentials.verification.Verifier
-import id.walt.credentials.verification.models.PolicyRequest
-import id.walt.credentials.verification.policies.JwtSignaturePolicy
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
-import id.walt.sdjwt.DecoyMode
-import id.walt.sdjwt.SDField
-import id.walt.sdjwt.SDMap
 
 suspend fun main() {
-    sign()
+    signJwtVc()
 }
 
-suspend fun sign() {
+suspend fun signJwtVc() {
+    DidService.minimalInit()
 
-    DidService.init()
-
+    println("Sign JWT VC:")
     //Create issuer did
     val issuerPrivateKey = JWKKey.generate(KeyType.Ed25519)
     val issuerDidKeyOptions = DidKeyCreateOptions(
@@ -72,47 +66,15 @@ suspend fun sign() {
             )
         )
     )
+    println("Unsigned VC:\n${vc.toPrettyJson()}")
 
     //JWT VC signature
-    println("\nUsing JWT as signature type..")
-    val signedJWT = vc.signJws(
+    println("\nUsing JWT as signature type...")
+    val signedJwtVc = vc.signJws(
         issuerKey = issuerPrivateKey,
         issuerDid = issuerDidResult.did,
         issuerKid = issuerPrivateKey.getKeyId(),
         subjectDid = holderDidResult.did,
     )
-    println("JWT VC: $signedJWT\n")
-
-    println("\nVerify JWT VC signature....")
-    val jwtVerificationResults = Verifier.verifyCredential(
-        signedJWT,
-        listOf(
-            PolicyRequest(JwtSignaturePolicy())
-        )
-    )
-    jwtVerificationResults.forEach { verification ->
-        println("[${verification.request.policy.name}] -> Success=${verification.isSuccess()}, Result=${verification.result}")
-    }
-
-    //SD-JWT VC signature
-    println("\nUsing SD-JWT as signature type..")
-    // Prepare SD-JWT options for signing:
-    val disclosureMap = SDMap(
-        fields = mapOf("name" to SDField(true)),
-        decoyMode = DecoyMode.RANDOM,
-        decoys = 2
-    )
-    val signedSDJWT: String = vc.signSdJwt(issuerPrivateKey, issuerDidResult.did, holderDidResult.did, disclosureMap)
-    println("SD-JWT VC: $signedSDJWT\n")
-
-    val sdJwtVerificationResults = Verifier.verifyCredential(
-        signedSDJWT,
-        listOf(
-            PolicyRequest(JwtSignaturePolicy())
-        )
-    )
-    sdJwtVerificationResults.forEach { verification ->
-        println("[${verification.request.policy.name}] -> Success=${verification.isSuccess()}, Result=${verification.result}")
-    }
-
+    println("Signed JWT VC: $signedJwtVc\n")
 }

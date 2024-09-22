@@ -36,8 +36,11 @@ import did.create.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
 import did.resolve.resolveDidWeb
-import vc.*
-import vp.verify_vp
+import vc.jwt.signJwtVc
+import vc.jwt.verifyJwtVc
+import vc.sdjwt.signSdJwtVc
+import vp.signVP
+import vp.verifyVP
 
 
 suspend fun main() {
@@ -140,7 +143,8 @@ suspend fun main() {
     //Signatures End
     // Crypto End
 
-    // DIDs
+    // DID Start
+    // Create
     println("createDidCheqd() ----------------------------------------------------------------------------------------")
     createDidCheqd()
     println("createDidJwk() ------------------------------------------------------------------------------------------")
@@ -149,23 +153,31 @@ suspend fun main() {
     createDidKey()
     println("createDidWeb() ------------------------------------------------------------------------------------------")
     createDidWeb()
-
+    // Resolve
     println("resolveDidJwk() -----------------------------------------------------------------------------------------")
     resolveDidJwk()
     println("resolveDidKey() -----------------------------------------------------------------------------------------")
     resolveDidKey()
     println("resolveDidWeb() -----------------------------------------------------------------------------------------")
     resolveDidWeb()
+    // DID End
 
-    // VCs
-    println("build_vc() ----------------------------------------------------------------------------------------------")
-    build()
-    println("create_sign_presentation() ------------------------------------------------------------------------------")
-    create_sign_presentation()
-    println("sign_vc() -----------------------------------------------------------------------------------------------")
-    sign()
-    println("verify_vc() ---------------------------------------------------------------------------------------------")
-    verify_vc()
-    println("verify_vp() ---------------------------------------------------------------------------------------------")
-    verify_vp()
+    // VC Start
+    // JWT
+    println("signJwtVc() ---------------------------------------------------------------------------------------------")
+    signJwtVc()
+    println("verifyJwtVc() -------------------------------------------------------------------------------------------")
+    verifyJwtVc()
+    // SD-JWT
+    println("signSdJwtVc() -------------------------------------------------------------------------------------------")
+    signSdJwtVc()
+    println("verifyJwtVc() -------------------------------------------------------------------------------------------")
+    verifyJwtVc()
+    // VC End
+    // VP Start
+    println("signVP() ------------------------------------------------------------------------------------------------")
+    signVP()
+    println("verifyVP() ----------------------------------------------------------------------------------------------")
+    verifyVP()
+    // VP End
 }

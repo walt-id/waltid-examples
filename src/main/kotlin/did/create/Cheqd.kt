@@ -19,7 +19,8 @@ suspend fun createDidCheqd() {
         network = "testnet"
     )
     didResult = DidService.register(options)
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 
     println("Register did:cheqd by providing key")
     val key = JWKKey.generate(KeyType.Ed25519)
@@ -29,5 +30,6 @@ suspend fun createDidCheqd() {
         key = key,
         options = options,
     )
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }

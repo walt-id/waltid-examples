@@ -20,7 +20,8 @@ suspend fun createDidKey() {
         useJwkJcsPub = true,
     )
     didResult = DidService.register(options)
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 
     println("Register did:key by providing key")
     val key = JWKKey.generate(KeyType.secp256r1)
@@ -30,5 +31,6 @@ suspend fun createDidKey() {
         key = key,
         options = options,
     )
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }

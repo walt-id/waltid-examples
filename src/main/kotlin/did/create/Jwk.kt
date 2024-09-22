@@ -20,7 +20,8 @@ suspend fun createDidJwk() {
         keyType = KeyType.secp256k1
     )
     didResult = DidService.register(options)
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 
     println("Register did:jwk by providing key")
     val key = JWKKey.generate(KeyType.RSA)
@@ -30,5 +31,6 @@ suspend fun createDidJwk() {
         key = key,
         options = options,
     )
-    printDidResult(didResult)
+    println("DID: ${didResult.did}")
+    println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }
