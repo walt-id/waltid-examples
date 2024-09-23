@@ -19,7 +19,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven ("https://maven.waltid.dev/releases")
-    maven("https://maven.waltid.dev/snapshots")
+    maven ("https://maven.waltid.dev/snapshots")
 
 }
 
