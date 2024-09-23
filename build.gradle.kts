@@ -8,6 +8,7 @@ version = "0.0.1"
 object Versions {
     const val KOTLIN_VERSION = "2.0.20-RC" // also change 1 plugin
     const val WALTID_VERSION = "0.7.0"
+    const val DID_LIB_DOC_CONFIG_SNAPSHOT_VERSION = "1.0.2409230658-SNAPSHOT"
 }
 
 tasks.withType<Test>().configureEach {
@@ -18,6 +19,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven ("https://maven.waltid.dev/releases")
+    maven ("https://maven.waltid.dev/snapshots")
 
 }
 
@@ -27,7 +29,7 @@ dependencies {
     // required dependencies for running the example project
     implementation("id.walt.crypto:waltid-crypto:${Versions.WALTID_VERSION}")
     implementation("id.walt.credentials:waltid-verifiable-credentials:${Versions.WALTID_VERSION}")
-    implementation("id.walt.did:waltid-did:${Versions.WALTID_VERSION}")
+    implementation("id.walt.did:waltid-did:${Versions.DID_LIB_DOC_CONFIG_SNAPSHOT_VERSION}")
     implementation("id.walt.sdjwt:waltid-sdjwt:${Versions.WALTID_VERSION}")
     implementation("id.walt.openid4vc:waltid-openid4vc:${Versions.WALTID_VERSION}")
 
