@@ -32,7 +32,7 @@ import crypto.signatures.raw.signVerifyRawSecp256r1Key
 import did.create.createDidCheqd
 import did.create.createDidJwk
 import did.create.createDidKey
-import did.create.createDidWeb
+import did.create.web.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
 import did.resolve.resolveDidWeb
