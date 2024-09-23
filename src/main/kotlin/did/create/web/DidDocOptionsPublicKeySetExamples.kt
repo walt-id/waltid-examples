@@ -104,3 +104,8 @@ internal suspend fun createDidWebDidDocOptionsFromPublicKeySetExamples() {
     println("DID: ${didResult.did}")
     println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }
+
+suspend fun main() {
+    DidService.minimalInit()
+    createDidWebDidDocOptionsFromPublicKeySetExamples()
+}

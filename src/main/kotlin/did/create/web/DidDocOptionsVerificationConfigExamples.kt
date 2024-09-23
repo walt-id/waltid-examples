@@ -88,3 +88,8 @@ internal suspend fun createDidWebDidDocOptionsFromPublicKeySetVerificationConfig
     println("DID: ${didResult.did}")
     println("DID Document: ${didResult.didDocument.toJsonObject()}")
 }
+
+suspend fun main() {
+    DidService.minimalInit()
+    createDidWebDidDocOptionsFromPublicKeySetVerificationConfigurationExamples()
+}
