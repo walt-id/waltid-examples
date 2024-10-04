@@ -3,11 +3,12 @@ package waltid;
 import id.walt.credentials.CredentialBuilder;
 import id.walt.credentials.CredentialBuilderType;
 import id.walt.credentials.PresentationBuilder;
+import id.walt.credentials.utils.VCFormat;
 import id.walt.credentials.vc.vcs.W3CVC;
-import id.walt.credentials.verification.Verifier;
-import id.walt.credentials.verification.models.PolicyRequest;
-import id.walt.credentials.verification.models.PresentationVerificationResponse;
-import id.walt.credentials.verification.policies.vp.HolderBindingPolicy;
+import id.walt.policies.Verifier;
+import id.walt.policies.models.PolicyRequest;
+import id.walt.policies.models.PresentationVerificationResponse;
+import id.walt.policies.policies.vp.HolderBindingPolicy;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
@@ -78,7 +79,9 @@ public class VpExamples {
         List<PolicyRequest> vpPolicyList = new ArrayList<>();
         vpPolicyList.add(new PolicyRequest(new HolderBindingPolicy(), null));
         Map<String, Object> presentationContext = new HashMap<>();
+        VCFormat jwtVcJson = VCFormat.jwt_vc_json;
         PresentationVerificationResponse result = Verifier.INSTANCE.verifyPresentationBlocking(
+                jwtVcJson,
                 vp,
                 vpPolicyList,
                 globalVcPolicies,

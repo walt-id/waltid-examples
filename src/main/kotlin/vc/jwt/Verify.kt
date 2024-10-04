@@ -1,9 +1,10 @@
 package vc.jwt
 
-import id.walt.credentials.verification.Verifier
-import id.walt.credentials.verification.models.PolicyRequest
-import id.walt.credentials.verification.policies.JwtSignaturePolicy
+
 import id.walt.did.dids.DidService
+import id.walt.policies.Verifier
+import id.walt.policies.models.PolicyRequest
+import id.walt.policies.policies.JwtSignaturePolicy
 
 suspend fun main() {
     verifyJwtVc()
