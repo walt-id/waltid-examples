@@ -3,19 +3,20 @@ package waltid;
 import id.walt.credentials.CredentialBuilder;
 import id.walt.credentials.CredentialBuilderType;
 import id.walt.credentials.vc.vcs.W3CVC;
-import id.walt.policies.Verifier;
-import id.walt.policies.models.PolicyRequest;
-import id.walt.policies.models.PolicyResult;
-import id.walt.policies.policies.JwtSignaturePolicy;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import id.walt.crypto.utils.JsonUtils;
 import id.walt.did.helpers.WaltidServices;
+import id.walt.policies.Verifier;
+import id.walt.policies.models.PolicyRequest;
+import id.walt.policies.models.PolicyResult;
+import id.walt.policies.policies.JwtSignaturePolicy;
 import id.walt.sdjwt.DecoyMode;
 import id.walt.sdjwt.SDField;
 import id.walt.sdjwt.SDMap;
 import kotlinx.serialization.json.JsonObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class VcExamples {
         Map<String, SDField> fields = new HashMap<>();
         fields.put("name", new SDField(Boolean.TRUE, null));
         SDMap disclosureMap = new SDMap(fields, DecoyMode.RANDOM, 2);
-        String signed = vc.signSdJwtBlocking(key, did, did, disclosureMap,new HashMap<>(), new HashMap<>());
+        String signed = vc.signSdJwtBlocking(key, did, null, did, disclosureMap, new HashMap<>(), new HashMap<>());
         System.out.println("Signed SD-JWT VC: " + signed);
         return signed;
     }

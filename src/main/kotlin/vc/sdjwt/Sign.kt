@@ -82,10 +82,11 @@ suspend fun signSdJwtVc() {
     //SD-JWT VC signature
     println("\nUsing SD-JWT as signature type...")
     val signedSdJwtVc = vc.signSdJwt(
-        issuerPrivateKey,
-        issuerDidResult.did,
-        holderDidResult.did,
-        disclosureMap,
+        issuerKey = issuerPrivateKey,
+        issuerId = issuerDidResult.did,
+        issuerKid = null,
+        subjectDid = holderDidResult.did,
+        disclosureMap = disclosureMap,
         )
     println("Signed SD-JWT VC: $signedSdJwtVc\n")
 }
