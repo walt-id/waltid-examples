@@ -65,7 +65,7 @@ suspend fun signVP() {
     println("\nUsing JWT as signature type...")
     val signedJwtVc = vc.signJws(
         issuerKey = issuerPrivateKey,
-        issuerDid = issuerDid,
+        issuerId = issuerDid,
         issuerKid = issuerPrivateKey.getKeyId(),
         subjectDid = holderDid,
     )
