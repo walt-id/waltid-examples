@@ -7,7 +7,7 @@ version = "0.0.1"
 
 object Versions {
     const val KOTLIN_VERSION = "2.0.21" // also change 1 plugin
-    const val WALTID_VERSION = "0.11.0"
+    const val WALTID_VERSION = "0.12.0"
 }
 
 tasks.withType<Test>().configureEach {
