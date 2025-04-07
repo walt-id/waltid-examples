@@ -1,13 +1,13 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
+    val kotlinVersion = "2.1.20"
+    kotlin("jvm") version kotlinVersion
 }
 
 group = "identity"
 version = "0.0.1"
 
 object Versions {
-    const val KOTLIN_VERSION = "2.0.21" // also change 1 plugin
-    const val WALTID_VERSION = "0.12.0"
+    const val WALTID_VERSION = "0.13.0"
 }
 
 tasks.withType<Test>().configureEach {
@@ -36,7 +36,7 @@ dependencies {
     implementation("id.walt.mdoc-credentials:waltid-mdoc-credentials:${Versions.WALTID_VERSION}")
     implementation("id.walt:waltid-service-commons:${Versions.WALTID_VERSION}")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
-    implementation("org.jetbrains:annotations:24.1.0")
-    implementation("org.slf4j:slf4j-simple:2.0.13")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation("org.jetbrains:annotations:26.0.1")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
 }
