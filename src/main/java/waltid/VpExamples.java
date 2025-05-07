@@ -1,10 +1,5 @@
 package waltid;
 
-import id.walt.credentials.CredentialBuilder;
-import id.walt.credentials.CredentialBuilderType;
-import id.walt.credentials.PresentationBuilder;
-import id.walt.credentials.utils.VCFormat;
-import id.walt.credentials.vc.vcs.W3CVC;
 import id.walt.policies.Verifier;
 import id.walt.policies.models.PolicyRequest;
 import id.walt.policies.models.PresentationVerificationResponse;
@@ -14,6 +9,11 @@ import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import id.walt.crypto.utils.JsonUtils;
 import id.walt.did.helpers.WaltidServices;
+import id.walt.w3c.CredentialBuilder;
+import id.walt.w3c.CredentialBuilderType;
+import id.walt.w3c.PresentationBuilder;
+import id.walt.w3c.utils.VCFormat;
+import id.walt.w3c.vc.vcs.W3CVC;
 import kotlinx.serialization.json.JsonObject;
 import java.util.ArrayList;
 import java.util.HashMap;

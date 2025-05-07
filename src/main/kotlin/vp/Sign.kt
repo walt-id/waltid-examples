@@ -1,13 +1,13 @@
 package vp
 
-import id.walt.credentials.CredentialBuilder
-import id.walt.credentials.CredentialBuilderType
-import id.walt.credentials.PresentationBuilder
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.crypto.utils.JsonUtils.toJsonElement
 import id.walt.crypto.utils.JsonUtils.toJsonObject
 import id.walt.did.dids.DidService
+import id.walt.w3c.CredentialBuilder
+import id.walt.w3c.CredentialBuilderType
+import id.walt.w3c.PresentationBuilder
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.time.Duration.Companion.days
 

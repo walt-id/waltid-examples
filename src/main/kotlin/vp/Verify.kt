@@ -1,6 +1,5 @@
 package vp
 
-import id.walt.credentials.utils.VCFormat
 import id.walt.crypto.utils.JsonUtils.toJsonElement
 import id.walt.did.dids.DidService
 import id.walt.policies.Verifier
@@ -9,6 +8,7 @@ import id.walt.policies.policies.AllowedIssuerPolicy
 import id.walt.policies.policies.ExpirationDatePolicy
 import id.walt.policies.policies.JwtSignaturePolicy
 import id.walt.policies.policies.vp.HolderBindingPolicy
+import id.walt.w3c.utils.VCFormat
 
 suspend fun main() {
     verifyVP()
