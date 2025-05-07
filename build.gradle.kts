@@ -7,7 +7,7 @@ group = "identity"
 version = "0.0.1"
 
 object Versions {
-    const val WALTID_VERSION = "0.13.0"
+    const val WALTID_VERSION = "0.14.0"
 }
 
 tasks.withType<Test>().configureEach {
@@ -18,6 +18,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven("https://maven.waltid.dev/releases")
+    maven("https://maven.waltid.dev/snapshots")
 }
 
 dependencies {
@@ -25,7 +26,7 @@ dependencies {
     // walt.id
     // required dependencies for running the example project
     implementation("id.walt.crypto:waltid-crypto:${Versions.WALTID_VERSION}")
-    implementation("id.walt.credentials:waltid-verifiable-credentials:${Versions.WALTID_VERSION}")
+    implementation("id.walt.credentials:waltid-digital-credentials:${Versions.WALTID_VERSION}")
     implementation("id.walt.did:waltid-did:${Versions.WALTID_VERSION}")
     implementation("id.walt.sdjwt:waltid-sdjwt:${Versions.WALTID_VERSION}")
     implementation("id.walt.openid4vc:waltid-openid4vc:${Versions.WALTID_VERSION}")
