@@ -1,6 +1,5 @@
 package vc.sdjwt
 
-import id.walt.credentials.vc.vcs.W3CVC
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
@@ -8,6 +7,7 @@ import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
 import id.walt.sdjwt.DecoyMode
 import id.walt.sdjwt.SDField
 import id.walt.sdjwt.SDMap
+import id.walt.w3c.vc.vcs.W3CVC
 
 suspend fun main() {
     signSdJwtVc()

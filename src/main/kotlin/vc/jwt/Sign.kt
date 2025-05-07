@@ -1,10 +1,10 @@
 package vc.jwt
 
-import id.walt.credentials.vc.vcs.W3CVC
 import id.walt.crypto.keys.KeyType
 import id.walt.crypto.keys.jwk.JWKKey
 import id.walt.did.dids.DidService
 import id.walt.did.dids.registrar.dids.DidKeyCreateOptions
+import id.walt.w3c.vc.vcs.W3CVC
 
 suspend fun main() {
     signJwtVc()

@@ -1,8 +1,5 @@
 package waltid;
 
-import id.walt.credentials.CredentialBuilder;
-import id.walt.credentials.CredentialBuilderType;
-import id.walt.credentials.vc.vcs.W3CVC;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
@@ -15,6 +12,9 @@ import id.walt.policies.policies.JwtSignaturePolicy;
 import id.walt.sdjwt.DecoyMode;
 import id.walt.sdjwt.SDField;
 import id.walt.sdjwt.SDMap;
+import id.walt.w3c.CredentialBuilder;
+import id.walt.w3c.CredentialBuilderType;
+import id.walt.w3c.vc.vcs.W3CVC;
 import kotlinx.serialization.json.JsonObject;
 
 import java.util.HashMap;
