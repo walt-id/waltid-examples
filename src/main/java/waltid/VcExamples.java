@@ -51,6 +51,7 @@ public class VcExamples {
         credentialBuilder.validFromNow();
         credentialBuilder.useStatusList2021Revocation("https://university.example/credentials/status/3", 94567);
         credentialBuilder.useCredentialSubject(credentialSubject);
+        credentialBuilder.set("name", JsonUtils.INSTANCE.javaToJsonElement("some-name"));
 
         W3CVC vc = credentialBuilder.buildW3C();
         System.out.println("VC: " + vc.toPrettyJson());
