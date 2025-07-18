@@ -7,7 +7,7 @@ group = "identity"
 version = "0.0.1"
 
 object Versions {
-    const val WALTID_VERSION = "0.14.0"
+    const val WALTID_VERSION = "0.15.0"
 }
 
 tasks.withType<Test>().configureEach {
