@@ -1,6 +1,7 @@
 plugins {
     val kotlinVersion = "2.1.20"
     kotlin("jvm") version kotlinVersion
+    application
 }
 
 group = "identity"
@@ -18,6 +19,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven("https://maven.waltid.dev/releases")
+    maven("https://maven.waltid.dev/snapshots")
 }
 
 dependencies {
@@ -39,4 +41,16 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.jetbrains:annotations:26.0.1")
     implementation("org.slf4j:slf4j-simple:2.0.16")
+}
+
+// Configure run task to allow dynamic main class selection
+tasks.named<JavaExec>("run") {
+    if (project.hasProperty("mainClass")) {
+        mainClass.set(project.property("mainClass").toString())
+    }
+}
+
+// Set default main class for application plugin
+application {
+    mainClass.set("RunAllKt")
 }

@@ -91,7 +91,7 @@ waltid-examples/
 │   │   └── vp/                   # Verifiable Presentations
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
-└── did*.json                     # Example DID documents
+└── build.gradle.kts               # Build configuration
 ```
 
 ## 📚 Available Examples
