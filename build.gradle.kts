@@ -11,6 +11,15 @@ object Versions {
     const val WALTID_VERSION = "0.15.0"
 }
 
+application {
+    val main = (project.findProperty("mainClass") as String?) ?: "RunAllKt"
+    mainClass.set(main)
+}
+
+tasks.named<JavaExec>("run").configure {
+    mainClass.set((project.findProperty("mainClass") as String?) ?: "RunAllKt")
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
