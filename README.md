@@ -47,14 +47,16 @@
    ```
 
 3. **Run all examples (Kotlin):**
-   ```bash
-   ./gradlew run -PmainClass=RunAllKt
-   ```
+```bash
+./gradlew run -PmainClass=RunAllKt
+```
 
 4. **Run all examples (Java):**
-   ```bash
-   ./gradlew run -PmainClass=waltid.RunAll
-   ```
+```bash
+./gradlew run -PmainClass=waltid.RunAll
+```
+
+Note: The build is configured to accept -PmainClass for selecting the entry point.
 
 5. **Run individual examples:**
    ```bash
