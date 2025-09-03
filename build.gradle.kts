@@ -41,6 +41,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.jetbrains:annotations:26.0.1")
     implementation("org.slf4j:slf4j-simple:2.0.16")
+    
+    // Additional dependencies for wallet functionality
+    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+    implementation("org.bouncycastle:bcpkix-jdk15on:1.70")
 }
 
 // Configure run task to allow dynamic main class selection

@@ -41,6 +41,7 @@ import vc.jwt.verifyJwtVc
 import vc.sdjwt.signSdJwtVc
 import vp.signVP
 import vp.verifyVP
+import wallet.runWalletDemo
 
 
 suspend fun main() {
@@ -180,4 +181,9 @@ suspend fun main() {
     println("verifyVP() ----------------------------------------------------------------------------------------------")
     verifyVP()
     // VP End
+    
+    // Wallet Demo Start
+    println("runWalletDemo() -----------------------------------------------------------------------------------------")
+    runWalletDemo()
+    // Wallet Demo End
 }
