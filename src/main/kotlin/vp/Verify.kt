@@ -14,7 +14,7 @@ suspend fun main() {
     verifyVP()
 }
 
-suspend fun verifyVP() {
+suspend fun verifyVP(): Boolean {
     DidService.minimalInit()
 
     val issuerDid = "did:key:z6Mksd8WWHnyHhS5zuS7ia9GRUcoAYAQ1M5n7M8wcZ9riqbh"
@@ -56,5 +56,7 @@ suspend fun verifyVP() {
         specificCredentialPolicies,
         presentationContext
     )
-    println("Overall Verification Result: ${resultJWT.overallSuccess()}")
+    val overall = resultJWT.overallSuccess()
+    println("Overall Verification Result: ${overall}")
+    return overall
 }

@@ -11,6 +11,15 @@ object Versions {
     const val WALTID_VERSION = "0.15.0"
 }
 
+application {
+    val main = (project.findProperty("mainClass") as String?) ?: "RunAllKt"
+    mainClass.set(main)
+}
+
+tasks.named<JavaExec>("run").configure {
+    mainClass.set((project.findProperty("mainClass") as String?) ?: "RunAllKt")
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
@@ -41,6 +50,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("org.jetbrains:annotations:26.0.1")
     implementation("org.slf4j:slf4j-simple:2.0.16")
+
+    testImplementation(platform("org.junit:junit-bom:5.10.3"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Reduce SLF4J binding noise during tests
+    testImplementation("org.slf4j:slf4j-nop:2.0.16")
 }
 
 // Configure run task to allow dynamic main class selection
