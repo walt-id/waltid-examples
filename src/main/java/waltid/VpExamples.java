@@ -1,5 +1,6 @@
 package waltid;
 
+import id.walt.did.dids.DidService;
 import id.walt.policies.Verifier;
 import id.walt.policies.models.PolicyRequest;
 import id.walt.policies.models.PresentationVerificationResponse;
@@ -57,7 +58,7 @@ public class VpExamples {
         // setup signing
         Key key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
-        WaltidServices.INSTANCE.minimalInitBlocking();
+        DidService.INSTANCE.minimalInitBlocking();
 
         String did = DidExamples.generateDidSync(key);
         // sign
