@@ -4,7 +4,7 @@ import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
 import id.walt.crypto.utils.JsonUtils;
-import id.walt.did.helpers.WaltidServices;
+import id.walt.did.dids.DidService;
 import id.walt.policies.Verifier;
 import id.walt.policies.models.PolicyRequest;
 import id.walt.policies.models.PolicyResult;
@@ -59,7 +59,7 @@ public class VcExamples {
         // setup signing
         Key key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
-        WaltidServices.INSTANCE.minimalInitBlocking();
+        DidService.INSTANCE.minimalInitBlocking();
 
         String did = DidExamples.generateDidSync(key);
         // sign
@@ -105,7 +105,7 @@ public class VcExamples {
         // setup signing
         Key key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
-        WaltidServices.INSTANCE.minimalInitBlocking();
+        DidService.INSTANCE.minimalInitBlocking();
 
         String did = DidExamples.generateDidSync(key);
         // sign

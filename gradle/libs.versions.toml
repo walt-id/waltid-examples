@@ -1,0 +1,28 @@
+[versions]
+kotlin = "2.2.20"
+waltid = "2025.1.0-PRE-RELEASE.7"
+
+[libraries]
+# walt.id
+# required dependencies for running the example project
+waltid-crypto = { module = "id.walt.crypto:waltid-crypto", version.ref = "waltid" }
+waltid-digital-credentials = { module = "id.walt.credentials:waltid-digital-credentials", version.ref = "waltid" }
+waltid-did = { module = "id.walt.did:waltid-did", version.ref = "waltid" }
+waltid-sdjwt = { module = "id.walt.sdjwt:waltid-sdjwt", version.ref = "waltid" }
+waltid-openid4vc = { module = "id.walt.openid4vc:waltid-openid4vc", version.ref = "waltid" }
+waltid-verification-policies = { module = "id.walt.policies:waltid-verification-policies", version.ref = "waltid" }
+waltid-dif-definitions-parser = { module = "id.walt.dif-definitions-parser:waltid-dif-definitions-parser", version.ref = "waltid" }
+
+# all walt.id dependencies (not required for this project)
+waltid-mdoc-credentials = { module = "id.walt.mdoc-credentials:waltid-mdoc-credentials", version.ref = "waltid" }
+waltid-service-commons = { module = "id.walt:waltid-service-commons", version.ref = "waltid" }
+
+[bundles]
+waltid = ["waltid-crypto", "waltid-digital-credentials", "waltid-did", "waltid-sdjwt",
+    "waltid-openid4vc", "waltid-verification-policies", "waltid-dif-definitions-parser"]
+waltidNotNeeded = ["waltid-mdoc-credentials", "waltid-service-commons"]
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
