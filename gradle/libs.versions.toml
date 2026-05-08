@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.20"
-waltid = "0.18.0"
+waltid = "0.20.0"
 
 [libraries]
 # walt.id
