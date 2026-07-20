@@ -1,6 +1,6 @@
 [versions]
-kotlin = "2.2.20"
-waltid = "0.20.0"
+kotlin = "2.4.0"
+waltid = "0.22.0"
 
 [libraries]
 # walt.id
@@ -24,5 +24,3 @@ waltidNotNeeded = ["waltid-mdoc-credentials", "waltid-service-commons"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-
