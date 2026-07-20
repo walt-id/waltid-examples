@@ -64,7 +64,7 @@ public class VcExamples {
         String did = DidExamples.generateDidSync(key);
         // sign
         Map<String, SDField> fields = new HashMap<>();
-        fields.put("name", new SDField(Boolean.TRUE, null));
+        fields.put("name", new SDField(true, null, null));
         SDMap disclosureMap = new SDMap(fields, DecoyMode.RANDOM, 2);
         String signed = vc.signSdJwtBlocking(key, did, null, did, disclosureMap, new HashMap<>(), new HashMap<>());
         System.out.println("Signed SD-JWT VC: " + signed);
