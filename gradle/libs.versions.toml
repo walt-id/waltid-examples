@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.4.0"
-waltid = "0.20.0"
+waltid = "0.22.0"
 waltid-trust-registry = "1.0.0-SNAPSHOT"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime-compat = "0.8.0-0.6.x-compat"
