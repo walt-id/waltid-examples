@@ -130,11 +130,13 @@ waltid-examples/
 
 ## Trust-list formats
 
-The [trust-list example](src/main/kotlin/trustregistry/TrustListFormats.kt) loads and checks every representation currently supported by `waltid-trust-registry`. It is also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAll.kt) entry point:
+The trust-list examples validate both the public URLs advertised by the Enterprise API and the library's local format
+fixtures. They are also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAll.kt) entry point.
 
-- ETSI TS 119 612 TSL XML, fetched from the current Austrian RTR endpoint and validated with XMLDSig
-- Provisional LoTE JSON and LoTE XML using clearly marked synthetic fixtures
-- LoTE JSON in a compact-JWS envelope, validated against an independently pinned signer certificate
+- [TrustListUrls.kt](src/main/kotlin/trustregistry/TrustListUrls.kt) checks Austria, Italy, and the EU LoTL
+- Signed lists must pass XMLDSig integrity validation
+- The EU LoTL must load as a pointer-only list with no providers
+- [TrustListFormats.kt](src/main/kotlin/trustregistry/TrustListFormats.kt) additionally checks normative ETSI TS 119 602 JSON and XML fixtures
 
 Publish the current library to Maven Local before testing unpublished changes:
 
@@ -143,16 +145,22 @@ cd /path/to/waltid-identity
 ./gradlew :waltid-libraries:credentials:waltid-trust-registry:publishToMavenLocal
 
 cd /path/to/waltid-examples
+./gradlew validateTrustListUrls
 ./gradlew runTrustListFormats
 ```
 
-The TSL example requires outbound HTTPS access to:
+`validateTrustListUrls` is fail-fast: it returns a non-zero exit code if fetching, format detection, signature handling,
+parsing, or expected list contents do not match. It requires outbound HTTPS access to:
 
 ```text
 https://www.signatur.rtr.at/vertrauensliste.xml
+https://eidas.agid.gov.it/TL/TSL-IT.xml
+https://ec.europa.eu/tools/lotl/eu-lotl.xml
 ```
 
-The LoTE schemas are provisional pilot inputs, not finalized ETSI schemas. The unsigned fixtures report `UNVERIFIED`, the TSL reports `INTEGRITY_VERIFIED`, and the pinned compact-JWS source reports `AUTHENTICATED`.
+Signed TSLs report `INTEGRITY_VERIFIED`; the unsigned local TS 119 602 fixtures report `UNVERIFIED` because the example
+explicitly opts into `ALLOW_UNSIGNED`. The EU LoTL check validates its distinct format and pointer count. Pointer targets
+are not fetched automatically.
 
 ## 🏃‍♂️ Running Examples
 
@@ -183,6 +191,9 @@ The LoTE schemas are provisional pilot inputs, not finalized ETSI schemas. The u
 
 # Every supported trust-list format
 ./gradlew runTrustListFormats
+
+# Only the four live Enterprise API URL claims
+./gradlew validateTrustListUrls
 ```
 
 ### Using IDE

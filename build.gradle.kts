@@ -49,6 +49,13 @@ tasks.register<JavaExec>("runTrustListFormats") {
     mainClass.set("trustregistry.TrustListFormatsKt")
 }
 
+tasks.register<JavaExec>("validateTrustListUrls") {
+    group = "verification"
+    description = "Validate all public trust-list URLs advertised by the Enterprise API"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("trustregistry.TrustListUrlsKt")
+}
+
 // Set default main class for application plugin
 application {
     mainClass.set("RunAllKt")

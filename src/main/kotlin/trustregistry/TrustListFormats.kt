@@ -6,50 +6,26 @@ import id.walt.trust.model.SourceFamily
 import id.walt.trust.model.SourceAcceptancePolicy
 import id.walt.trust.model.SourceLoadOptions
 import id.walt.trust.model.TrustDecisionCode
+import id.walt.trust.model.TrustListFormat
 import id.walt.trust.service.DefaultTrustRegistryService
 import id.walt.trust.store.InMemoryTrustStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlin.time.Clock
 
-private const val AUSTRIAN_TSL_URL = "https://www.signatur.rtr.at/vertrauensliste.xml"
-
 /**
  * Loads and checks every trust-list representation currently supported by the SDK:
  *
- * 1. ETSI TS 119 612 TSL XML with XMLDSig validation
- * 2. Provisional LoTE JSON
- * 3. Provisional LoTE XML
- * 4. LoTE JSON in a compact-JWS envelope with an independently pinned signer
- *
- * The LoTE fixtures are synthetic and non-normative. They demonstrate the current
- * MVP input shape; they are not examples of a finalized ETSI schema.
+ * 1. The official live TS 119 612 URLs advertised by the Enterprise API
+ * 2. Normative TS 119 602 Annex A.1 JSON and Annex A.2.1 XML fixtures
  */
 fun main() = runBlocking { runTrustListFormats() }
 
 suspend fun runTrustListFormats() {
-    proveTslXml()
+    runTrustListUrlValidation()
     proveLoteJson()
     proveLoteXml()
-    proveSignedLoteJson()
     println("\nAll supported trust-list format checks passed.")
-}
-
-private suspend fun proveTslXml() {
-    val service = newService()
-    val result = service.loadSourceFromUrl(
-        sourceId = "at-tsl",
-        url = AUSTRIAN_TSL_URL,
-        options = SourceLoadOptions(SourceAcceptancePolicy.REQUIRE_VALID_SIGNATURE)
-    ).requireSuccess("ETSI TSL XML")
-
-    val source = service.listSources().first { it.sourceId == "at-tsl" }
-    check(source.sourceFamily == SourceFamily.TSL)
-    check(source.assurance.authenticityState == AuthenticityState.INTEGRITY_VERIFIED) {
-        "Austrian TSL XML signature integrity was not verified: ${source.assurance}"
-    }
-    check(result.entitiesLoaded > 0 && result.servicesLoaded > 0)
-    printResult("ETSI TSL XML + XMLDSig", result, source.assurance.authenticityState)
 }
 
 private suspend fun proveLoteJson() {
@@ -60,11 +36,12 @@ private suspend fun proveLoteJson() {
         options = SourceLoadOptions(SourceAcceptancePolicy.ALLOW_UNSIGNED)
     ).requireSuccess("LoTE JSON")
 
-    requireTrustedProvider(service, "JSON-WALLET-001")
+    requireTrustedProvider(service, "https://example.org/ListOfTrustedEntities/WalletProvider/AT")
     val source = service.listSources().first { it.sourceId == "lote-json" }
     check(source.sourceFamily == SourceFamily.LOTE)
+    check(source.format == TrustListFormat.ETSI_TS_119_602_JSON)
     check(source.assurance.authenticityState == AuthenticityState.UNVERIFIED)
-    printResult("LoTE JSON (synthetic, unsigned)", result, source.assurance.authenticityState)
+    printResult("TS 119 602 JSON fixture", result, source.assurance.authenticityState)
 }
 
 private suspend fun proveLoteXml() {
@@ -75,29 +52,12 @@ private suspend fun proveLoteXml() {
         options = SourceLoadOptions(SourceAcceptancePolicy.ALLOW_UNSIGNED)
     ).requireSuccess("LoTE XML")
 
-    requireTrustedProvider(service, "XML-PID-001")
+    requireTrustedProvider(service, "https://example.org/ListOfTrustedEntities/PIDProvider/AT")
     val source = service.listSources().first { it.sourceId == "lote-xml" }
     check(source.sourceFamily == SourceFamily.LOTE)
+    check(source.format == TrustListFormat.ETSI_TS_119_602_XML)
     check(source.assurance.authenticityState == AuthenticityState.UNVERIFIED)
-    printResult("LoTE XML (synthetic, unsigned)", result, source.assurance.authenticityState)
-}
-
-private suspend fun proveSignedLoteJson() {
-    val service = newService()
-    val result = service.loadSourceFromContent(
-        sourceId = "signed-lote-json",
-        content = resource("/trust-registry/signed-lote.jws").trim(),
-        options = SourceLoadOptions(
-            acceptancePolicy = SourceAcceptancePolicy.REQUIRE_AUTHENTICATED,
-            trustedSignerCertificates = listOf(resource("/trust-registry/signed-lote-signer.pem"))
-        )
-    ).requireSuccess("compact-JWS LoTE JSON")
-
-    requireTrustedProvider(service, "SIGNED-WALLET-001")
-    val source = service.listSources().first { it.sourceId == "signed-lote-json" }
-    check(source.assurance.authenticityState == AuthenticityState.AUTHENTICATED)
-    check(source.metadata["signatureFormat"] == "JWS_COMPACT")
-    printResult("LoTE JSON + compact JWS", result, source.assurance.authenticityState)
+    printResult("TS 119 602 XML fixture", result, source.assurance.authenticityState)
 }
 
 private fun newService() = DefaultTrustRegistryService(InMemoryTrustStore())
