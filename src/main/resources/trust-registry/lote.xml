@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic and non-normative fixture for the trust-registry example. -->
+<ListOfTrustedEntities>
+    <ListMetadata>
+        <ListId>xml-lote-example</ListId>
+        <ListType>pid-providers</ListType>
+        <Territory>EU</Territory>
+        <IssueDate>2026-07-20T00:00:00Z</IssueDate>
+        <NextUpdate>2035-01-01T00:00:00Z</NextUpdate>
+        <SequenceNumber>1</SequenceNumber>
+    </ListMetadata>
+    <TrustedEntity>
+        <EntityId>XML-PID-001</EntityId>
+        <EntityType>PID_PROVIDER</EntityType>
+        <LegalName>XML Example PID Provider</LegalName>
+        <Country>AT</Country>
+        <TrustedService>
+            <ServiceId>pid-service</ServiceId>
+            <ServiceType>PID_PROVIDER</ServiceType>
+            <Status>GRANTED</Status>
+            <StatusStart>2026-07-20T00:00:00Z</StatusStart>
+            <Identity>
+                <MatchType>CERTIFICATE_SHA256</MatchType>
+                <Value>sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</Value>
+            </Identity>
+        </TrustedService>
+    </TrustedEntity>
+</ListOfTrustedEntities>

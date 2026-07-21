@@ -1,6 +1,9 @@
 [versions]
-kotlin = "2.2.20"
+kotlin = "2.4.0"
 waltid = "0.20.0"
+waltid-trust-registry = "1.0.0-SNAPSHOT"
+kotlinx-coroutines = "1.11.0"
+kotlinx-datetime-compat = "0.8.0-0.6.x-compat"
 
 [libraries]
 # walt.id
@@ -12,6 +15,9 @@ waltid-sdjwt = { module = "id.walt.sdjwt:waltid-sdjwt", version.ref = "waltid" }
 waltid-openid4vc = { module = "id.walt.openid4vc:waltid-openid4vc", version.ref = "waltid" }
 waltid-verification-policies = { module = "id.walt.policies:waltid-verification-policies", version.ref = "waltid" }
 waltid-dif-definitions-parser = { module = "id.walt.dif-definitions-parser:waltid-dif-definitions-parser", version.ref = "waltid" }
+waltid-trust-registry = { module = "id.walt.credentials:waltid-trust-registry", version.ref = "waltid-trust-registry" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-datetime-compat = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime-compat" }
 
 # all walt.id dependencies (not required for this project)
 waltid-mdoc-credentials = { module = "id.walt.mdoc-credentials:waltid-mdoc-credentials", version.ref = "waltid" }
@@ -25,4 +31,3 @@ waltidNotNeeded = ["waltid-mdoc-credentials", "waltid-service-commons"]
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-

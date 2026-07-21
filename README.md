@@ -21,6 +21,7 @@
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Available Examples](#available-examples)
+- [Trust-list formats](#trust-list-formats)
 - [Running Examples](#running-examples)
 - [Key Features](#key-features)
 - [Documentation](#documentation)
@@ -29,7 +30,7 @@
 
 ## 🔧 Prerequisites
 
-- **Java 11+** or **Kotlin 1.8+**
+- **Java 21** (the Gradle daemon and compilation toolchain are provisioned automatically)
 - **Gradle 7.0+** (or Maven 3.6+)
 - **IDE** (IntelliJ IDEA recommended)
 
@@ -91,6 +92,7 @@ waltid-examples/
 │   │   └── vp/                   # Verifiable Presentations
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
+│   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
 └── build.gradle.kts               # Build configuration
 ```
 
@@ -126,6 +128,32 @@ waltid-examples/
 |---------|-------------|--------|------|
 | **VP Operations** | Create and verify verifiable presentations | [📁](src/main/kotlin/vp) | [📄](src/main/java/waltid/VpExamples.java) |
 
+## Trust-list formats
+
+The [trust-list example](src/main/kotlin/trustregistry/TrustListFormats.kt) loads and checks every representation currently supported by `waltid-trust-registry`. It is also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAll.kt) entry point:
+
+- ETSI TS 119 612 TSL XML, fetched from the current Austrian RTR endpoint and validated with XMLDSig
+- Provisional LoTE JSON and LoTE XML using clearly marked synthetic fixtures
+- LoTE JSON in a compact-JWS envelope, validated against an independently pinned signer certificate
+
+Publish the current library to Maven Local before testing unpublished changes:
+
+```bash
+cd /path/to/waltid-identity
+./gradlew :waltid-libraries:credentials:waltid-trust-registry:publishToMavenLocal
+
+cd /path/to/waltid-examples
+./gradlew runTrustListFormats
+```
+
+The TSL example requires outbound HTTPS access to:
+
+```text
+https://www.signatur.rtr.at/vertrauensliste.xml
+```
+
+The LoTE schemas are provisional pilot inputs, not finalized ETSI schemas. The unsigned fixtures report `UNVERIFIED`, the TSL reports `INTEGRITY_VERIFIED`, and the pinned compact-JWS source reports `AUTHENTICATED`.
+
 ## 🏃‍♂️ Running Examples
 
 ### Using Gradle
@@ -152,6 +180,9 @@ waltid-examples/
 # Verifiable credentials
 ./gradlew run -PmainClass=vc.jwt.SignKt
 ./gradlew run -PmainClass=vc.sdjwt.SignKt
+
+# Every supported trust-list format
+./gradlew runTrustListFormats
 ```
 
 ### Using IDE
@@ -185,6 +216,7 @@ If you prefer Maven, add the walt.id repository to your `pom.xml`:
 - **🆔 DID Methods**: did:key, did:web, did:jwk, did:cheqd
 - **🎫 VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
 - **🎭 VP Support**: Verifiable Presentations
+- **✅ Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
 - **🌐 Cross-platform**: Java and Kotlin implementations
 - **📚 Comprehensive**: From basic key generation to complex credential workflows
 

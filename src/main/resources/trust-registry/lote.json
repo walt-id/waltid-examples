@@ -1,0 +1,33 @@
+{
+  "syntheticNotice": "Synthetic and non-normative fixture for the trust-registry example.",
+  "listMetadata": {
+    "listId": "json-lote-example",
+    "listType": "wallet-providers",
+    "territory": "EU",
+    "issueDate": "2026-07-20T00:00:00Z",
+    "nextUpdate": "2035-01-01T00:00:00Z",
+    "sequenceNumber": "1"
+  },
+  "trustedEntities": [
+    {
+      "entityId": "JSON-WALLET-001",
+      "entityType": "WALLET_PROVIDER",
+      "legalName": "JSON Example Wallet Provider",
+      "country": "AT",
+      "services": [
+        {
+          "serviceId": "wallet-service",
+          "serviceType": "WALLET_PROVIDER",
+          "status": "GRANTED",
+          "statusStart": "2026-07-20T00:00:00Z",
+          "identities": [
+            {
+              "matchType": "CERTIFICATE_SHA256",
+              "value": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
