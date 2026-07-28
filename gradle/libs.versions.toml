@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.4.0"
 waltid = "0.22.0"
+waltid-crypto2 = "1.0.0-SNAPSHOT-crypto2"
 
 [libraries]
 # walt.id
@@ -16,6 +17,10 @@ waltid-dif-definitions-parser = { module = "id.walt.dif-definitions-parser:walti
 # all walt.id dependencies (not required for this project)
 waltid-mdoc-credentials = { module = "id.walt.mdoc-credentials:waltid-mdoc-credentials", version.ref = "waltid" }
 waltid-service-commons = { module = "id.walt:waltid-service-commons", version.ref = "waltid" }
+
+# crypto2 libraries
+waltid-crypto2 = { module = "id.walt.crypto2:waltid-crypto2", version.ref = "waltid-crypto2" }
+waltid-crypto2-java = { module = "id.walt.crypto2:waltid-crypto2-java", version.ref = "waltid-crypto2" }
 
 [bundles]
 waltid = ["waltid-crypto", "waltid-digital-credentials", "waltid-did", "waltid-sdjwt",
