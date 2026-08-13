@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.4.0"
 waltid = "0.22.0"
+local = "1.0.0-SNAPSHOT"
 
 [libraries]
 # walt.id
@@ -8,6 +9,7 @@ waltid = "0.22.0"
 waltid-crypto = { module = "id.walt.crypto:waltid-crypto", version.ref = "waltid" }
 waltid-digital-credentials = { module = "id.walt.credentials:waltid-digital-credentials", version.ref = "waltid" }
 waltid-did = { module = "id.walt.did:waltid-did", version.ref = "waltid" }
+waltid-x509 = { module = "id.walt.crypto:waltid-x509", version.ref = "local" }
 waltid-sdjwt = { module = "id.walt.sdjwt:waltid-sdjwt", version.ref = "waltid" }
 waltid-openid4vc = { module = "id.walt.openid4vc:waltid-openid4vc", version.ref = "waltid" }
 waltid-verification-policies = { module = "id.walt.policies:waltid-verification-policies", version.ref = "waltid" }
@@ -18,7 +20,7 @@ waltid-mdoc-credentials = { module = "id.walt.mdoc-credentials:waltid-mdoc-crede
 waltid-service-commons = { module = "id.walt:waltid-service-commons", version.ref = "waltid" }
 
 [bundles]
-waltid = ["waltid-crypto", "waltid-digital-credentials", "waltid-did", "waltid-sdjwt",
+waltid = ["waltid-crypto", "waltid-x509", "waltid-digital-credentials", "waltid-did", "waltid-sdjwt",
     "waltid-openid4vc", "waltid-verification-policies", "waltid-dif-definitions-parser"]
 waltidNotNeeded = ["waltid-mdoc-credentials", "waltid-service-commons"]
 
