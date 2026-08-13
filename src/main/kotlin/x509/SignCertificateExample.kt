@@ -83,6 +83,10 @@ private suspend fun createLeafCertificate(
 
 private suspend fun validateCertificateChain(chain: List<X509Certificate>, trustRoot: X509Certificate) {
     val trustStore = InMemoryTrustStore(listOf(trustRoot))
+    // Passing trustStore here scopes trust to exactly trustRoot for this call - it replaces
+    // X509CertificateUtil.Default's configured trust store rather than merging with it, so this
+    // does not also trust the platform's system CA store. See ConfigureTrustStoreExample.kt for
+    // more on how trust stores are combined/configured.
     val validationResult = X509CertificateUtil.validateCertificateChain(chain, trustStore)
     println("Validation result - isValid: ${validationResult.valid}")
     println("Validation result - log:")

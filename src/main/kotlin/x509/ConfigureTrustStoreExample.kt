@@ -84,4 +84,16 @@ suspend fun configureTrustStore() {
     val validationResultWithoutStore = X509CertificateUtil.validatePemCertificateChain(leafCertPem)
     println("Certificate valid (without trust): ${validationResultWithoutStore.valid}")
     validationResultWithoutStore.log.forEach { println("${it.severity} ${it.subjectDn}/${it.validatorId}: '${it.message}'") }
+    println()
+
+    // You don't need to build a whole new util via setTrust() just to scope trust for a single
+    // validation call - passing a trust store as the second argument does the same job. It fully
+    // REPLACES the util's configured trust store for that call, it is not merged with it. So even
+    // on X509CertificateUtil.Default (whose configured trust store is the platform's system CA
+    // store on JVM/Android), passing your own anchors here means ONLY those anchors are trusted -
+    // the platform's system trust is not silently added on top. This call gives the exact same
+    // result as the setTrust()-configured util above:
+    val validationResultWithOverride = X509CertificateUtil.validatePemCertificateChain(leafCertPem, trustAnchors)
+    println("Certificate valid (Default util, trust store passed per-call): ${validationResultWithOverride.valid}")
+    validationResultWithOverride.log.forEach { println("${it.severity} ${it.subjectDn}/${it.validatorId}: '${it.message}'") }
 }
