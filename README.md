@@ -88,7 +88,8 @@ waltid-examples/
 │   │   ├── vc/                   # Verifiable Credentials
 │   │   │   ├── jwt/              # JWT-based VCs
 │   │   │   └── sdjwt/            # Selective Disclosure JWTs
-│   │   └── vp/                   # Verifiable Presentations
+│   │   ├── vp/                   # Verifiable Presentations
+│   │   └── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding)
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
 └── build.gradle.kts               # Build configuration
@@ -126,6 +127,17 @@ waltid-examples/
 |---------|-------------|--------|------|
 | **VP Operations** | Create and verify verifiable presentations | [📁](src/main/kotlin/vp) | [📄](src/main/java/waltid/VpExamples.java) |
 
+### 🔏 X.509 Certificates
+
+| Feature | Description | Kotlin |
+|---------|-------------|--------|
+| **Sign Certificates** | Create a self-signed root, sign a leaf certificate, and validate the chain | [📄](src/main/kotlin/x509/SignCertificateExample.kt) |
+| **Configure Trust Stores** | Combine trust stores and configure a custom `X509CertificateUtil` | [📄](src/main/kotlin/x509/ConfigureTrustStoreExample.kt) |
+| **ISO mDL Onboarding** | Build an ISO/IEC 18013-5 IACA root and Document Signer certificate | [📄](src/main/kotlin/x509/IsoMdlOnboardingExample.kt) |
+
+> No Java examples yet for X.509 - see the Kotlin sources above, or the
+> [waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme) for the underlying library docs.
+
 ## 🏃‍♂️ Running Examples
 
 ### Using Gradle
@@ -152,6 +164,11 @@ waltid-examples/
 # Verifiable credentials
 ./gradlew run -PmainClass=vc.jwt.SignKt
 ./gradlew run -PmainClass=vc.sdjwt.SignKt
+
+# X.509 certificates
+./gradlew run -PmainClass=x509.SignCertificateExampleKt
+./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
+./gradlew run -PmainClass=x509.IsoMdlOnboardingExampleKt
 ```
 
 ### Using IDE
@@ -185,6 +202,7 @@ If you prefer Maven, add the walt.id repository to your `pom.xml`:
 - **🆔 DID Methods**: did:key, did:web, did:jwk, did:cheqd
 - **🎫 VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
 - **🎭 VP Support**: Verifiable Presentations
+- **🔏 X.509 Certificates**: Signing, trust store configuration, ISO/IEC 18013-5 (mDL) IACA/Document Signer onboarding
 - **🌐 Cross-platform**: Java and Kotlin implementations
 - **📚 Comprehensive**: From basic key generation to complex credential workflows
 
