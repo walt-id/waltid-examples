@@ -52,7 +52,7 @@ private suspend fun createSelfSignedRootCa(key: Key): X509Certificate {
         }
         //add subject alternative names
         extensionSan {
-            addEmail("office@walt.id")
+            addEmail("example@walt.id")
             addUri("https://walt.id")
         }
     }

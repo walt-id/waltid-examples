@@ -75,7 +75,7 @@ private suspend fun createIaCaRoot(): RootCertificate {
             issuerDnCountryCode = "AT",
             issuerDnOrganizationName = "Walt.id",
             issuerDnCommonName = "Walt ID IACA Root",
-            issuerEmailAddress = "office@walt.id",
+            issuerEmailAddress = "example@walt.id",
         )
     }
     println("Created IACA root: ${root.data.subjectDn}")
@@ -113,7 +113,7 @@ private suspend fun issueDocumentSignerUnder(root: RootCertificate, description:
     val documentSignerCert = X509CertificateUtil.createCertificate(root.key, root.cert, signingAlg) {
         profileDocumentSignerCertificate(
             crlDistributionPointUri = "https://crl.walt.id/crl.der",
-            issuerEmailAddress = "office@walt.id",
+            issuerEmailAddress = "example@walt.id",
             subjectKey = documentSignerKey,
             subjectDnCountryCode = "AT",
             subjectDnOrganizationName = "Walt.id",
