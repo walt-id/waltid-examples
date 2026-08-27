@@ -1,0 +1,42 @@
+{
+  "LoTE": {
+    "ListAndSchemeInformation": {
+      "LoTEVersionIdentifier": 1,
+      "LoTESequenceNumber": 1,
+      "LoTEType": "http://uri.etsi.org/19602/LoTEType/EUWalletProvidersList",
+      "SchemeOperatorName": [{ "lang": "en", "value": "Example operator" }],
+      "SchemeTerritory": "AT",
+      "ListIssueDateTime": "2026-07-21T00:00:00Z",
+      "NextUpdate": "2027-07-21T00:00:00Z"
+    },
+    "TrustedEntitiesList": [{
+      "TrustedEntityInformation": {
+        "TEName": [{ "lang": "en", "value": "Example wallet provider" }],
+        "TEAddress": {
+          "TEPostalAddress": [{
+            "lang": "en",
+            "StreetAddress": "Example street 1",
+            "Locality": "Vienna",
+            "Country": "AT"
+          }],
+          "TEElectronicAddress": [{ "lang": "en", "uriValue": "https://example.org" }]
+        },
+        "TEInformationURI": [{
+          "lang": "en",
+          "uriValue": "https://example.org/ListOfTrustedEntities/WalletProvider/AT"
+        }]
+      },
+      "TrustedEntityServices": [{
+        "ServiceInformation": {
+          "ServiceName": [{ "lang": "en", "value": "Wallet solution" }],
+          "ServiceDigitalIdentity": {
+            "X509SubjectNames": ["CN=Wallet Provider,O=Example,C=AT"]
+          },
+          "ServiceTypeIdentifier": "http://uri.etsi.org/19602/SvcType/WalletSolution/Issuance",
+          "ServiceStatus": "http://uri.etsi.org/TrstSvc/TrustedList/Svcstatus/granted",
+          "StatusStartingTime": "2026-07-21T00:00:00Z"
+        }
+      }]
+    }]
+  }
+}
