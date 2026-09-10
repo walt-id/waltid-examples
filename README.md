@@ -21,6 +21,7 @@
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Available Examples](#available-examples)
+- [Trust-list formats](#trust-list-formats)
 - [Running Examples](#running-examples)
 - [Key Features](#key-features)
 - [Documentation](#documentation)
@@ -29,7 +30,7 @@
 
 ## 🔧 Prerequisites
 
-- **Java 11+** or **Kotlin 1.8+**
+- **Java 21** (the Gradle daemon and compilation toolchain are provisioned automatically)
 - **Gradle 7.0+** (or Maven 3.6+)
 - **IDE** (IntelliJ IDEA recommended)
 
@@ -92,6 +93,7 @@ waltid-examples/
 │   │   └── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding)
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
+│   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
 └── build.gradle.kts               # Build configuration
 ```
 
@@ -126,6 +128,40 @@ waltid-examples/
 | Feature | Description | Kotlin | Java |
 |---------|-------------|--------|------|
 | **VP Operations** | Create and verify verifiable presentations | [📁](src/main/kotlin/vp) | [📄](src/main/java/waltid/VpExamples.java) |
+
+## Trust-list formats
+
+The trust-list examples validate both the public URLs advertised by the Enterprise API and the library's local format
+fixtures. They are also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAll.kt) entry point.
+
+- [TrustListUrls.kt](src/main/kotlin/trustregistry/TrustListUrls.kt) checks Austria, Italy, and the EU LoTL
+- Signed lists must pass XMLDSig integrity validation
+- The EU LoTL must load as a pointer-only list with no providers
+- [TrustListFormats.kt](src/main/kotlin/trustregistry/TrustListFormats.kt) additionally checks normative ETSI TS 119 602 JSON and XML fixtures
+
+Publish the current library to Maven Local before testing unpublished changes:
+
+```bash
+cd /path/to/waltid-identity
+./gradlew :waltid-libraries:credentials:waltid-trust-registry:publishToMavenLocal
+
+cd /path/to/waltid-examples
+./gradlew validateTrustListUrls
+./gradlew runTrustListFormats
+```
+
+`validateTrustListUrls` is fail-fast: it returns a non-zero exit code if fetching, format detection, signature handling,
+parsing, or expected list contents do not match. It requires outbound HTTPS access to:
+
+```text
+https://www.signatur.rtr.at/vertrauensliste.xml
+https://eidas.agid.gov.it/TL/TSL-IT.xml
+https://ec.europa.eu/tools/lotl/eu-lotl.xml
+```
+
+Signed TSLs report `INTEGRITY_VERIFIED`; the unsigned local TS 119 602 fixtures report `UNVERIFIED` because the example
+explicitly opts into `ALLOW_UNSIGNED`. The EU LoTL check validates its distinct format and pointer count. Pointer targets
+are not fetched automatically.
 
 ### 🔏 X.509 Certificates
 
@@ -165,6 +201,12 @@ waltid-examples/
 ./gradlew run -PmainClass=vc.jwt.SignKt
 ./gradlew run -PmainClass=vc.sdjwt.SignKt
 
+# Every supported trust-list format
+./gradlew runTrustListFormats
+
+# Only the four live Enterprise API URL claims
+./gradlew validateTrustListUrls
+
 # X.509 certificates
 ./gradlew run -PmainClass=x509.SignCertificateExampleKt
 ./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
@@ -202,6 +244,7 @@ If you prefer Maven, add the walt.id repository to your `pom.xml`:
 - **🆔 DID Methods**: did:key, did:web, did:jwk, did:cheqd
 - **🎫 VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
 - **🎭 VP Support**: Verifiable Presentations
+- **✅ Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
 - **🔏 X.509 Certificates**: Signing, trust store configuration, ISO/IEC 18013-5 (mDL) IACA/Document Signer onboarding
 - **🌐 Cross-platform**: Java and Kotlin implementations
 - **📚 Comprehensive**: From basic key generation to complex credential workflows

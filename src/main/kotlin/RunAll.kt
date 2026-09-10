@@ -29,13 +29,13 @@ import crypto.signatures.raw.signVerifyRawEd25519Key
 import crypto.signatures.raw.signVerifyRawRSAKey
 import crypto.signatures.raw.signVerifyRawSecp256k1Key
 import crypto.signatures.raw.signVerifyRawSecp256r1Key
-import did.create.createDidCheqd
 import did.create.createDidJwk
 import did.create.createDidKey
 import did.create.web.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
 import did.resolve.resolveDidWeb
+import trustregistry.runTrustListFormats
 import vc.jwt.signJwtVc
 import vc.jwt.verifyJwtVc
 import vc.sdjwt.signSdJwtVc
@@ -158,8 +158,8 @@ suspend fun main() {
     resolveDidJwk()
     println("resolveDidKey() -----------------------------------------------------------------------------------------")
     resolveDidKey()
-    println("resolveDidWeb() -----------------------------------------------------------------------------------------")
-    resolveDidWeb()
+    // println("resolveDidWeb() -----------------------------------------------------------------------------------------")
+    // resolveDidWeb()
     // DID End
 
     // VC Start
@@ -180,4 +180,7 @@ suspend fun main() {
     println("verifyVP() ----------------------------------------------------------------------------------------------")
     verifyVP()
     // VP End
+
+    println("runTrustListFormats() -----------------------------------------------------------------------------------")
+    runTrustListFormats()
 }
