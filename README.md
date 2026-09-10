@@ -207,7 +207,7 @@ are not fetched automatically.
 # Only the four live Enterprise API URL claims
 ./gradlew validateTrustListUrls
 
-# X.509 certificates
+# X.509 certificates (Kotlin)
 ./gradlew run -PmainClass=x509.SignCertificateExampleKt
 ./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
 ./gradlew run -PmainClass=x509.IsoMdlOnboardingExampleKt
