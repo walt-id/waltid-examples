@@ -11,12 +11,10 @@ import id.walt.certificate.x509.validation.validator.X509CertificateBasicConstra
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator;
 import id.walt.crypto2.CryptoRuntime;
 import id.walt.crypto2.algorithms.SignatureAlgorithm;
+import id.walt.crypto2.jvm.JavaDigestAlgorithm;
+import id.walt.crypto2.jvm.JavaSignatureAlgorithm;
+import id.walt.crypto2.jvm.JavaSoftwareKeys;
 import id.walt.crypto2.keys.Key;
-
-import static waltid.x509.Crypto2Support.ecP256;
-import static waltid.x509.Crypto2Support.ecdsaSha256Der;
-import static waltid.x509.Crypto2Support.generateSoftwareKey;
-import static waltid.x509.Crypto2Support.softwareKeyRequest;
 
 /**
  * Java port of {@code IsoMdlOnboardingExample.kt}.
@@ -31,8 +29,9 @@ import static waltid.x509.Crypto2Support.softwareKeyRequest;
  */
 public class IsoMdlOnboardingExample {
 
-    private static final CryptoRuntime cryptoRuntime = Crypto2Support.defaultRuntime();
-    private static final SignatureAlgorithm signingAlg = ecdsaSha256Der();
+    private static final CryptoRuntime cryptoRuntime = JavaSoftwareKeys.defaultRuntime();
+    private static final SignatureAlgorithm signingAlg =
+            JavaSoftwareKeys.toKotlin(JavaSignatureAlgorithm.ecdsa(new JavaDigestAlgorithm("SHA-256"), "DER"));
 
     // A util for validating a certificate presented as an IACA root, before trusting it as an anchor
     private static final JavaX509CertificateUtil iaCaRootCertUtil = JavaX509CertificateUtil.configure(
@@ -69,7 +68,7 @@ public class IsoMdlOnboardingExample {
     }
 
     private static RootCertificate createIaCaRoot() {
-        Key key = generateSoftwareKey(cryptoRuntime, softwareKeyRequest("iaca", ecP256()));
+        Key key = Crypto2Keys.generateEcP256Key(cryptoRuntime, "iaca");
         X509Certificate root = JavaX509CertificateUtil.getDefault().createSelfSignedCertificate(
                 key,
                 signingAlg,
@@ -89,7 +88,7 @@ public class IsoMdlOnboardingExample {
     }
 
     private static RootCertificate createNonCompliantSelfSignedCertificate() {
-        Key key = generateSoftwareKey(cryptoRuntime, softwareKeyRequest("not-a-real-root", ecP256()));
+        Key key = Crypto2Keys.generateEcP256Key(cryptoRuntime, "not-a-real-root");
         X509Certificate cert = JavaX509CertificateUtil.getDefault().createSelfSignedCertificate(
                 key,
                 signingAlg,
@@ -123,7 +122,7 @@ public class IsoMdlOnboardingExample {
             return;
         }
 
-        Key documentSignerKey = generateSoftwareKey(cryptoRuntime, softwareKeyRequest("document-signer", ecP256()));
+        Key documentSignerKey = Crypto2Keys.generateEcP256Key(cryptoRuntime, "document-signer");
         X509Certificate documentSignerCert = JavaX509CertificateUtil.getDefault().createCertificate(
                 root.key(),
                 root.cert(),

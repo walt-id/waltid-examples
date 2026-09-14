@@ -1,14 +1,14 @@
 package waltid.crypto2.key.create;
 
 import id.walt.crypto2.CryptoRuntime;
-import id.walt.crypto2.keys.*;
-import id.walt.crypto2.providers.GenerateSoftwareKeyRequest;
-import id.walt.crypto2.providers.cryptography.CryptographySoftwareKeyProvider;
-import kotlin.collections.CollectionsKt;
-import kotlinx.coroutines.future.FutureKt;
-import kotlinx.serialization.json.Json;
+import id.walt.crypto2.jvm.JavaGenerateSoftwareKeyRequest;
+import id.walt.crypto2.jvm.JavaKeySpec;
+import id.walt.crypto2.jvm.JavaSoftwareKeys;
+import id.walt.crypto2.keys.KeyUsage;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 /**
  * Java example: Generate a secp256r1 (P-256) ECDSA key using crypto2 library.
@@ -24,35 +24,21 @@ public class Secp256r1 {
     }
 
     public static CompletableFuture<Void> createSecp256r1() {
-        CryptoRuntime runtime = new CryptoRuntime(
-            CollectionsKt.listOf(CryptographySoftwareKeyProvider.Companion.invoke()),
-            CollectionsKt.emptyList(),
-            null
+        CryptoRuntime runtime = JavaSoftwareKeys.defaultRuntime();
+
+        JavaGenerateSoftwareKeyRequest request = JavaGenerateSoftwareKeyRequest.of(
+            "secp256r1-key",
+            JavaKeySpec.ec("P-256"),
+            Set.of(KeyUsage.SIGN, KeyUsage.VERIFY)
         );
 
-        return FutureKt.asCompletableFuture(
-            runtime.generateSoftwareKey(
-                new GenerateSoftwareKeyRequest(
-                    KeyId.Companion.invoke("secp256r1-key"),
-                    new KeySpec.Ec(EcCurve.Companion.getP256()),
-                    CollectionsKt.setOf(KeyUsage.SIGN, KeyUsage.VERIFY),
-                    null
-                ),
-                null,
-                null
-            )
-        ).thenAccept(key -> {
-            Json json = Json.Default;
+        CompletionStage<Void> result = JavaSoftwareKeys.generate(runtime, request)
+            .thenAccept(key -> {
+                System.out.println("Generated secp256r1 (P-256) key:");
+                System.out.println(key.storedKeyJson());
+            })
+            .thenCompose(unused -> JavaSoftwareKeys.close(runtime));
 
-            String serialized = json.encodeToString(
-                StoredKey.Software.Companion.serializer(),
-                key.getStoredKey()
-            );
-
-            System.out.println("Generated secp256r1 (P-256) key:");
-            System.out.println(serialized);
-
-            FutureKt.asCompletableFuture(runtime.close(null)).join();
-        });
+        return result.toCompletableFuture();
     }
 }

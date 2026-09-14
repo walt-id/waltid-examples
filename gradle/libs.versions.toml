@@ -9,6 +9,8 @@ local = "2.0.0-SNAPSHOT"
 # walt.id
 # required dependencies for running the example project
 waltid-crypto = { module = "id.walt.crypto:waltid-crypto", version.ref = "waltid" }
+waltid-crypto2 = { module = "id.walt.crypto2:waltid-crypto2", version.ref = "local" }
+waltid-crypto2-java = { module = "id.walt.crypto2:waltid-crypto2-java", version.ref = "local" }
 waltid-digital-credentials = { module = "id.walt.credentials:waltid-digital-credentials", version.ref = "waltid" }
 waltid-did = { module = "id.walt.did:waltid-did", version.ref = "waltid" }
 waltid-x509 = { module = "id.walt.crypto:waltid-x509", version.ref = "local" }

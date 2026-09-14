@@ -12,14 +12,11 @@ import id.walt.certificate.x509.truststore.InMemoryTrustStore;
 import id.walt.certificate.x509.validation.ValidationResult;
 import id.walt.crypto2.CryptoRuntime;
 import id.walt.crypto2.algorithms.SignatureAlgorithm;
+import id.walt.crypto2.jvm.JavaDigestAlgorithm;
+import id.walt.crypto2.jvm.JavaSignatureAlgorithm;
+import id.walt.crypto2.jvm.JavaSoftwareKeys;
 import id.walt.crypto2.keys.Key;
 import kotlin.Unit;
-
-import static waltid.x509.Crypto2Support.ecP256;
-import static waltid.x509.Crypto2Support.ecdsaSha256Der;
-import static waltid.x509.Crypto2Support.generateSoftwareKey;
-import static waltid.x509.Crypto2Support.softwareKeyRequest;
-import static waltid.x509.JavaInterop.await;
 
 /**
  * Java port of {@code SignCertificateExample.kt}.
@@ -30,14 +27,15 @@ import static waltid.x509.JavaInterop.await;
  */
 public class SignCertificateExample {
 
-    private static final CryptoRuntime cryptoRuntime = Crypto2Support.defaultRuntime();
-    private static final SignatureAlgorithm certSigningAlg = ecdsaSha256Der();
+    private static final CryptoRuntime cryptoRuntime = JavaSoftwareKeys.defaultRuntime();
+    private static final SignatureAlgorithm certSigningAlg =
+            JavaSoftwareKeys.toKotlin(JavaSignatureAlgorithm.ecdsa(new JavaDigestAlgorithm("SHA-256"), "DER"));
 
     public static void main(String[] args) {
-        Key caKey = generateSoftwareKey(cryptoRuntime, softwareKeyRequest("ca", ecP256()));
+        Key caKey = Crypto2Keys.generateEcP256Key(cryptoRuntime, "ca");
         X509Certificate caCert = createSelfSignedRootCa(caKey);
         System.out.println();
-        Key leafKey = generateSoftwareKey(cryptoRuntime, softwareKeyRequest("ca", ecP256()));
+        Key leafKey = Crypto2Keys.generateEcP256Key(cryptoRuntime, "ca");
         X509Certificate leafCert = createLeafCertificate(caKey, caCert, leafKey);
         System.out.println();
         validateCertificateChain(List.of(leafCert), caCert);
@@ -99,7 +97,7 @@ public class SignCertificateExample {
         System.out.println("Subject DN: " + cert.getData().getSubjectDn());
         System.out.println("Fingerprint: " + cert.getFingerprintSha256Hex());
         // restored subject public key - not used further, mirrors the Kotlin example
-        Key publicKey = await(cont -> cert.restoreSubjectPublicKey(cryptoRuntime, cont));
+        Key publicKey = JavaX509CertificateUtil.getDefault().restoreSubjectPublicKey(cert, cryptoRuntime);
         return cert;
     }
 
