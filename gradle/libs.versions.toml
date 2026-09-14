@@ -3,6 +3,7 @@ kotlin = "2.4.0"
 waltid = "1.0.0"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime-compat = "0.8.0-0.6.x-compat"
+local = "2.0.0-SNAPSHOT"
 
 [libraries]
 # walt.id
@@ -10,7 +11,7 @@ kotlinx-datetime-compat = "0.8.0-0.6.x-compat"
 waltid-crypto = { module = "id.walt.crypto:waltid-crypto", version.ref = "waltid" }
 waltid-digital-credentials = { module = "id.walt.credentials:waltid-digital-credentials", version.ref = "waltid" }
 waltid-did = { module = "id.walt.did:waltid-did", version.ref = "waltid" }
-waltid-x509 = { module = "id.walt.crypto:waltid-x509", version.ref = "waltid" }
+waltid-x509 = { module = "id.walt.crypto:waltid-x509", version.ref = "local" }
 waltid-sdjwt = { module = "id.walt.sdjwt:waltid-sdjwt", version.ref = "waltid" }
 waltid-openid4vc = { module = "id.walt.openid4vc:waltid-openid4vc", version.ref = "waltid" }
 waltid-verification-policies = { module = "id.walt.policies:waltid-verification-policies", version.ref = "waltid" }
