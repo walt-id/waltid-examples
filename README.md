@@ -22,6 +22,8 @@
 - [Project Structure](#project-structure)
 - [Available Examples](#available-examples)
 - [Trust-list formats](#trust-list-formats)
+- [🔏 X.509 Certificates](#-x509-certificates)
+- [🔑 Crypto2 (new library)](#-crypto2-new-library)
 - [Running Examples](#running-examples)
 - [Key Features](#key-features)
 - [Documentation](#documentation)
@@ -90,9 +92,12 @@ waltid-examples/
 │   │   │   ├── jwt/              # JWT-based VCs
 │   │   │   └── sdjwt/            # Selective Disclosure JWTs
 │   │   ├── vp/                   # Verifiable Presentations
-│   │   └── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding)
+│   │   ├── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding)
+│   │   └── crypto2/              # New crypto2 library: keys, signatures, serialization, provider selection
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
+│           ├── x509/             # Java ports of the X.509 examples
+│           └── crypto2/          # Java ports of the crypto2 examples
 │   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
 └── build.gradle.kts               # Build configuration
 ```
@@ -165,14 +170,34 @@ are not fetched automatically.
 
 ### 🔏 X.509 Certificates
 
-| Feature | Description | Kotlin |
-|---------|-------------|--------|
-| **Sign Certificates** | Create a self-signed root, sign a leaf certificate, and validate the chain | [📄](src/main/kotlin/x509/SignCertificateExample.kt) |
-| **Configure Trust Stores** | Combine trust stores and configure a custom `X509CertificateUtil` | [📄](src/main/kotlin/x509/ConfigureTrustStoreExample.kt) |
-| **ISO mDL Onboarding** | Build an ISO/IEC 18013-5 IACA root and Document Signer certificate | [📄](src/main/kotlin/x509/IsoMdlOnboardingExample.kt) |
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **Sign Certificates** | Create a self-signed root, sign a leaf certificate, and validate the chain | [📄](src/main/kotlin/x509/SignCertificateExample.kt) | [📄](src/main/java/waltid/x509/SignCertificateExample.java) |
+| **Configure Trust Stores** | Combine trust stores and configure a custom `X509CertificateUtil` | [📄](src/main/kotlin/x509/ConfigureTrustStoreExample.kt) | [📄](src/main/java/waltid/x509/ConfigureTrustStoreExample.java) |
+| **ISO mDL Onboarding** | Build an ISO/IEC 18013-5 IACA root and Document Signer certificate | [📄](src/main/kotlin/x509/IsoMdlOnboardingExample.kt) | [📄](src/main/java/waltid/x509/IsoMdlOnboardingExample.java) |
 
-> No Java examples yet for X.509 - see the Kotlin sources above, or the
-> [waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme) for the underlying library docs.
+The Java ports are direct translations of the Kotlin sources and use the crypto2 library (via `Crypto2Keys`, a
+shared internal helper) to generate the EC P-256 keys used to sign the certificates. See the
+[waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme)
+for the underlying library docs.
+
+## 🔑 Crypto2 (new library)
+
+`crypto2` is walt.id's next-generation crypto library, built around a `CryptoRuntime` that generates and manages
+keys through pluggable providers (software or hardware-backed providers) instead of a fixed key
+type per algorithm.
+
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **Key Generation** | Generate Ed25519, RSA, and secp256r1 (P-256) software keys | [📁](src/main/kotlin/crypto2/key/create) | [📄](src/main/java/waltid/crypto2/key/create) |
+| **Signatures** | Sign and verify with Ed25519 and secp256r1 keys | [📁](src/main/kotlin/crypto2/signatures) | [📄](src/main/java/waltid/crypto2/signatures/Secp256r1Sign.java) |
+| **PEM Export** | Export a key's public/private material to SPKI/PKCS8 PEM | [📄](src/main/kotlin/crypto2/key/encode/PemExport.kt) | — |
+| **Serialization & Restoration** | Serialize a key to JSON and restore it into an operational key via `CryptoRuntime` | [📄](src/main/kotlin/crypto2/key/SerializationExample.kt) | — |
+| **Provider Selection** | Automatic, explicit, and fallback-list provider selection, including the failure case | [📄](src/main/kotlin/crypto2/ProviderSelectionDemo.kt) | — |
+| **Simplified Java Usage** | Idiomatic blocking-call Java example (`.get()` on the `CompletionStage` API) instead of coroutine interop | — | [📄](src/main/java/waltid/crypto2/simple/SimpleSigningExample.java) |
+
+None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - run them individually (see
+[Running Examples](#running-examples)).
 
 ## 🏃‍♂️ Running Examples
 
@@ -211,6 +236,22 @@ are not fetched automatically.
 ./gradlew run -PmainClass=x509.SignCertificateExampleKt
 ./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
 ./gradlew run -PmainClass=x509.IsoMdlOnboardingExampleKt
+
+# X.509 certificates (Java)
+./gradlew run -PmainClass=waltid.x509.SignCertificateExample
+./gradlew run -PmainClass=waltid.x509.ConfigureTrustStoreExample
+./gradlew run -PmainClass=waltid.x509.IsoMdlOnboardingExample
+
+# crypto2 (Kotlin)
+./gradlew run -PmainClass=crypto2.key.create.Ed25519Kt
+./gradlew run -PmainClass=crypto2.signatures.Ed25519Kt
+./gradlew run -PmainClass=crypto2.key.SerializationExampleKt
+./gradlew run -PmainClass=crypto2.ProviderSelectionDemoKt
+
+# crypto2 (Java)
+./gradlew run -PmainClass=waltid.crypto2.key.create.Ed25519
+./gradlew run -PmainClass=waltid.crypto2.signatures.Secp256r1Sign
+./gradlew run -PmainClass=waltid.crypto2.simple.SimpleSigningExample
 ```
 
 ### Using IDE
@@ -246,6 +287,7 @@ If you prefer Maven, add the walt.id repository to your `pom.xml`:
 - **🎭 VP Support**: Verifiable Presentations
 - **✅ Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
 - **🔏 X.509 Certificates**: Signing, trust store configuration, ISO/IEC 18013-5 (mDL) IACA/Document Signer onboarding
+- **🔑 Crypto2**: Provider-based key generation, signatures, PEM export, serialization/restoration, and provider selection (walt.id's next-generation crypto library)
 - **🌐 Cross-platform**: Java and Kotlin implementations
 - **📚 Comprehensive**: From basic key generation to complex credential workflows
 
