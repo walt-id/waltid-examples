@@ -13,7 +13,10 @@ import crypto.key.decode.raw.importEd25519RawPublicKey
 import crypto.key.decode.raw.importRSARawPublicKey
 import crypto.key.decode.raw.importSecp256k1RawPublicKey
 import crypto.key.decode.raw.importSecp256r1RawPublicKey
-import crypto.key.encode.jwk.*
+import crypto.key.encode.jwk.exportEd25519Jwk
+import crypto.key.encode.jwk.exportRSAJwk
+import crypto.key.encode.jwk.exportSecp256k1Jwk
+import crypto.key.encode.jwk.exportSecp256r1Jwk
 import crypto.key.encode.pem.exportRSAPEM
 import crypto.key.encode.pem.exportSecp256k1PEM
 import crypto.key.encode.pem.exportSecp256r1PEM
@@ -34,13 +37,16 @@ import did.create.createDidKey
 import did.create.web.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
-import did.resolve.resolveDidWeb
 import trustregistry.runTrustListFormats
 import vc.jwt.signJwtVc
 import vc.jwt.verifyJwtVc
 import vc.sdjwt.signSdJwtVc
 import vp.signVP
 import vp.verifyVP
+import x509.configureTrustStore
+import x509.createCsr
+import x509.isoMdlOnboarding
+import x509.signCertificate
 
 
 suspend fun main() {
@@ -183,4 +189,16 @@ suspend fun main() {
 
     println("runTrustListFormats() -----------------------------------------------------------------------------------")
     runTrustListFormats()
+
+    println("runConfigureTrustStore() [X509] ----------------------------------------------------------------------------")
+    configureTrustStore()
+
+    println("runCreateCsr() [X509] --------------------------------------------------------------------------------------")
+    createCsr()
+
+    println("runSignCertificate() [X509] --------------------------------------------------------------------------------")
+    signCertificate()
+
+    println("runIsoMdlOnboarding() [X509] -------------------------------------------------------------------------------")
+    isoMdlOnboarding()
 }

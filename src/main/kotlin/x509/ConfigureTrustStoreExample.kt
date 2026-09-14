@@ -40,9 +40,7 @@ w+skfmw=
 """.trimIndent()
 
 suspend fun main() {
-
     configureTrustStore()
-
 }
 
 object MyTrustStore : X509CertificateTrustStore {

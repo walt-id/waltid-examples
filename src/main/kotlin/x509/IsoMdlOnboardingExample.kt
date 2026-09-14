@@ -55,6 +55,10 @@ private val documentSignerCertUtil = X509CertificateUtil {
 private data class RootCertificate(val cert: X509Certificate, val key: Key)
 
 suspend fun main() {
+    isoMdlOnboarding()
+}
+
+suspend fun isoMdlOnboarding() {
     val validRoot = createIaCaRoot()
     println()
     issueDocumentSignerUnder(validRoot, "a genuine, profile-compliant IACA root")

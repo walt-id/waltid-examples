@@ -25,8 +25,11 @@ private val keyGen = GenerateSoftwareKeyRequest(
 )
 private val certSigningAlg = SignatureAlgorithm.Ecdsa(DigestAlgorithm.SHA_256, EcdsaSignatureEncoding.DER)
 
-
 suspend fun main() {
+    signCertificate()
+}
+
+suspend fun signCertificate() {
     val caKey = cryptoRuntime.generateSoftwareKey(keyGen)
     val caCert = createSelfSignedRootCa(caKey)
     println()
