@@ -32,6 +32,10 @@ import crypto.signatures.raw.signVerifyRawEd25519Key
 import crypto.signatures.raw.signVerifyRawRSAKey
 import crypto.signatures.raw.signVerifyRawSecp256k1Key
 import crypto.signatures.raw.signVerifyRawSecp256r1Key
+import crypto2.providerSelectionDemo
+import crypto2.key.keySerializationAndRestoration
+import crypto2.signatures.signAndVerifyEd25519
+import crypto2.signatures.signAndVerifySecp256r1
 import did.create.createDidJwk
 import did.create.createDidKey
 import did.create.web.createDidWeb
@@ -148,6 +152,17 @@ suspend fun main() {
     signVerifyRawSecp256r1Key()
     //Signatures End
     // Crypto End
+
+    // Crypto2 Start
+    println("providerSelectionDemo() [Crypto2] ------------------------------------------------------------------------")
+    providerSelectionDemo()
+    println("keySerializationAndRestoration() [Crypto2] ---------------------------------------------------------------")
+    keySerializationAndRestoration()
+    println("signAndVerifyEd25519() [Crypto2] --------------------------------------------------------------------------")
+    signAndVerifyEd25519()
+    println("signAndVerifySecp256r1() [Crypto2] ------------------------------------------------------------------------")
+    signAndVerifySecp256r1()
+    // Crypto2 End
 
     // DID Start
     // Create
