@@ -51,6 +51,8 @@ import x509.configureTrustStore
 import x509.createCsr
 import x509.isoMdlOnboarding
 import x509.signCertificate
+import x509.wrpacRelyingParty
+import x509.wrprcRelyingParty
 
 
 suspend fun main() {
@@ -216,4 +218,10 @@ suspend fun main() {
 
     println("runIsoMdlOnboarding() [X509] -------------------------------------------------------------------------------")
     isoMdlOnboarding()
+
+    println("runWrpacRelyingParty() [X509] ------------------------------------------------------------------------------")
+    wrpacRelyingParty()
+
+    println("runWrprcRelyingParty() [X509] ------------------------------------------------------------------------------")
+    wrprcRelyingParty()
 }

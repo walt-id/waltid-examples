@@ -7,5 +7,11 @@ public class AllX509Examples {
         ConfigureTrustStoreExample.main(new String[0]);
         SignCertificateExample.main(new String[0]);
         IsoMdlOnboardingExample.main(new String[0]);
+        WrpacRelyingPartyExample.main(new String[0]);
+        WrprcRelyingPartyExample.main(new String[0]);
+    }
+
+    public static void main(String[] args) throws Exception {
+        AllX509Examples.runAllX509Examples();
     }
 }
