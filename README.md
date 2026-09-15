@@ -15,26 +15,28 @@
 </a>
 </div>
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Available Examples](#available-examples)
 - [Trust-list formats](#trust-list-formats)
+- [X.509 Certificates](#x509-certificates)
+- [Crypto2 (new library)](#crypto2-new-library)
 - [Running Examples](#running-examples)
 - [Key Features](#key-features)
 - [Documentation](#documentation)
 - [Community](#community)
 - [License](#license)
 
-## 🔧 Prerequisites
+## Prerequisites
 
 - **Java 21** (the Gradle daemon and compilation toolchain are provisioned automatically)
 - **Gradle 7.0+** (or Maven 3.6+)
 - **IDE** (IntelliJ IDEA recommended)
 
-## 🚀 Quick Start
+## Quick Start
 
 1. **Clone the repository:**
    ```bash
@@ -69,7 +71,7 @@
    ./gradlew run -PmainClass=vc.jwt.SignKt
    ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 waltid-examples/
@@ -89,44 +91,48 @@ waltid-examples/
 │   │   ├── vc/                   # Verifiable Credentials
 │   │   │   ├── jwt/              # JWT-based VCs
 │   │   │   └── sdjwt/            # Selective Disclosure JWTs
-│   │   └── vp/                   # Verifiable Presentations
+│   │   ├── vp/                   # Verifiable Presentations
+│   │   ├── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding, WRPAC/WRPRC)
+│   │   └── crypto2/              # New crypto2 library: keys, signatures, serialization, provider selection
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
+│           ├── x509/             # Java ports of the X.509 examples, including WRPAC/WRPRC
+│           └── crypto2/          # Java ports of the crypto2 examples
 │   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
 └── build.gradle.kts               # Build configuration
 ```
 
-## 📚 Available Examples
+## Available Examples
 
-### 🔐 Cryptographic Operations
-
-| Feature | Description | Kotlin | Java |
-|---------|-------------|--------|------|
-| **Key Generation** | Create cryptographic keys (Ed25519, RSA, Secp256k1, Secp256r1) | [📁](src/main/kotlin/crypto/key/create) | [📄](src/main/java/waltid/KeysExamples.java) |
-| **Key Import** | Import keys from JWK, PEM, or raw formats | [📁](src/main/kotlin/crypto/key/decode) | [📄](src/main/java/waltid/KeysExamples.java) |
-| **Key Export** | Export keys to various formats | [📁](src/main/kotlin/crypto/key/encode) | [📄](src/main/java/waltid/KeysExamples.java) |
-| **Raw Signatures** | Sign and verify raw data | [📁](src/main/kotlin/crypto/signatures/raw) | [📄](src/main/java/waltid/KeysExamples.java) |
-| **JWS Signatures** | JSON Web Signature operations | [📁](src/main/kotlin/crypto/signatures/jws) | [📄](src/main/java/waltid/KeysExamples.java) |
-
-### 🆔 Decentralized Identifiers (DIDs)
+### Cryptographic Operations
 
 | Feature | Description | Kotlin | Java |
 |---------|-------------|--------|------|
-| **DID Creation** | Generate DIDs using various methods (did:key, did:web, did:jwk, did:cheqd) | [📁](src/main/kotlin/did/create) | [📄](src/main/java/waltid/DidExamples.java) |
-| **DID Resolution** | Resolve DIDs to DID documents | [📁](src/main/kotlin/did/resolve) | [📄](src/main/java/waltid/DidExamples.java) |
+| **Key Generation** | Create cryptographic keys (Ed25519, RSA, Secp256k1, Secp256r1) | [Kotlin](src/main/kotlin/crypto/key/create) | [Java](src/main/java/waltid/KeysExamples.java) |
+| **Key Import** | Import keys from JWK, PEM, or raw formats | [Kotlin](src/main/kotlin/crypto/key/decode) | [Java](src/main/java/waltid/KeysExamples.java) |
+| **Key Export** | Export keys to various formats | [Kotlin](src/main/kotlin/crypto/key/encode) | [Java](src/main/java/waltid/KeysExamples.java) |
+| **Raw Signatures** | Sign and verify raw data | [Kotlin](src/main/kotlin/crypto/signatures/raw) | [Java](src/main/java/waltid/KeysExamples.java) |
+| **JWS Signatures** | JSON Web Signature operations | [Kotlin](src/main/kotlin/crypto/signatures/jws) | [Java](src/main/java/waltid/KeysExamples.java) |
 
-### 🎫 Verifiable Credentials (VCs)
-
-| Feature | Description | Kotlin | Java |
-|---------|-------------|--------|------|
-| **JWT VCs** | Create and verify JWT-based verifiable credentials | [📁](src/main/kotlin/vc/jwt) | [📄](src/main/java/waltid/VcExamples.java) |
-| **SD-JWT VCs** | Selective disclosure JWT credentials | [📁](src/main/kotlin/vc/sdjwt) | [📄](src/main/java/waltid/VcExamples.java) |
-
-### 🎭 Verifiable Presentations (VPs)
+### Decentralized Identifiers (DIDs)
 
 | Feature | Description | Kotlin | Java |
 |---------|-------------|--------|------|
-| **VP Operations** | Create and verify verifiable presentations | [📁](src/main/kotlin/vp) | [📄](src/main/java/waltid/VpExamples.java) |
+| **DID Creation** | Generate DIDs using various methods (did:key, did:web, did:jwk, did:cheqd) | [Kotlin](src/main/kotlin/did/create) | [Java](src/main/java/waltid/DidExamples.java) |
+| **DID Resolution** | Resolve DIDs to DID documents | [Kotlin](src/main/kotlin/did/resolve) | [Java](src/main/java/waltid/DidExamples.java) |
+
+### Verifiable Credentials (VCs)
+
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **JWT VCs** | Create and verify JWT-based verifiable credentials | [Kotlin](src/main/kotlin/vc/jwt) | [Java](src/main/java/waltid/VcExamples.java) |
+| **SD-JWT VCs** | Selective disclosure JWT credentials | [Kotlin](src/main/kotlin/vc/sdjwt) | [Java](src/main/java/waltid/VcExamples.java) |
+
+### Verifiable Presentations (VPs)
+
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **VP Operations** | Create and verify verifiable presentations | [Kotlin](src/main/kotlin/vp) | [Java](src/main/java/waltid/VpExamples.java) |
 
 ## Trust-list formats
 
@@ -162,7 +168,40 @@ Signed TSLs report `INTEGRITY_VERIFIED`; the unsigned local TS 119 602 fixtures 
 explicitly opts into `ALLOW_UNSIGNED`. The EU LoTL check validates its distinct format and pointer count. Pointer targets
 are not fetched automatically.
 
-## 🏃‍♂️ Running Examples
+### X.509 Certificates
+
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **Sign Certificates** | Create a self-signed root, sign a leaf certificate, and validate the chain | [Kotlin](src/main/kotlin/x509/SignCertificateExample.kt) | [Java](src/main/java/waltid/x509/SignCertificateExample.java) |
+| **Configure Trust Stores** | Combine trust stores and configure a custom `X509CertificateUtil` | [Kotlin](src/main/kotlin/x509/ConfigureTrustStoreExample.kt) | [Java](src/main/java/waltid/x509/ConfigureTrustStoreExample.java) |
+| **ISO mDL Onboarding** | Build an ISO/IEC 18013-5 IACA root and Document Signer certificate | [Kotlin](src/main/kotlin/x509/IsoMdlOnboardingExample.kt) | [Java](src/main/java/waltid/x509/IsoMdlOnboardingExample.java) |
+| **WRPAC (Relying Party Access)** | Build and validate a Wallet Relying Party Access Certificate (ETSI TS 119 411-8) across both policy extremes (legal/qualified and natural/non-qualified) | [Kotlin](src/main/kotlin/x509/WrpacRelyingPartyExample.kt) | [Java](src/main/java/waltid/x509/WrpacRelyingPartyExample.java) |
+| **WRPRC (Relying Party Registration)** | Build and validate a Wallet Relying Party Registration Certificate (ETSI TS 119 475) - draft profile, doesn't yet validate the registered intended use | [Kotlin](src/main/kotlin/x509/WrprcRelyingPartyExample.kt) | [Java](src/main/java/waltid/x509/WrprcRelyingPartyExample.java) |
+
+The Java ports are direct translations of the Kotlin sources and use the crypto2 library (via `Crypto2Keys`, a
+shared internal helper) to generate the EC P-256 keys used to sign the certificates. See the
+[waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme)
+for the underlying library docs, including what the WRPRC profile deliberately doesn't validate yet.
+
+## Crypto2 (new library)
+
+`crypto2` is walt.id's next-generation crypto library, built around a `CryptoRuntime` that generates and manages
+keys through pluggable providers (software or hardware-backed providers) instead of a fixed key
+type per algorithm.
+
+| Feature | Description | Kotlin | Java |
+|---------|-------------|--------|------|
+| **Key Generation** | Generate Ed25519, RSA, and secp256r1 (P-256) software keys | [Kotlin](src/main/kotlin/crypto2/key/create) | [Java](src/main/java/waltid/crypto2/key/create) |
+| **Signatures** | Sign and verify with Ed25519 and secp256r1 keys | [Kotlin](src/main/kotlin/crypto2/signatures) | [Java](src/main/java/waltid/crypto2/signatures/Secp256r1Sign.java) |
+| **PEM Export** | Export a key's public/private material to SPKI/PKCS8 PEM | [Kotlin](src/main/kotlin/crypto2/key/encode/PemExport.kt) | — |
+| **Serialization & Restoration** | Serialize a key to JSON and restore it into an operational key via `CryptoRuntime` | [Kotlin](src/main/kotlin/crypto2/key/SerializationExample.kt) | — |
+| **Provider Selection** | Automatic, explicit, and fallback-list provider selection, including the failure case | [Kotlin](src/main/kotlin/crypto2/ProviderSelectionDemo.kt) | — |
+| **Simplified Java Usage** | Idiomatic blocking-call Java example (`.get()` on the `CompletionStage` API) instead of coroutine interop | — | [Java](src/main/java/waltid/crypto2/simple/SimpleSigningExample.java) |
+
+None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - run them individually (see
+[Running Examples](#running-examples)).
+
+## Running Examples
 
 ### Using Gradle
 
@@ -194,6 +233,31 @@ are not fetched automatically.
 
 # Only the four live Enterprise API URL claims
 ./gradlew validateTrustListUrls
+
+# X.509 certificates (Kotlin)
+./gradlew run -PmainClass=x509.SignCertificateExampleKt
+./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
+./gradlew run -PmainClass=x509.IsoMdlOnboardingExampleKt
+./gradlew run -PmainClass=x509.WrpacRelyingPartyExampleKt
+./gradlew run -PmainClass=x509.WrprcRelyingPartyExampleKt
+
+# X.509 certificates (Java)
+./gradlew run -PmainClass=waltid.x509.SignCertificateExample
+./gradlew run -PmainClass=waltid.x509.ConfigureTrustStoreExample
+./gradlew run -PmainClass=waltid.x509.IsoMdlOnboardingExample
+./gradlew run -PmainClass=waltid.x509.WrpacRelyingPartyExample
+./gradlew run -PmainClass=waltid.x509.WrprcRelyingPartyExample
+
+# crypto2 (Kotlin)
+./gradlew run -PmainClass=crypto2.key.create.Ed25519Kt
+./gradlew run -PmainClass=crypto2.signatures.Ed25519Kt
+./gradlew run -PmainClass=crypto2.key.SerializationExampleKt
+./gradlew run -PmainClass=crypto2.ProviderSelectionDemoKt
+
+# crypto2 (Java)
+./gradlew run -PmainClass=waltid.crypto2.key.create.Ed25519
+./gradlew run -PmainClass=waltid.crypto2.signatures.Secp256r1Sign
+./gradlew run -PmainClass=waltid.crypto2.simple.SimpleSigningExample
 ```
 
 ### Using IDE
@@ -220,42 +284,44 @@ If you prefer Maven, add the walt.id repository to your `pom.xml`:
 </repositories>
 ```
 
-## ✨ Key Features
+## Key Features
 
-- **🔐 Multi-algorithm Support**: Ed25519, RSA, Secp256k1, Secp256r1
-- **📦 Multiple Key Formats**: JWK, PEM, Raw (Base58)
-- **🆔 DID Methods**: did:key, did:web, did:jwk, did:cheqd
-- **🎫 VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
-- **🎭 VP Support**: Verifiable Presentations
-- **✅ Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
-- **🌐 Cross-platform**: Java and Kotlin implementations
-- **📚 Comprehensive**: From basic key generation to complex credential workflows
+- **Multi-algorithm Support**: Ed25519, RSA, Secp256k1, Secp256r1
+- **Multiple Key Formats**: JWK, PEM, Raw (Base58)
+- **DID Methods**: did:key, did:web, did:jwk, did:cheqd
+- **VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
+- **VP Support**: Verifiable Presentations
+- **Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
+- **X.509 Certificates**: Signing, trust store configuration, ISO/IEC 18013-5 (mDL) IACA/Document Signer onboarding, and ETSI Wallet Relying Party (WRPAC/WRPRC) certificates
+- **Crypto2**: Provider-based key generation, signatures, PEM export, serialization/restoration, and provider selection (walt.id's next-generation crypto library)
+- **Cross-platform**: Java and Kotlin implementations
+- **Comprehensive**: From basic key generation to complex credential workflows
 
-## 📖 Documentation
+## Documentation
 
 - **walt.id SDK Documentation**: [https://docs.walt.id/](https://docs.walt.id/)
 - **Identity Repository**: [https://github.com/walt-id/waltid-identity](https://github.com/walt-id/waltid-identity)
 - **Maven Repository**: [https://maven.waltid.dev/#/releases/id/walt](https://maven.waltid.dev/#/releases/id/walt)
 - **API Reference**: Available in the test directories of the [identity repository](https://github.com/walt-id/waltid-identity)
 
-## 🤝 Community
+## Community
 
 Connect with the walt.id community:
 
-* **💬 Discord**: [Join our Discord server](https://discord.gg/AW8AgqJthZ)
-* **📧 Newsletter**: [Subscribe to updates](https://walt.id/newsletter)
-* **📺 YouTube**: [Watch tutorials](https://www.youtube.com/channel/UCXfOzrv3PIvmur_CmwwmdLA)
-* **🐦 Twitter**: [Follow @walt_id](https://mobile.twitter.com/walt_id)
-* **💭 GitHub Discussions**: [Get help and discuss features](https://github.com/walt-id/.github/discussions)
+* **Discord**: [Join our Discord server](https://discord.gg/AW8AgqJthZ)
+* **Newsletter**: [Subscribe to updates](https://walt.id/newsletter)
+* **YouTube**: [Watch tutorials](https://www.youtube.com/channel/UCXfOzrv3PIvmur_CmwwmdLA)
+* **Twitter**: [Follow @walt_id](https://mobile.twitter.com/walt_id)
+* **GitHub Discussions**: [Get help and discuss features](https://github.com/walt-id/.github/discussions)
 
-## 📄 License
+## License
 
 This project is licensed under the **Apache License, Version 2.0**. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-  <p>Made with ❤️ by the <a href="https://walt.id">walt.id</a> team</p>
+  <p>Made by the <a href="https://walt.id">walt.id</a> team</p>
   <p>
     <a href="https://walt.id">Website</a> •
     <a href="https://docs.walt.id">Documentation</a> •

@@ -13,7 +13,10 @@ import crypto.key.decode.raw.importEd25519RawPublicKey
 import crypto.key.decode.raw.importRSARawPublicKey
 import crypto.key.decode.raw.importSecp256k1RawPublicKey
 import crypto.key.decode.raw.importSecp256r1RawPublicKey
-import crypto.key.encode.jwk.*
+import crypto.key.encode.jwk.exportEd25519Jwk
+import crypto.key.encode.jwk.exportRSAJwk
+import crypto.key.encode.jwk.exportSecp256k1Jwk
+import crypto.key.encode.jwk.exportSecp256r1Jwk
 import crypto.key.encode.pem.exportRSAPEM
 import crypto.key.encode.pem.exportSecp256k1PEM
 import crypto.key.encode.pem.exportSecp256r1PEM
@@ -29,18 +32,27 @@ import crypto.signatures.raw.signVerifyRawEd25519Key
 import crypto.signatures.raw.signVerifyRawRSAKey
 import crypto.signatures.raw.signVerifyRawSecp256k1Key
 import crypto.signatures.raw.signVerifyRawSecp256r1Key
+import crypto2.providerSelectionDemo
+import crypto2.key.keySerializationAndRestoration
+import crypto2.signatures.signAndVerifyEd25519
+import crypto2.signatures.signAndVerifySecp256r1
 import did.create.createDidJwk
 import did.create.createDidKey
 import did.create.web.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
-import did.resolve.resolveDidWeb
 import trustregistry.runTrustListFormats
 import vc.jwt.signJwtVc
 import vc.jwt.verifyJwtVc
 import vc.sdjwt.signSdJwtVc
 import vp.signVP
 import vp.verifyVP
+import x509.configureTrustStore
+import x509.createCsr
+import x509.isoMdlOnboarding
+import x509.signCertificate
+import x509.wrpacRelyingParty
+import x509.wrprcRelyingParty
 
 
 suspend fun main() {
@@ -143,6 +155,17 @@ suspend fun main() {
     //Signatures End
     // Crypto End
 
+    // Crypto2 Start
+    println("providerSelectionDemo() [Crypto2] ------------------------------------------------------------------------")
+    providerSelectionDemo()
+    println("keySerializationAndRestoration() [Crypto2] ---------------------------------------------------------------")
+    keySerializationAndRestoration()
+    println("signAndVerifyEd25519() [Crypto2] --------------------------------------------------------------------------")
+    signAndVerifyEd25519()
+    println("signAndVerifySecp256r1() [Crypto2] ------------------------------------------------------------------------")
+    signAndVerifySecp256r1()
+    // Crypto2 End
+
     // DID Start
     // Create
     println("createDidCheqd() ----------------------------------------------------------------------------------------")
@@ -183,4 +206,22 @@ suspend fun main() {
 
     println("runTrustListFormats() -----------------------------------------------------------------------------------")
     runTrustListFormats()
+
+    println("runConfigureTrustStore() [X509] ----------------------------------------------------------------------------")
+    configureTrustStore()
+
+    println("runCreateCsr() [X509] --------------------------------------------------------------------------------------")
+    createCsr()
+
+    println("runSignCertificate() [X509] --------------------------------------------------------------------------------")
+    signCertificate()
+
+    println("runIsoMdlOnboarding() [X509] -------------------------------------------------------------------------------")
+    isoMdlOnboarding()
+
+    println("runWrpacRelyingParty() [X509] ------------------------------------------------------------------------------")
+    wrpacRelyingParty()
+
+    println("runWrprcRelyingParty() [X509] ------------------------------------------------------------------------------")
+    wrprcRelyingParty()
 }
