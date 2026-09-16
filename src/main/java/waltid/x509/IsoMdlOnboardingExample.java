@@ -84,6 +84,7 @@ public class IsoMdlOnboardingExample {
                 )
         );
         System.out.println("Created IACA root: " + root.getData().getSubjectDn());
+        System.out.println(root.getEncodedPem());
         return new RootCertificate(root, key);
     }
 
@@ -96,6 +97,7 @@ public class IsoMdlOnboardingExample {
         );
         System.out.println("Created certificate (not built via the IACA profile helper): "
                 + cert.getData().getSubjectDn());
+        System.out.println(cert.getEncodedPem());
         return new RootCertificate(cert, key);
     }
 
@@ -142,6 +144,7 @@ public class IsoMdlOnboardingExample {
                 )
         );
 
+        System.out.println(documentSignerCert.getEncodedPem());
         ValidationResult validationResult =
                 documentSignerCertUtil.validateCertificateChain(List.of(documentSignerCert), root.cert());
         System.out.println("Document Signer issued and profile-compliant: " + validationResult.getValid());

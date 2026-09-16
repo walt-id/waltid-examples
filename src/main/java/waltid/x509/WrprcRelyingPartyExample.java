@@ -61,6 +61,7 @@ public class WrprcRelyingPartyExample {
                 )
         );
         System.out.println("Issued WRPRC: " + wrprcCert.getData().getSubjectDn());
+        System.out.println(wrprcCert.getEncodedPem());
 
         ValidationResult result = wrprcCertUtil.validateCertificateChain(List.of(wrprcCert), rootCert);
         System.out.println("WRPRC valid: " + result.getValid());
@@ -84,6 +85,7 @@ public class WrprcRelyingPartyExample {
                 }
         );
         System.out.println("Created WRPRC registrar root CA: " + cert.getData().getSubjectDn());
+        System.out.println(cert.getEncodedPem());
         return cert;
     }
 }

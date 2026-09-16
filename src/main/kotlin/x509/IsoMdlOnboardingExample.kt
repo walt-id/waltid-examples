@@ -83,6 +83,7 @@ private suspend fun createIaCaRoot(): RootCertificate {
         )
     }
     println("Created IACA root: ${root.data.subjectDn}")
+    println(root.encodedPem)
     return RootCertificate(root, key)
 }
 
@@ -92,6 +93,7 @@ private suspend fun createNonCompliantSelfSignedCertificate(): RootCertificate {
         subjectDn = "CN=Not A Real IACA Root, O=Walt.id, C=AT"
     }
     println("Created certificate (not built via the IACA profile helper): ${cert.data.subjectDn}")
+    println(cert.encodedPem)
     return RootCertificate(cert, key)
 }
 
@@ -125,6 +127,7 @@ private suspend fun issueDocumentSignerUnder(root: RootCertificate, description:
         )
     }
 
+    println(documentSignerCert.encodedPem)
     val validationResult = documentSignerCertUtil.validateCertificateChain(listOf(documentSignerCert), root.cert)
     println("Document Signer issued and profile-compliant: ${validationResult.valid}")
 }

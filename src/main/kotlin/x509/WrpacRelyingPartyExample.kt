@@ -78,6 +78,7 @@ private suspend fun createRootCa(key: Key): X509Certificate {
         extensionBasicConstraints { critical = true; cA = true }
     }
     println("Created WRPAC root CA: ${cert.data.subjectDn}")
+
     return cert
 }
 
@@ -102,7 +103,9 @@ private suspend fun issueAndValidate(
             crlDistributionPointUri = "https://ca.example.com/crl",
         )
     }
+    println(wrpacCert.encodedPem)
     println("Issued WRPAC ($policyOid): ${wrpacCert.data.subjectDn}")
+    println(wrpacCert.encodedPem)
 
     val result = wrpacCertUtil.validateCertificateChain(listOf(wrpacCert), rootCert)
     println("WRPAC valid: ${result.valid}")

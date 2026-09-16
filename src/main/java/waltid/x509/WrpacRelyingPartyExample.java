@@ -76,6 +76,7 @@ public class WrpacRelyingPartyExample {
                 }
         );
         System.out.println("Created WRPAC root CA: " + cert.getData().getSubjectDn());
+        System.out.println(cert.getEncodedPem());
         return cert;
     }
 
@@ -105,6 +106,7 @@ public class WrpacRelyingPartyExample {
                 )
         );
         System.out.println("Issued WRPAC (" + policyOid + "): " + wrpacCert.getData().getSubjectDn());
+        System.out.println(wrpacCert.getEncodedPem());
 
         ValidationResult result = wrpacCertUtil.validateCertificateChain(List.of(wrpacCert), rootCert);
         System.out.println("WRPAC valid: " + result.getValid());

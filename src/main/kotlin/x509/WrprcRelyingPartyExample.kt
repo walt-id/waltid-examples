@@ -61,6 +61,7 @@ suspend fun wrprcRelyingParty() {
         )
     }
     println("Issued WRPRC: ${wrprcCert.data.subjectDn}")
+    println(wrprcCert.encodedPem)
 
     val result = wrprcCertUtil.validateCertificateChain(listOf(wrprcCert), rootCert)
     println("WRPRC valid: ${result.valid}")
@@ -74,5 +75,6 @@ private suspend fun createRootCa(key: Key): X509Certificate {
         extensionBasicConstraints { critical = true; cA = true }
     }
     println("Created WRPRC registrar root CA: ${cert.data.subjectDn}")
+    println(cert.encodedPem)
     return cert
 }
