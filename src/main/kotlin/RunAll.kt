@@ -50,7 +50,9 @@ import vp.verifyVP
 import x509.configureTrustStore
 import x509.createCsr
 import x509.isoMdlOnboarding
+import x509.pidProvider
 import x509.signCertificate
+import x509.walletProvider
 import x509.wrpacRelyingParty
 import x509.wrprcRelyingParty
 
@@ -218,6 +220,12 @@ suspend fun main() {
 
     println("runIsoMdlOnboarding() [X509] -------------------------------------------------------------------------------")
     isoMdlOnboarding()
+
+    println("runPidProvider() [X509] ------------------------------------------------------------------------------------")
+    pidProvider()
+
+    println("runWalletProvider() [X509] ---------------------------------------------------------------------------------")
+    walletProvider()
 
     println("runWrpacRelyingParty() [X509] ------------------------------------------------------------------------------")
     wrpacRelyingParty()
