@@ -92,11 +92,11 @@ waltid-examples/
 │   │   │   ├── jwt/              # JWT-based VCs
 │   │   │   └── sdjwt/            # Selective Disclosure JWTs
 │   │   ├── vp/                   # Verifiable Presentations
-│   │   ├── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding, WRPAC/WRPRC)
+│   │   ├── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding, ETSI Provider/WRPAC/WRPRC)
 │   │   └── crypto2/              # New crypto2 library: keys, signatures, serialization, provider selection
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
-│           ├── x509/             # Java ports of the X.509 examples, including WRPAC/WRPRC
+│           ├── x509/             # Java ports of the X.509 examples, including ETSI Provider/WRPAC/WRPRC
 │           └── crypto2/          # Java ports of the crypto2 examples
 │   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
 └── build.gradle.kts               # Build configuration
@@ -175,11 +175,14 @@ are not fetched automatically.
 | **Sign Certificates** | Create a self-signed root, sign a leaf certificate, and validate the chain | [Kotlin](src/main/kotlin/x509/SignCertificateExample.kt) | [Java](src/main/java/waltid/x509/SignCertificateExample.java) |
 | **Configure Trust Stores** | Combine trust stores and configure a custom `X509CertificateUtil` | [Kotlin](src/main/kotlin/x509/ConfigureTrustStoreExample.kt) | [Java](src/main/java/waltid/x509/ConfigureTrustStoreExample.java) |
 | **ISO mDL Onboarding** | Build an ISO/IEC 18013-5 IACA root and Document Signer certificate | [Kotlin](src/main/kotlin/x509/IsoMdlOnboardingExample.kt) | [Java](src/main/java/waltid/x509/IsoMdlOnboardingExample.java) |
+| **PID Provider** | Build and validate a PID Provider certificate (ETSI TS 119 412-6), both CA-issued and self-signed | [Kotlin](src/main/kotlin/x509/PidProviderExample.kt) | [Java](src/main/java/waltid/x509/PidProviderExample.java) |
+| **Wallet Provider** | Build and validate a Wallet Provider certificate (ETSI TS 119 412-6, WAL-5.1-01) | [Kotlin](src/main/kotlin/x509/WalletProviderExample.kt) | [Java](src/main/java/waltid/x509/WalletProviderExample.java) |
 | **WRPAC (Relying Party Access)** | Build and validate a Wallet Relying Party Access Certificate (ETSI TS 119 411-8) across both policy extremes (legal/qualified and natural/non-qualified) | [Kotlin](src/main/kotlin/x509/WrpacRelyingPartyExample.kt) | [Java](src/main/java/waltid/x509/WrpacRelyingPartyExample.java) |
 | **WRPRC (Relying Party Registration)** | Build and validate a Wallet Relying Party Registration Certificate (ETSI TS 119 475) - draft profile, doesn't yet validate the registered intended use | [Kotlin](src/main/kotlin/x509/WrprcRelyingPartyExample.kt) | [Java](src/main/java/waltid/x509/WrprcRelyingPartyExample.java) |
 
 The Java ports are direct translations of the Kotlin sources and use the crypto2 library (via `Crypto2Keys`, a
-shared internal helper) to generate the EC P-256 keys used to sign the certificates. See the
+shared internal helper) to generate the EC P-256 keys used to sign the certificates. Every example prints the full
+PEM of each certificate it creates, so you can paste it into an ASN.1/X.509 decoder to inspect it directly. See the
 [waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme)
 for the underlying library docs, including what the WRPRC profile deliberately doesn't validate yet.
 
@@ -238,6 +241,8 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
 ./gradlew run -PmainClass=x509.SignCertificateExampleKt
 ./gradlew run -PmainClass=x509.ConfigureTrustStoreExampleKt
 ./gradlew run -PmainClass=x509.IsoMdlOnboardingExampleKt
+./gradlew run -PmainClass=x509.PidProviderExampleKt
+./gradlew run -PmainClass=x509.WalletProviderExampleKt
 ./gradlew run -PmainClass=x509.WrpacRelyingPartyExampleKt
 ./gradlew run -PmainClass=x509.WrprcRelyingPartyExampleKt
 
@@ -245,6 +250,8 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
 ./gradlew run -PmainClass=waltid.x509.SignCertificateExample
 ./gradlew run -PmainClass=waltid.x509.ConfigureTrustStoreExample
 ./gradlew run -PmainClass=waltid.x509.IsoMdlOnboardingExample
+./gradlew run -PmainClass=waltid.x509.PidProviderExample
+./gradlew run -PmainClass=waltid.x509.WalletProviderExample
 ./gradlew run -PmainClass=waltid.x509.WrpacRelyingPartyExample
 ./gradlew run -PmainClass=waltid.x509.WrprcRelyingPartyExample
 
