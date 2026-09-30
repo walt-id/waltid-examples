@@ -41,7 +41,12 @@ import did.create.createDidKey
 import did.create.web.createDidWeb
 import did.resolve.resolveDidJwk
 import did.resolve.resolveDidKey
+import trustregistry.germanTrustList
+import trustregistry.pidProviderTrustList
 import trustregistry.runTrustListFormats
+import trustregistry.walletProviderTrustList
+import trustregistry.wrpacTrustList
+import trustregistry.wrprcTrustList
 import vc.jwt.signJwtVc
 import vc.jwt.verifyJwtVc
 import vc.sdjwt.signSdJwtVc
@@ -208,6 +213,21 @@ suspend fun main() {
 
     println("runTrustListFormats() -----------------------------------------------------------------------------------")
     runTrustListFormats()
+
+    println("germanTrustList() ---------------------------------------------------------------------------------------")
+    germanTrustList()
+
+    println("wrpacTrustList() -----------------------------------------------------------------------------------------")
+    wrpacTrustList()
+
+    println("wrprcTrustList() -----------------------------------------------------------------------------------------")
+    wrprcTrustList()
+
+    println("pidProviderTrustList() ----------------------------------------------------------------------------------")
+    pidProviderTrustList()
+
+    println("walletProviderTrustList() -------------------------------------------------------------------------------")
+    walletProviderTrustList()
 
     println("runConfigureTrustStore() [X509] ----------------------------------------------------------------------------")
     configureTrustStore()

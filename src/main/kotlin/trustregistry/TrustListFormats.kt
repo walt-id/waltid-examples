@@ -92,6 +92,6 @@ private fun printResult(
     )
 }
 
-private fun resource(path: String): String = checkNotNull(
+internal fun resource(path: String): String = checkNotNull(
     object {}.javaClass.getResource(path)
 ) { "Missing example resource: $path" }.readText()

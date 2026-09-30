@@ -46,7 +46,7 @@
 
 2. **Build the project:**
    ```bash
-   ./gradlew build
+   ./gradlew build --rerun-tasks
    ```
 
 3. **Run all examples (Kotlin):**
@@ -144,6 +144,30 @@ fixtures. They are also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAl
 - The EU LoTL must load as a pointer-only list with no providers
 - [TrustListFormats.kt](src/main/kotlin/trustregistry/TrustListFormats.kt) additionally checks normative ETSI TS 119 602 JSON and XML fixtures
 
+### Entity types beyond `TRUST_SERVICE_PROVIDER`
+
+Most national trust lists (Austria, Italy, the EU LoTL) are ETSI TS 119 612 TSLs, which this library
+always reads as `TrustedEntityType.TRUST_SERVICE_PROVIDER`. The EUDI Wallet ecosystem's other roles
+(`PID_PROVIDER`, `WALLET_PROVIDER`, `ACCESS_CERTIFICATE_PROVIDER`, `RELYING_PARTY_PROVIDER`,
+`ATTESTATION_PROVIDER`) only come from ETSI TS 119 602 Lists of Trusted Entities (LoTE) - a newer,
+JSON/XML format most publishers haven't adopted yet. These examples show each role, from the most
+real source currently available:
+
+- [GermanTrustListExample.kt](src/main/kotlin/trustregistry/GermanTrustListExample.kt) - Germany's
+  national TSL (`TRUST_SERVICE_PROVIDER`), signed with RSASSA-PSS rather than plain PKCS#1 v1.5;
+  loaded from a local snapshot (`src/main/resources/trust-registry/tl-de.xml`, ~5 MB) rather than
+  refetched live on every run
+- [WrpacTrustListExample.kt](src/main/kotlin/trustregistry/WrpacTrustListExample.kt) /
+  [WrprcTrustListExample.kt](src/main/kotlin/trustregistry/WrprcTrustListExample.kt) -
+  `ACCESS_CERTIFICATE_PROVIDER` / `RELYING_PARTY_PROVIDER`, from a real public LoTE snapshot
+  published by the WE BUILD WP4 Trust Infrastructure pilot
+  ([webuild-consortium.github.io/wp4-trust-group](https://webuild-consortium.github.io/wp4-trust-group/))
+- [PidProviderTrustListExample.kt](src/main/kotlin/trustregistry/PidProviderTrustListExample.kt) /
+  [WalletProviderTrustListExample.kt](src/main/kotlin/trustregistry/WalletProviderTrustListExample.kt) -
+  `PID_PROVIDER` / `WALLET_PROVIDER`, from the local LoTE fixtures (`lote.xml` / `lote.json`); no
+  public LoTE publisher lists these two roles yet as of this writing - the one real pilot checked
+  for this still publishes them as TSLs instead
+
 Publish the current library to Maven Local before testing unpublished changes:
 
 ```bash
@@ -236,6 +260,13 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
 
 # Only the four live Enterprise API URL claims
 ./gradlew validateTrustListUrls
+
+# Entity types beyond TRUST_SERVICE_PROVIDER
+./gradlew run -PmainClass=trustregistry.GermanTrustListExampleKt
+./gradlew run -PmainClass=trustregistry.WrpacTrustListExampleKt
+./gradlew run -PmainClass=trustregistry.WrprcTrustListExampleKt
+./gradlew run -PmainClass=trustregistry.PidProviderTrustListExampleKt
+./gradlew run -PmainClass=trustregistry.WalletProviderTrustListExampleKt
 
 # X.509 certificates (Kotlin)
 ./gradlew run -PmainClass=x509.SignCertificateExampleKt
