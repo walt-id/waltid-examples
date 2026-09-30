@@ -33,6 +33,10 @@ dependencies {
     }
     // all walt.id dependencies (not required for this project)
     implementation(libs.bundles.waltidNotNeeded)
+
+    // crypto2 (new library)
+    implementation(libs.waltid.crypto2)
+    implementation(libs.waltid.crypto2.java)
 }
 
 // Configure run task to allow dynamic main class selection
