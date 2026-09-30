@@ -1,5 +1,3 @@
-# walt.id Examples
-
 <div align="center">
  <h1>walt.id Identity SDK Examples</h1>
  <p>Comprehensive examples and tutorials for the walt.id Identity SDK, covering cryptographic operations, DID management, and verifiable credentials.</p>
