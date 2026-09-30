@@ -25,58 +25,34 @@
 - [X.509 Certificates](#x509-certificates)
 - [Crypto2 (new library)](#crypto2-new-library)
 - [Running Examples](#running-examples)
-- [Key Features](#key-features)
 - [Documentation](#documentation)
 - [Community](#community)
 - [License](#license)
 
 ## Prerequisites
 
-- **Java 21** (the Gradle daemon and compilation toolchain are provisioned automatically)
-- **Gradle 7.0+** (or Maven 3.6+)
-- **IDE** (IntelliJ IDEA recommended)
+- **Java 21** - the Gradle wrapper (`./gradlew`, included) provisions the daemon and Kotlin/Java toolchain itself,
+  no separate Gradle install needed
+- **IDE** (IntelliJ IDEA recommended) - optional, only for [Using IDE](#using-ide)
 
 ## Quick Start
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/walt-id/waltid-examples.git
-   cd waltid-examples
-   ```
+```bash
+git clone https://github.com/walt-id/waltid-examples.git
+cd waltid-examples
+./gradlew build --rerun-tasks
+./gradlew run -PmainClass=RunAllKt
+```
 
-2. **Build the project:**
-   ```bash
-   ./gradlew build --rerun-tasks
-   ```
-
-3. **Run all examples (Kotlin):**
-   ```bash
-   ./gradlew run -PmainClass=RunAllKt
-   ```
-
-4. **Run all examples (Java):**
-   ```bash
-   ./gradlew run -PmainClass=waltid.RunAll
-   ```
-
-5. **Run individual examples:**
-   ```bash
-   # Generate cryptographic keys
-   ./gradlew run -PmainClass=crypto.key.create.Ed25519Kt
-   
-   # Create a DID
-   ./gradlew run -PmainClass=did.create.KeyKt
-   
-   # Sign a verifiable credential
-   ./gradlew run -PmainClass=vc.jwt.SignKt
-   ```
+That's the whole loop: clone, build, run. For running one example at a time instead of everything,
+jump to [Running Examples](#running-examples) - every `-PmainClass=...` command is listed there.
 
 ## Project Structure
 
 ```
 waltid-examples/
 ├── src/main/
-│   ├── kotlin/                    # Kotlin examples
+│   ├── kotlin/                   # Kotlin examples
 │   │   ├── crypto/               # Cryptographic operations
 │   │   │   ├── key/              # Key management
 │   │   │   │   ├── create/       # Key generation
@@ -93,13 +69,14 @@ waltid-examples/
 │   │   │   └── sdjwt/            # Selective Disclosure JWTs
 │   │   ├── vp/                   # Verifiable Presentations
 │   │   ├── x509/                 # X.509 certificates (signing, trust stores, ISO mDL onboarding, ETSI Provider/WRPAC/WRPRC)
+│   │   ├── trustregistry/        # Trust-list formats (TSL/LoTE) and entity types (PID/Wallet/WRPAC/WRPRC Provider)
 │   │   └── crypto2/              # New crypto2 library: keys, signatures, serialization, provider selection
 │   └── java/                     # Java examples
 │       └── waltid/               # Java implementation
 │           ├── x509/             # Java ports of the X.509 examples, including ETSI Provider/WRPAC/WRPRC
 │           └── crypto2/          # Java ports of the crypto2 examples
-│   └── resources/trust-registry/ # Synthetic LoTE and signed-JWS fixtures
-└── build.gradle.kts               # Build configuration
+│   └── resources/trust-registry/ # LoTE fixtures, plus real snapshots (German TSL, WE BUILD WRPAC/WRPRC LoTE)
+└── build.gradle.kts              # Build configuration
 ```
 
 ## Available Examples
@@ -192,7 +169,7 @@ Signed TSLs report `INTEGRITY_VERIFIED`; the unsigned local TS 119 602 fixtures 
 explicitly opts into `ALLOW_UNSIGNED`. The EU LoTL check validates its distinct format and pointer count. Pointer targets
 are not fetched automatically.
 
-### X.509 Certificates
+## X.509 Certificates
 
 | Feature | Description | Kotlin | Java |
 |---------|-------------|--------|------|
@@ -232,17 +209,13 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
 
 ### Using Gradle
 
-**Run all examples:**
-```bash
-# Kotlin version
-./gradlew run -PmainClass=RunAllKt
+Every example is a `main()` function, run via `-PmainClass=<fully.qualified.Name>` (Kotlin files get a `Kt` suffix
+unless they define a top-level object). `RunAllKt` / `waltid.RunAll` run everything in one call:
 
-# Java version  
-./gradlew run -PmainClass=waltid.RunAll
-```
-
-**Run specific examples:**
 ```bash
+./gradlew run -PmainClass=RunAllKt        # Kotlin, all examples
+./gradlew run -PmainClass=waltid.RunAll   # Java, all examples
+
 # Key generation
 ./gradlew run -PmainClass=crypto.key.create.Ed25519Kt
 ./gradlew run -PmainClass=crypto.key.create.RSAKt
@@ -258,7 +231,7 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
 # Every supported trust-list format
 ./gradlew runTrustListFormats
 
-# Only the four live Enterprise API URL claims
+# Only the three live Enterprise API URL claims
 ./gradlew validateTrustListUrls
 
 # Entity types beyond TRUST_SERVICE_PROVIDER
@@ -309,37 +282,11 @@ None of the crypto2 examples are wired into `RunAllKt` / `waltid.RunAll` yet - r
    - Install Kotlin and Java extensions
    - Use the integrated terminal to run Gradle commands
 
-### Using Maven
-
-If you prefer Maven, add the walt.id repository to your `pom.xml`:
-
-```xml
-<repositories>
-    <repository>
-        <id>walt.id</id>
-        <url>https://maven.waltid.dev/releases</url>
-    </repository>
-</repositories>
-```
-
-## Key Features
-
-- **Multi-algorithm Support**: Ed25519, RSA, Secp256k1, Secp256r1
-- **Multiple Key Formats**: JWK, PEM, Raw (Base58)
-- **DID Methods**: did:key, did:web, did:jwk, did:cheqd
-- **VC Standards**: JWT VCs, SD-JWT (Selective Disclosure)
-- **VP Support**: Verifiable Presentations
-- **Trust Lists**: TSL XML, LoTE JSON/XML, XMLDSig, and compact-JWS validation
-- **X.509 Certificates**: Signing, trust store configuration, ISO/IEC 18013-5 (mDL) IACA/Document Signer onboarding, and ETSI Wallet Relying Party (WRPAC/WRPRC) certificates
-- **Crypto2**: Provider-based key generation, signatures, PEM export, serialization/restoration, and provider selection (walt.id's next-generation crypto library)
-- **Cross-platform**: Java and Kotlin implementations
-- **Comprehensive**: From basic key generation to complex credential workflows
-
 ## Documentation
 
 - **walt.id SDK Documentation**: [https://docs.walt.id/](https://docs.walt.id/)
 - **Identity Repository**: [https://github.com/walt-id/waltid-identity](https://github.com/walt-id/waltid-identity)
-- **Maven Repository**: [https://maven.waltid.dev/#/releases/id/walt](https://maven.waltid.dev/#/releases/id/walt)
+- **Maven Repository**: [https://maven.waltid.dev/#/releases/id/walt](https://maven.waltid.dev/#/releases/id/walt) - this repo builds with Gradle only; add this as a Maven repository if you're consuming walt.id libraries from your own Maven project instead
 - **API Reference**: Available in the test directories of the [identity repository](https://github.com/walt-id/waltid-identity)
 
 ## Community
