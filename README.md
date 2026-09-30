@@ -111,7 +111,7 @@ waltid-examples/
 |---------|-------------|--------|------|
 | **VP Operations** | Create and verify verifiable presentations | [Kotlin](src/main/kotlin/vp) | [Java](src/main/java/waltid/VpExamples.java) |
 
-## Trust-list formats
+### Trust-list Examples
 
 The trust-list examples validate both the public URLs advertised by the Enterprise API and the library's local format
 fixtures. They are also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAll.kt) entry point.
@@ -120,16 +120,6 @@ fixtures. They are also executed by the Kotlin [RunAll.kt](src/main/kotlin/RunAl
 - Signed lists must pass XMLDSig integrity validation
 - The EU LoTL must load as a pointer-only list with no providers
 - [TrustListFormats.kt](src/main/kotlin/trustregistry/TrustListFormats.kt) additionally checks normative ETSI TS 119 602 JSON and XML fixtures
-
-### Entity types beyond `TRUST_SERVICE_PROVIDER`
-
-Most national trust lists (Austria, Italy, the EU LoTL) are ETSI TS 119 612 TSLs, which this library
-always reads as `TrustedEntityType.TRUST_SERVICE_PROVIDER`. The EUDI Wallet ecosystem's other roles
-(`PID_PROVIDER`, `WALLET_PROVIDER`, `ACCESS_CERTIFICATE_PROVIDER`, `RELYING_PARTY_PROVIDER`,
-`ATTESTATION_PROVIDER`) only come from ETSI TS 119 602 Lists of Trusted Entities (LoTE) - a newer,
-JSON/XML format most publishers haven't adopted yet. These examples show each role, from the most
-real source currently available:
-
 - [GermanTrustListExample.kt](src/main/kotlin/trustregistry/GermanTrustListExample.kt) - Germany's
   national TSL (`TRUST_SERVICE_PROVIDER`), signed with RSASSA-PSS rather than plain PKCS#1 v1.5;
   loaded from a local snapshot (`src/main/resources/trust-registry/tl-de.xml`, ~5 MB) rather than
@@ -145,31 +135,7 @@ real source currently available:
   public LoTE publisher lists these two roles yet as of this writing - the one real pilot checked
   for this still publishes them as TSLs instead
 
-Publish the current library to Maven Local before testing unpublished changes:
-
-```bash
-cd /path/to/waltid-identity
-./gradlew :waltid-libraries:credentials:waltid-trust-registry:publishToMavenLocal
-
-cd /path/to/waltid-examples
-./gradlew validateTrustListUrls
-./gradlew runTrustListFormats
-```
-
-`validateTrustListUrls` is fail-fast: it returns a non-zero exit code if fetching, format detection, signature handling,
-parsing, or expected list contents do not match. It requires outbound HTTPS access to:
-
-```text
-https://www.signatur.rtr.at/vertrauensliste.xml
-https://eidas.agid.gov.it/TL/TSL-IT.xml
-https://ec.europa.eu/tools/lotl/eu-lotl.xml
-```
-
-Signed TSLs report `INTEGRITY_VERIFIED`; the unsigned local TS 119 602 fixtures report `UNVERIFIED` because the example
-explicitly opts into `ALLOW_UNSIGNED`. The EU LoTL check validates its distinct format and pointer count. Pointer targets
-are not fetched automatically.
-
-## X.509 Certificates
+### X.509 Certificates
 
 | Feature | Description | Kotlin | Java |
 |---------|-------------|--------|------|
@@ -187,7 +153,7 @@ PEM of each certificate it creates, so you can paste it into an ASN.1/X.509 deco
 [waltid-x509 README](https://github.com/walt-id/waltid-identity/tree/main/waltid-libraries/crypto/waltid-x509#readme)
 for the underlying library docs, including what the WRPRC profile deliberately doesn't validate yet.
 
-## Crypto2 (new library)
+### Crypto2 (new library)
 
 `crypto2` is walt.id's next-generation crypto library, built around a `CryptoRuntime` that generates and manages
 keys through pluggable providers (software or hardware-backed providers) instead of a fixed key
