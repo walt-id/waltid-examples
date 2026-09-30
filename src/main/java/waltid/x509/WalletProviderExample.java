@@ -59,7 +59,7 @@ public class WalletProviderExample {
                 rootKey,
                 rootCert,
                 signingAlg,
-                builder -> EtsiWalletProviderX509CertificateProfile.INSTANCE.profileWalletProviderCertificate(
+                builder -> EtsiWalletProviderX509CertificateProfile.INSTANCE.profileEtsiWalletProviderCertificate(
                         builder,
                         walletProviderKey,                     // subjectKey
                         "CN=Example Wallet Provider,O=Walt.id,OrganizationIdentifier=VATAT-U11223344,C=AT", // subjectDn

@@ -3,7 +3,7 @@ package x509
 import id.walt.certificate.x509.X509CertificateUtil
 import id.walt.certificate.x509.extension.BasicConstraintsExtension.Companion.extensionBasicConstraints
 import id.walt.certificate.x509.profile.EtsiWalletProviderX509CertificateProfile
-import id.walt.certificate.x509.profile.EtsiWalletProviderX509CertificateProfile.profileWalletProviderCertificate
+import id.walt.certificate.x509.profile.EtsiWalletProviderX509CertificateProfile.profileEtsiWalletProviderCertificate
 import id.walt.certificate.x509.validation.ValidationResult
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator
 import id.walt.crypto2.CryptoRuntime
@@ -53,7 +53,7 @@ suspend fun walletProvider() {
 
     val walletProviderKey = cryptoRuntime.generateSoftwareKey(keyGen.copy(id = KeyId("wallet-provider")))
     val walletProviderCert = X509CertificateUtil.createCertificate(rootKey, rootCert, signingAlg) {
-        profileWalletProviderCertificate(
+        profileEtsiWalletProviderCertificate(
             subjectKey = walletProviderKey,
             subjectDn = "CN=Example Wallet Provider,O=Walt.id,OrganizationIdentifier=VATAT-U11223344,C=AT",
             certificatePolicyOids = listOf("0.4.0.194112.1.2"),

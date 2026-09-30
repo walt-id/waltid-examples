@@ -65,7 +65,7 @@ public class PidProviderExample {
                 rootKey,
                 rootCert,
                 signingAlg,
-                builder -> EtsiPidProviderX509CertificateProfile.INSTANCE.profilePidProviderCertificate(
+                builder -> EtsiPidProviderX509CertificateProfile.INSTANCE.profileEtsiPidProviderCertificate(
                         builder,
                         pidProviderKey,                        // subjectKey
                         "CN=Example PID Provider,O=Walt.id,OrganizationIdentifier=VATAT-U87654321,C=AT", // subjectDn
@@ -91,7 +91,7 @@ public class PidProviderExample {
         X509Certificate pidProviderCert = JavaX509CertificateUtil.getDefault().createSelfSignedCertificate(
                 pidProviderKey,
                 signingAlg,
-                builder -> EtsiPidProviderX509CertificateProfile.INSTANCE.profilePidProviderCertificate(
+                builder -> EtsiPidProviderX509CertificateProfile.INSTANCE.profileEtsiPidProviderCertificate(
                         builder,
                         null,                                   // subjectKey - null = self-signed
                         "CN=Example Self-Signed PID Provider,O=Walt.id,OrganizationIdentifier=VATAT-U11223344,C=AT", // subjectDn

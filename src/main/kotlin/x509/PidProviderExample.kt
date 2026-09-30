@@ -3,7 +3,7 @@ package x509
 import id.walt.certificate.x509.X509CertificateUtil
 import id.walt.certificate.x509.extension.BasicConstraintsExtension.Companion.extensionBasicConstraints
 import id.walt.certificate.x509.profile.EtsiPidProviderX509CertificateProfile
-import id.walt.certificate.x509.profile.EtsiPidProviderX509CertificateProfile.profilePidProviderCertificate
+import id.walt.certificate.x509.profile.EtsiPidProviderX509CertificateProfile.profileEtsiPidProviderCertificate
 import id.walt.certificate.x509.validation.ValidationResult
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator
 import id.walt.crypto2.CryptoRuntime
@@ -59,7 +59,7 @@ private suspend fun issueCaIssuedCertificate() {
 
     val pidProviderKey = cryptoRuntime.generateSoftwareKey(keyGen.copy(id = KeyId("pid-provider-ca-issued")))
     val pidProviderCert = X509CertificateUtil.createCertificate(rootKey, rootCert, signingAlg) {
-        profilePidProviderCertificate(
+        profileEtsiPidProviderCertificate(
             subjectKey = pidProviderKey,
             subjectDn = "CN=Example PID Provider,O=Walt.id,OrganizationIdentifier=VATAT-U87654321,C=AT",
             certificatePolicyOids = listOf("0.4.0.194112.1.1"),
@@ -79,7 +79,7 @@ private suspend fun issueCaIssuedCertificate() {
 private suspend fun issueSelfSignedCertificate() {
     val pidProviderKey = cryptoRuntime.generateSoftwareKey(keyGen.copy(id = KeyId("pid-provider-self-signed")))
     val pidProviderCert = X509CertificateUtil.createSelfSignedCertificate(pidProviderKey, signingAlg) {
-        profilePidProviderCertificate(
+        profileEtsiPidProviderCertificate(
             subjectDn = "CN=Example Self-Signed PID Provider,O=Walt.id,OrganizationIdentifier=VATAT-U11223344,C=AT",
             certificatePolicyOids = listOf("0.4.0.194112.1.1"),
         )

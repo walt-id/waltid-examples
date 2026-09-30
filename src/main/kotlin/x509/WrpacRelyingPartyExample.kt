@@ -3,9 +3,9 @@ package x509
 import id.walt.certificate.x509.X509Certificate
 import id.walt.certificate.x509.X509CertificateUtil
 import id.walt.certificate.x509.extension.BasicConstraintsExtension.Companion.extensionBasicConstraints
-import id.walt.certificate.x509.profile.Etsi119411Part8
-import id.walt.certificate.x509.profile.EtsiWrpacX509CertificateProfile
-import id.walt.certificate.x509.profile.EtsiWrpacX509CertificateProfile.profileWrpAccessCertificate
+import id.walt.certificate.x509.profile.EtsiWalletRelyingPartyX509CertificateProfile
+import id.walt.certificate.x509.profile.EtsiWrpAcX509CertificateProfile
+import id.walt.certificate.x509.profile.EtsiWrpAcX509CertificateProfile.profileWrpAccessCertificate
 import id.walt.certificate.x509.validation.ValidationResult
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator
 import id.walt.crypto2.CryptoRuntime
@@ -22,8 +22,8 @@ import id.walt.crypto2.providers.cryptography.defaultSoftwareKeyProviders
  * A Relying Party uses its WRPAC private key to authenticate a presentation request, so the
  * wallet can confirm it's talking to a registered Relying Party before releasing any credential.
  * This example issues both a legal-person qualified (QCP-l) and a natural-person non-qualified
- * (NCP-n) certificate, to show the two ends of the four policy variants [Etsi119411Part8]
- * defines - see [EtsiWrpacX509CertificateProfile] for the full requirement set and what's
+ * (NCP-n) certificate, to show the two ends of the four policy variants
+ * [EtsiWalletRelyingPartyX509CertificateProfile] defines - see [EtsiWrpAcX509CertificateProfile] for the full requirement set and what's
  * deliberately not implemented yet (the short-term/no-revocation exemption, telephone contact
  * info).
  */
@@ -38,7 +38,7 @@ private val signingAlg = SignatureAlgorithm.Ecdsa(DigestAlgorithm.SHA_256, Ecdsa
 
 private val wrpacCertUtil = X509CertificateUtil {
     addValidators(
-        EtsiWrpacX509CertificateProfile,
+        EtsiWrpAcX509CertificateProfile,
         X509CertificateValidityValidator(allowValidityInFuture = true)
     )
 }
@@ -56,7 +56,7 @@ suspend fun wrpacRelyingParty() {
         rootKey, rootCert,
         keyIdSuffix = "qcp-l",
         subjectDn = "CN=Example Relying Party,O=Walt.id,OrganizationIdentifier=VATAT-U55667788,C=AT",
-        policyOid = Etsi119411Part8.QCP_L_EUDIWRP,
+        policyOid = EtsiWalletRelyingPartyX509CertificateProfile.QUALIFIED_CERT_POLICY_LEGAL_PERSON,
         contactUri = null,
         contactEmail = "relying-party@example.com",
     )
@@ -66,7 +66,7 @@ suspend fun wrpacRelyingParty() {
         rootKey, rootCert,
         keyIdSuffix = "ncp-n",
         subjectDn = "CN=Jane Doe,GivenName=Jane,Surname=Doe,SerialNumber=RP-12345,C=AT",
-        policyOid = Etsi119411Part8.NCP_N_EUDIWRP,
+        policyOid = EtsiWalletRelyingPartyX509CertificateProfile.NORMALIZED_CERT_POLICY_NATURAL_PERSON,
         contactUri = "https://relying-party.example.com/contact",
         contactEmail = null,
     )

@@ -5,8 +5,8 @@ import java.util.List;
 import id.walt.certificate.x509.JavaX509CertificateUtil;
 import id.walt.certificate.x509.X509Certificate;
 import id.walt.certificate.x509.extension.BasicConstraintsExtension;
-import id.walt.certificate.x509.profile.Etsi119411Part8;
-import id.walt.certificate.x509.profile.EtsiWrpacX509CertificateProfile;
+import id.walt.certificate.x509.profile.EtsiWalletRelyingPartyX509CertificateProfile;
+import id.walt.certificate.x509.profile.EtsiWrpAcX509CertificateProfile;
 import id.walt.certificate.x509.validation.ValidationResult;
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator;
 import id.walt.crypto2.CryptoRuntime;
@@ -24,7 +24,7 @@ import kotlin.Unit;
  * wallet can confirm it's talking to a registered Relying Party before releasing any credential.
  * This example issues both a legal-person qualified (QCP-l) and a natural-person non-qualified
  * (NCP-n) certificate, to show the two ends of the four policy variants
- * {@link Etsi119411Part8} defines - see {@link EtsiWrpacX509CertificateProfile} for the full
+ * {@link EtsiWalletRelyingPartyX509CertificateProfile} defines - see {@link EtsiWrpAcX509CertificateProfile} for the full
  * requirement set and what's deliberately not implemented yet (the short-term/no-revocation
  * exemption, telephone contact info).
  */
@@ -36,7 +36,7 @@ public class WrpacRelyingPartyExample {
 
     private static final JavaX509CertificateUtil wrpacCertUtil = JavaX509CertificateUtil.configure(
             builder -> builder.addValidators(
-                    EtsiWrpacX509CertificateProfile.INSTANCE,
+                    EtsiWrpAcX509CertificateProfile.INSTANCE,
                     new X509CertificateValidityValidator(true) // allowValidityInFuture = true
             )
     );
@@ -49,7 +49,7 @@ public class WrpacRelyingPartyExample {
         issueAndValidate(
                 rootKey, rootCert,
                 "CN=Example Relying Party,O=Walt.id,OrganizationIdentifier=VATAT-U55667788,C=AT",
-                Etsi119411Part8.QCP_L_EUDIWRP,
+                EtsiWalletRelyingPartyX509CertificateProfile.QUALIFIED_CERT_POLICY_LEGAL_PERSON,
                 null, "relying-party@example.com"
         );
         System.out.println();
@@ -57,7 +57,7 @@ public class WrpacRelyingPartyExample {
         issueAndValidate(
                 rootKey, rootCert,
                 "CN=Jane Doe,GivenName=Jane,Surname=Doe,SerialNumber=RP-12345,C=AT",
-                Etsi119411Part8.NCP_N_EUDIWRP,
+                EtsiWalletRelyingPartyX509CertificateProfile.NORMALIZED_CERT_POLICY_NATURAL_PERSON,
                 "https://relying-party.example.com/contact", null
         );
     }
@@ -93,7 +93,7 @@ public class WrpacRelyingPartyExample {
                 rootKey,
                 rootCert,
                 signingAlg,
-                builder -> EtsiWrpacX509CertificateProfile.INSTANCE.profileWrpAccessCertificate(
+                builder -> EtsiWrpAcX509CertificateProfile.INSTANCE.profileWrpAccessCertificate(
                         builder,
                         relyingPartyKey,               // subjectKey
                         subjectDn,                      // subjectDn

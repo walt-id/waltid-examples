@@ -5,7 +5,7 @@ import java.util.List;
 import id.walt.certificate.x509.JavaX509CertificateUtil;
 import id.walt.certificate.x509.X509Certificate;
 import id.walt.certificate.x509.extension.BasicConstraintsExtension;
-import id.walt.certificate.x509.profile.EtsiWrprcX509CertificateProfile;
+import id.walt.certificate.x509.profile.EtsiWrpRcX509CertificateProfile;
 import id.walt.certificate.x509.validation.ValidationResult;
 import id.walt.certificate.x509.validation.validator.X509CertificateValidityValidator;
 import id.walt.crypto2.CryptoRuntime;
@@ -19,13 +19,13 @@ import kotlin.Unit;
 /**
  * Creating and validating a Wallet Relying Party Registration Certificate (WRPRC) - ETSI TS 119 475.
  *
- * <p><b>{@link EtsiWrprcX509CertificateProfile} is a draft.</b> Unlike every other profile shown in
+ * <p><b>{@link EtsiWrpRcX509CertificateProfile} is a draft.</b> Unlike every other profile shown in
  * these examples, there is no reference implementation to cross-check WRPRC against, and the
  * encoding of its defining feature - the Relying Party's <em>registered intended use</em> (what
  * attribute scope it's authorized to request, and why) - isn't confirmed; it likely needs a new
  * custom X.509 extension. This example only exercises the baseline end-entity certificate shape
  * the profile currently implements, and deliberately prints the {@code WARNING} log entry
- * {@link EtsiWrprcX509CertificateProfile#validate} always emits, to make that gap visible rather
+ * {@link EtsiWrpRcX509CertificateProfile#validate} always emits, to make that gap visible rather
  * than silently passing a certificate a real WRPRC issuer might reject.
  */
 public class WrprcRelyingPartyExample {
@@ -36,7 +36,7 @@ public class WrprcRelyingPartyExample {
 
     private static final JavaX509CertificateUtil wrprcCertUtil = JavaX509CertificateUtil.configure(
             builder -> builder.addValidators(
-                    EtsiWrprcX509CertificateProfile.INSTANCE,
+                    EtsiWrpRcX509CertificateProfile.INSTANCE,
                     new X509CertificateValidityValidator(true) // allowValidityInFuture = true
             )
     );
@@ -51,7 +51,7 @@ public class WrprcRelyingPartyExample {
                 rootKey,
                 rootCert,
                 signingAlg,
-                builder -> EtsiWrprcX509CertificateProfile.INSTANCE.profileWrpRegistrationCertificate(
+                builder -> EtsiWrpRcX509CertificateProfile.INSTANCE.profileEtsiWrpRegistrationCertificate(
                         builder,
                         relyingPartyKey,                     // subjectKey
                         "CN=Example Relying Party,O=Walt.id,OrganizationIdentifier=VATAT-U55667788,C=AT", // subjectDn
