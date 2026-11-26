@@ -44,7 +44,7 @@ public class DidExamples {
     }
 
     public static void runDidExample() throws ExecutionException, InterruptedException {
-        WaltidServices.INSTANCE.minimalInitBlocking();
+        didService.minimalInitBlocking();
         var key = JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
 
         DidExamples.generateDidAsync(key);

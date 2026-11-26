@@ -23,7 +23,7 @@ public class KeysExamples {
         JWKKey k = (JWKKey) JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
         System.out.println("Sync generated key: " + k);
         System.out.println("Signing with key synchronous...");
-        var signed = (byte[]) k.signRawBlocking(plaintext);
+        var signed = (byte[]) k.signRawBlocking(plaintext, null);
 
         System.out.println("Signed synchronous: " + Arrays.toString(signed));
 
@@ -46,7 +46,7 @@ public class KeysExamples {
             System.out.println("Signing with key asynchronous...");
 
             try {
-                key.signRawAsync(plaintext).thenAccept(signed -> {
+                key.signRawAsync(plaintext, null).thenAccept(signed -> {
                     System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
 
                     try {
@@ -64,7 +64,7 @@ public class KeysExamples {
     public static void verifyAsync(Key key, byte[] signed, byte[] plaintext, String message) throws Exception {
         key.getPublicKeyAsync().thenAccept(publicKey -> {
             try {
-                publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
+                publicKey.verifyRawAsync(signed, plaintext, null).thenAccept(result -> {
                     System.out.println("Verification result (" + message + "): " + result);
                 }).join();
             } catch (Exception e) {
