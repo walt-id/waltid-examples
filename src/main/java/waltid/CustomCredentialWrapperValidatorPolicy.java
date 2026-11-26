@@ -1,8 +1,8 @@
 package waltid;
 
-import id.walt.credentials.schemes.JwsSignatureScheme;
-import id.walt.credentials.verification.HolderBindingException;
-import id.walt.credentials.verification.JavaCredentialWrapperValidatorPolicy;
+import id.walt.w3c.schemes.JwsSignatureScheme;
+import id.walt.policies.HolderBindingException;
+import id.walt.policies.JavaCredentialWrapperValidatorPolicy;
 import id.walt.crypto.utils.JwsUtils;
 import java.util.List;
 import java.util.Map;
