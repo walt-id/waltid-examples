@@ -1,6 +1,6 @@
 package waltid;
 
-import id.walt.credentials.verification.JavaCredentialDataValidatorPolicy;
+import id.walt.policies.JavaCredentialDataValidatorPolicy;
 import java.util.Map;
 import java.util.Objects;
 import kotlinx.serialization.json.JsonObject;
