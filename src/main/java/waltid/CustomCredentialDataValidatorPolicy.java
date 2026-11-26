@@ -2,6 +2,8 @@ package waltid;
 
 import id.walt.policies.JavaCredentialDataValidatorPolicy;
 import java.util.Map;
+import java.util.Set;
+import id.walt.w3c.utils.VCFormat;
 import java.util.Objects;
 import kotlinx.serialization.json.JsonObject;
 import kotlinx.serialization.json.JsonPrimitive;
@@ -24,6 +26,12 @@ public class CustomCredentialDataValidatorPolicy extends JavaCredentialDataValid
         }
 
         return myVerificationContent;
+    }
+
+    @NotNull
+    @Override
+    public Set<VCFormat> getSupportedVCFormats() {
+        return Set.of(VCFormat.jwt_vc, VCFormat.jwt_vc_json, VCFormat.ldp_vc);
     }
 
     @NotNull
