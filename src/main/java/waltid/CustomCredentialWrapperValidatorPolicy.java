@@ -6,6 +6,8 @@ import id.walt.policies.JavaCredentialWrapperValidatorPolicy;
 import id.walt.crypto.utils.JwsUtils;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import id.walt.w3c.utils.VCFormat;
 import java.util.stream.Collectors;
 import kotlinx.serialization.json.JsonArray;
 import kotlinx.serialization.json.JsonElement;
@@ -15,6 +17,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomCredentialWrapperValidatorPolicy extends JavaCredentialWrapperValidatorPolicy {
+    @NotNull
+    @Override
+    public Set<VCFormat> getSupportedVCFormats() {
+        return Set.of(VCFormat.jwt_vp, VCFormat.jwt_vp_json);
+    }
+
     @NotNull
     @Override
     public String getName() {
