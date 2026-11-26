@@ -5,6 +5,10 @@ import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyMeta;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Map;
 import kotlin.random.Random;
 import kotlinx.serialization.json.Json;
 import kotlinx.serialization.json.JsonElement;
@@ -12,11 +16,6 @@ import kotlinx.serialization.json.JsonObject;
 import org.intellij.lang.annotations.Language;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Map;
 
 public class CustomKeyExample extends JavaKey {
 
@@ -71,7 +70,8 @@ public class CustomKeyExample extends JavaKey {
         return JWKKey.Companion.generateBlocking(getKeyType(), null);
     }
 
-    public byte[] javaVerifyRaw(@NotNull byte[] signed, @Nullable byte[] detachedPlaintext) {
+    @Override
+    public byte @NotNull [] javaVerifyRaw(byte @NotNull [] signed, byte @Nullable [] detachedPlaintext) {
         System.out.println("Verifying signed with custom key (example): " + Arrays.toString(signed));
 
         assert detachedPlaintext != null;
@@ -113,9 +113,8 @@ public class CustomKeyExample extends JavaKey {
         return myHeaders + "." + myPayload + "." + mySignature;
     }
 
-    @NotNull
     @Override
-    public byte[] javaSignRaw(@NotNull byte[] plaintext) {
+    public byte @NotNull [] javaSignRaw(byte @NotNull [] plaintext) {
         System.out.println("Signing plaintext with custom key (stub implementation): " + Arrays.toString(plaintext));
         return reverseArray(plaintext);
     }
