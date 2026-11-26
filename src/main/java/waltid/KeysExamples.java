@@ -3,12 +3,12 @@ package waltid;
 import id.walt.crypto.keys.Key;
 import id.walt.crypto.keys.KeyType;
 import id.walt.crypto.keys.jwk.JWKKey;
-import kotlin.Result;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
+import kotlin.Result;
 
+@SuppressWarnings({"RedundantThrows", "DuplicateThrows"})
 public class KeysExamples {
 
     private static final byte[] plaintext = "< this is my plaintext>".getBytes(StandardCharsets.UTF_8);
