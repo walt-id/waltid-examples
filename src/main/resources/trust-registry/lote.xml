@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListOfTrustedEntities xmlns="http://uri.etsi.org/019602/v1#"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#" LOTETag="urn:example:lote">
+  <ListAndSchemeInformation>
+    <LoTEVersionIdentifier>1</LoTEVersionIdentifier>
+    <LoTESequenceNumber>1</LoTESequenceNumber>
+    <LoTEType>http://uri.etsi.org/19602/LoTEType/EUPIDProvidersList</LoTEType>
+    <SchemeOperatorName><Name xml:lang="en">Example operator</Name></SchemeOperatorName>
+    <SchemeOperatorAddress>
+      <PostalAddresses><PostalAddress xml:lang="en">
+        <StreetAddress>Example street 1</StreetAddress><Locality>Vienna</Locality><CountryName>AT</CountryName>
+      </PostalAddress></PostalAddresses>
+      <ElectronicAddress><URI xml:lang="en">https://example.org</URI></ElectronicAddress>
+    </SchemeOperatorAddress>
+    <SchemeName><Name xml:lang="en">Example PID providers</Name></SchemeName>
+    <SchemeInformationURI><URI xml:lang="en">https://example.org/scheme</URI></SchemeInformationURI>
+    <StatusDeterminationApproach>https://example.org/status</StatusDeterminationApproach>
+    <SchemeTerritory>AT</SchemeTerritory>
+    <ListIssueDateTime>2026-07-21T00:00:00Z</ListIssueDateTime>
+    <NextUpdate><dateTime>2027-07-21T00:00:00Z</dateTime></NextUpdate>
+  </ListAndSchemeInformation>
+  <TrustedEntitiesList><TrustedEntity>
+    <TrustedEntityInformation>
+      <TEName><Name xml:lang="en">Example PID provider</Name></TEName>
+      <TEAddress>
+        <PostalAddresses><PostalAddress xml:lang="en">
+          <StreetAddress>Example street 1</StreetAddress><Locality>Vienna</Locality><CountryName>AT</CountryName>
+        </PostalAddress></PostalAddresses>
+        <ElectronicAddress><URI xml:lang="en">https://example.org</URI></ElectronicAddress>
+      </TEAddress>
+      <TEInformationURI><URI xml:lang="en">https://example.org/ListOfTrustedEntities/PIDProvider/AT</URI></TEInformationURI>
+    </TrustedEntityInformation>
+    <TrustedEntityServices><TrustedEntityService><ServiceInformation>
+      <ServiceTypeIdentifier>http://uri.etsi.org/19602/SvcType/PID/Issuance</ServiceTypeIdentifier>
+      <ServiceName><Name xml:lang="en">PID issuance</Name></ServiceName>
+      <ServiceDigitalIdentity><DigitalId>
+        <X509SubjectName>CN=PID Provider,O=Example,C=AT</X509SubjectName>
+      </DigitalId></ServiceDigitalIdentity>
+      <ServiceStatus>http://uri.etsi.org/TrstSvc/TrustedList/Svcstatus/granted</ServiceStatus>
+      <StatusStartingTime>2026-07-21T00:00:00Z</StatusStartingTime>
+    </ServiceInformation></TrustedEntityService></TrustedEntityServices>
+  </TrustedEntity></TrustedEntitiesList>
+</ListOfTrustedEntities>

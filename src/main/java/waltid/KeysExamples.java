@@ -23,8 +23,7 @@ public class KeysExamples {
         JWKKey k = (JWKKey) JWKKey.Companion.generateBlocking(KeyType.Ed25519, null);
         System.out.println("Sync generated key: " + k);
         System.out.println("Signing with key synchronous...");
-        byte[] signed;
-        signed = (byte[]) k.signRawBlocking(plaintext);
+        var signed = (byte[]) k.signRawBlocking(plaintext, null);
 
         System.out.println("Signed synchronous: " + Arrays.toString(signed));
 
@@ -47,7 +46,7 @@ public class KeysExamples {
             System.out.println("Signing with key asynchronous...");
 
             try {
-                key.signRawAsync(plaintext).thenAccept(signed -> {
+                key.signRawAsync(plaintext, null).thenAccept(signed -> {
                     System.out.println("Signed asynchronous: " + Arrays.toString((byte[]) signed));
 
                     try {
@@ -65,9 +64,9 @@ public class KeysExamples {
     public static void verifyAsync(Key key, byte[] signed, byte[] plaintext, String message) throws Exception {
         key.getPublicKeyAsync().thenAccept(publicKey -> {
             try {
-            publicKey.verifyRawAsync(signed, plaintext).thenAccept(result -> {
-                System.out.println("Verification result (" + message + "): " + result);
-            }).join();
+                publicKey.verifyRawAsync(signed, plaintext, null).thenAccept(result -> {
+                    System.out.println("Verification result (" + message + "): " + result);
+                }).join();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -89,7 +88,7 @@ public class KeysExamples {
         System.out.println("Import result: " + keyImport);
     }
 
-    public static void runKeyExample() throws ExecutionException, InterruptedException, Exception {
+    public static void runKeyExample() throws Exception {
         KeysExamples.signAsync();
         KeysExamples.signBlocking();
 
